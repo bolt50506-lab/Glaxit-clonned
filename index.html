@@ -5949,6 +5949,11 @@ function tune(){
  var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
  if(!root || !root.swiper) return false;
  var s=root.swiper;
+ if(s.params.loop && typeof s.loopDestroy==='function'){s.loopDestroy();}
+ s.params.loop=false;
+ var desired=[0,1,5,2,3,4], slides=Array.prototype.slice.call(root.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)')), by={};
+ slides.forEach(function(el){by[el.getAttribute('data-swiper-slide-index')]=el;});
+ desired.forEach(function(idx){if(by[idx]) root.querySelector('.swiper-wrapper').appendChild(by[idx]);});
  s.params.slidesPerGroup=1;
  s.params.slidesPerGroupAuto=false;
  s.params.slidesPerView=4;
