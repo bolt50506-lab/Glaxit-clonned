@@ -68,6 +68,29 @@ function companyflow_render_clone($path = '/') {
      */
     $base = 'https://glaxit-clonned.onrender.com/';
     $theme_assets = trailingslashit(get_stylesheet_directory_uri()) . 'assets/';
+    $original_assets = $theme_assets . 'original/';
+
+    // Keep the existing animation stack, but serve its exact library files
+    // from the WordPress theme instead of the public CDN.
+    $html = str_replace(
+        [
+            './cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+            'cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+            './cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+            'cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+            './unpkg.com/split-type',
+            'unpkg.com/split-type',
+        ],
+        [
+            $original_assets . 'gsap.min.js',
+            $original_assets . 'gsap.min.js',
+            $original_assets . 'ScrollTrigger.min.js',
+            $original_assets . 'ScrollTrigger.min.js',
+            $original_assets . 'split-type.js',
+            $original_assets . 'split-type.js',
+        ],
+        $html
+    );
     $html = preg_replace('/<base\\b[^>]*>/i', '', $html);
     $html = preg_replace('/<head\\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
 
