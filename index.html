@@ -6029,5 +6029,63 @@ body{overflow-x:hidden!important;overflow-y:visible!important;height:auto!import
   else {fix();setTimeout(fix,800);setTimeout(fix,2000)}
 })();
 </script>
+<style id="companyflow-home-sections-restore">
+/* CompanyFlow: restore the two homepage sections after removing legacy Elementor animation runtime */
+.elementor-element-47b49c3,
+.elementor-element-9518f2b{visibility:visible!important;opacity:1!important;display:block!important}
+.elementor-element-aebf35f,.elementor-element-96761b6,
+.elementor-element-292ba8e,.elementor-element-112fcf5,
+.elementor-element-0c05614,.elementor-element-2b3344e{visibility:visible!important;opacity:1!important}
+.elementor-element-0c05614 .elementor-loop-container,
+.elementor-element-2b3344e .elementor-loop-container{visibility:visible!important;opacity:1!important}
+.elementor-element-0c05614 .swiper-slide,
+.elementor-element-2b3344e .swiper-slide{visibility:visible!important}
+.elementor-element-0c05614 .swiper-slide .elementor-invisible,
+.elementor-element-2b3344e .swiper-slide .elementor-invisible{visibility:visible!important;opacity:1!important;transform:none!important}
+.elementor-element-0c05614 .elementor-element-d381295{opacity:1!important;visibility:visible!important}
+.elementor-element-2b3344e .elementor-element-8d49ab3{opacity:1!important;visibility:visible!important;transform:none!important}
+</style>
+<script id="companyflow-home-sections-restore-script">
+(function(){
+  function restore(){
+    var ids=['47b49c3','aebf35f','96761b6','0c05614','9518f2b','292ba8e','112fcf5','2b3344e'];
+    ids.forEach(function(id){
+      document.querySelectorAll('[data-id="'+id+'"]').forEach(function(el){
+        el.classList.remove('elementor-invisible','elementor-hidden');
+        el.hidden=false;
+        el.style.removeProperty('display');
+        el.style.removeProperty('visibility');
+        el.style.removeProperty('opacity');
+      });
+    });
+    ['0c05614','2b3344e'].forEach(function(id){
+      document.querySelectorAll('[data-id="'+id+'"] .elementor-invisible').forEach(function(el){
+        el.classList.remove('elementor-invisible');
+        el.hidden=false;
+        el.style.removeProperty('visibility');
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transform');
+      });
+    });
+    /* LiteSpeed replaced these images with placeholders; restore their real local sources. */
+    document.querySelectorAll('img[data-src]').forEach(function(img){
+      var src=img.getAttribute('data-src');
+      if(src && (!img.getAttribute('src') || img.getAttribute('src').indexOf('data:image')===0)){
+        img.setAttribute('src',src);
+      }
+      var srcset=img.getAttribute('data-srcset');
+      if(srcset) img.setAttribute('srcset',srcset);
+    });
+  }
+  function start(){
+    restore();
+    setTimeout(restore,300);
+    setTimeout(restore,1000);
+    setTimeout(restore,2500);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start);
+  else start();
+})();
+</script>
 </body>
 </html>
