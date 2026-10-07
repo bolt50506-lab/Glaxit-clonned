@@ -6,16 +6,6 @@ add_action('after_setup_theme', function () {
     add_theme_support('post-thumbnails');
 });
 
-add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.3.0');
-    wp_enqueue_script('companyflow-frontend', get_theme_file_uri('assets/js/companyflow.js'), [], '1.1.0', true);
-    wp_localize_script('companyflow-frontend', 'CompanyFlowWP', [
-        'home' => trailingslashit(home_url('/')),
-        'phone' => '+923407465567',
-        'email' => 'alihotspot1@gmail.com',
-    ]);
-});
-
 add_action('template_redirect', function () {
     if (is_404()) {
         status_header(200);
