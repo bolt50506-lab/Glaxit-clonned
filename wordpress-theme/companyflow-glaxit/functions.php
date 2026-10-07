@@ -67,8 +67,37 @@ function companyflow_render_clone($path = '/') {
      * header/footer and all frontend behavior remain intact.
      */
     $base = 'https://glaxit-clonned.onrender.com/';
+    $theme_assets = trailingslashit(get_stylesheet_directory_uri()) . 'assets/';
     $html = preg_replace('/<base\\b[^>]*>/i', '', $html);
     $html = preg_replace('/<head\\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
+
+    /*
+     * Keep the frontend markup untouched, but serve the migrated CompanyFlow
+     * images/logo/favicon from the WordPress theme itself.
+     */
+    $html = str_replace(
+        [
+            './assets/companyflow-logo-new.svg',
+            './assets/companyflow-cf-favicon.svg',
+            'assets/companyflow-logo-new.svg',
+            'assets/companyflow-cf-favicon.svg',
+            '/wp-content/uploads/',
+            '../wp-content/uploads/',
+            '../../wp-content/uploads/',
+            '../../../wp-content/uploads/',
+        ],
+        [
+            $theme_assets . 'companyflow-logo-new.svg',
+            $theme_assets . 'companyflow-cf-favicon.svg',
+            $theme_assets . 'companyflow-logo-new.svg',
+            $theme_assets . 'companyflow-cf-favicon.svg',
+            $theme_assets . 'uploads/',
+            $theme_assets . 'uploads/',
+            $theme_assets . 'uploads/',
+            $theme_assets . 'uploads/',
+        ],
+        $html
+    );
 
     // Keep internal navigation ready for the eventual WordPress domain,
     // while leaving external URLs, assets and scripts untouched.
