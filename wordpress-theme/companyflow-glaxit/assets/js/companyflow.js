@@ -3,7 +3,7 @@
 (function(){
   function wpUrl(path){
     var home=(window.CompanyFlowWP&&window.CompanyFlowWP.home)||'./';
-    return home.replace(/\\/$/,'/')+String(path).replace(/^\\.\\//,'').replace(/^\\//,'');
+    return home.replace(/\/$/,'/')+String(path).replace(/^\.\//,'').replace(/^\//,'');
   }
   /*
    * Keep the original Glaxit Swiper/Elementor carousel intact.
@@ -39,7 +39,7 @@
       title:'AgentHub',
       image:'./wp-content/uploads/2025/01/AgentHub.webp',
       desc:'An AI-powered sales and WhatsApp automation platform built around real business conversations.',
-      url:wpUrl('blog/case-study/ai-automation/')'
+      url:wpUrl('blog/case-study/ai-automation/')
     },
     {
       title:'AI Sales Agent',
