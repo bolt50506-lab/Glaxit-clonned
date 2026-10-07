@@ -7,7 +7,7 @@ add_action('after_setup_theme', function () {
 });
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.0.0');
+    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.1.0');
 });
 
 function companyflow_clone_path() {
@@ -20,7 +20,7 @@ function companyflow_fetch_clone($path = '/') {
     $base = 'https://glaxit-clonned.onrender.com';
     $url = $base . '/' . ltrim($path, '/');
     $response = wp_remote_get($url, [
-        'timeout' => 20,
+        'timeout' => 30,
         'redirection' => 5,
         'sslverify' => true,
         'headers' => ['User-Agent' => 'CompanyFlow WordPress Migration'],
@@ -34,13 +34,20 @@ function companyflow_fetch_clone($path = '/') {
 function companyflow_render_clone($path = '/') {
     $html = companyflow_fetch_clone($path);
     if (!$html) {
-        echo '<main style="padding:80px 24px;font-family:Arial;background:#10131a;color:#fff;min-height:60vh"><h1>CompanyFlow</h1><p>The frontend source is temporarily unavailable. Please try again.</p></main>';
+        echo '<main class="companyflow-migration-error"><h1>CompanyFlow</h1><p>The existing frontend is temporarily unavailable.</p></main>';
         return;
     }
 
-    // Keep the existing frontend intact. The <base> element makes every relative
-    // CSS/JS/image URL resolve against the existing clone while we prepare the
-    // permanent self-contained WordPress theme.
-    $html = preg_replace('/<head(.*?)>/i', '<head$1><base href="https://glaxit-clonned.onrender.com/">', $html, 1);
-    echo $html;
+    // Render the existing clone inside WordPress without rebuilding it with blocks.
+    // Keep the original relative asset/link behavior by setting a base URL.
+    $base = 'https://glaxit-clonned.onrender.com/';
+    $html = preg_replace('/<head\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
+    $html = preg_replace('/<script[^>]*class="rank-math-schema"[^>]*>.*?<\/script>/is', '', $html);
+    $html = preg_replace('/<link[^>]+rel=["\']canonical["\'][^>]*>/i', '', $html);
+
+    if (preg_match('/<body\b[^>]*>(.*)<\/body>/is', $html, $m)) {
+        echo $m[1];
+    } else {
+        echo $html;
+    }
 }
