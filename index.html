@@ -5733,5 +5733,125 @@ document.addEventListener('DOMContentLoaded',function(){
   setTimeout(initCompanyFlowProjects,1200);
 })();
 </script>
+<style id="companyflow-button-behavior">
+/* CompanyFlow button interactions — preserve the original Glaxit-style smooth navigation and overlays. */
+.cf-action-modal{position:fixed;inset:0;z-index:2147483640;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.58);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
+.cf-action-modal.is-open{opacity:1;visibility:visible}
+.cf-action-modal__panel{position:relative;width:min(620px,100%);max-height:min(78vh,720px);overflow:auto;background:#101615;color:#fff;border-radius:22px;padding:42px;box-shadow:0 24px 80px rgba(0,0,0,.35);transform:translateY(28px) scale(.97);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.cf-action-modal.is-open .cf-action-modal__panel{transform:none}
+.cf-action-modal__close{position:absolute;top:18px;right:20px;border:0;background:transparent;color:#fff;font-size:30px;line-height:1;cursor:pointer}
+.cf-action-modal__eyebrow{margin:0 0 10px;color:#17F0C5;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.cf-action-modal__title{margin:0 0 16px;font-size:clamp(28px,4vw,44px);line-height:1.05}
+.cf-action-modal__text{margin:0 0 28px;color:rgba(255,255,255,.78);font-size:16px;line-height:1.7}
+.cf-action-modal__cta{display:inline-flex;align-items:center;justify-content:center;padding:13px 24px;border-radius:999px;background:#17F0C5;color:#101615;text-decoration:none;font-weight:600;transition:transform .25s ease}
+.cf-action-modal__cta:hover{transform:translateY(-2px)}
+body.cf-modal-open{overflow:hidden}
+</style>
+<script id="companyflow-button-behavior-script">
+(function(){
+  function smoothTo(hash){
+    if(!hash || hash==='#') return false;
+    var target=document.querySelector(hash);
+    if(!target) return false;
+    var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    if(history.replaceState) history.replaceState(null,'',hash);
+    return true;
+  }
+
+  function openOffCanvas(){
+    var panel=document.getElementById('off-canvas-20b5d70');
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','false');
+    panel.removeAttribute('inert');
+    document.body.classList.add('e-off-canvas-open');
+    var opener=document.querySelector('[aria-controls="off-canvas-20b5d70"]');
+    if(opener) opener.setAttribute('aria-expanded','true');
+  }
+
+  function closeOffCanvas(){
+    var panel=document.getElementById('off-canvas-20b5d70');
+    if(!panel) return;
+    panel.setAttribute('aria-hidden','true');
+    panel.setAttribute('inert','');
+    document.body.classList.remove('e-off-canvas-open');
+    var opener=document.querySelector('[aria-controls="off-canvas-20b5d70"]');
+    if(opener) opener.setAttribute('aria-expanded','false');
+  }
+
+  function ensureModal(){
+    var modal=document.getElementById('cf-action-modal');
+    if(modal) return modal;
+    modal=document.createElement('div');
+    modal.id='cf-action-modal';
+    modal.className='cf-action-modal';
+    modal.setAttribute('aria-hidden','true');
+    modal.innerHTML='<div class="cf-action-modal__panel" role="dialog" aria-modal="true" aria-labelledby="cf-action-title">'+
+      '<button type="button" class="cf-action-modal__close" aria-label="Close">×</button>'+
+      '<p class="cf-action-modal__eyebrow">CompanyFlow</p>'+
+      '<h2 id="cf-action-title" class="cf-action-modal__title"></h2>'+
+      '<div class="cf-action-modal__text"></div>'+
+      '<a class="cf-action-modal__cta" href="#contact">Discuss this with us</a>'+
+      '</div>';
+    document.body.appendChild(modal);
+    modal.addEventListener('click',function(e){if(e.target===modal) closeModal();});
+    modal.querySelector('.cf-action-modal__close').addEventListener('click',closeModal);
+    modal.querySelector('.cf-action-modal__cta').addEventListener('click',function(){closeModal();setTimeout(function(){smoothTo('#contact')},50);});
+    return modal;
+  }
+
+  function openModal(title,text){
+    var modal=ensureModal();
+    modal.querySelector('.cf-action-modal__title').textContent=title||'CompanyFlow';
+    modal.querySelector('.cf-action-modal__text').textContent=text||'Tell us what you need and we will build the right digital solution around your business.';
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('cf-modal-open');
+  }
+  function closeModal(){
+    var modal=document.getElementById('cf-action-modal');
+    if(!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('cf-modal-open');
+  }
+
+  function bind(){
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeOffCanvas();}});
+    document.addEventListener('click',function(e){
+      var a=e.target.closest && e.target.closest('a');
+      if(!a) return;
+      var href=a.getAttribute('href')||'';
+      var text=(a.textContent||'').replace(/\s+/g,' ').trim();
+
+      if(href.indexOf('off_canvas%3Aaction%3D')>=0 || href.indexOf('action%3Doff_canvas%3Aopen')>=0){
+        e.preventDefault(); e.stopImmediatePropagation(); openOffCanvas(); return;
+      }
+      if(href.indexOf('action%3Doff_canvas%3Aclose')>=0){
+        e.preventDefault(); e.stopImmediatePropagation(); closeOffCanvas(); return;
+      }
+      if(href.indexOf('action%3Dpopup%3Aopen')>=0){
+        e.preventDefault(); e.stopImmediatePropagation();
+        var card=a.closest('.elementor-loop-item,.swiper-slide,.elementor-element');
+        var title=card && card.querySelector('.elementor-heading-title') ? card.querySelector('.elementor-heading-title').textContent.trim() : 'Our Services';
+        var desc=card && card.querySelector('.elementor-widget-text-editor') ? card.querySelector('.elementor-widget-text-editor').textContent.replace(/\s+/g,' ').trim() : 'CompanyFlow builds digital products around the way your business works.';
+        openModal(title,desc);
+        return;
+      }
+      if(href.charAt(0)==='#' && href.length>1){
+        if(smoothTo(href)){e.preventDefault();closeOffCanvas();}
+        return;
+      }
+      if(href==='./'){
+        e.preventDefault();closeOffCanvas();window.scrollTo({top:0,behavior:'smooth'});if(history.replaceState)history.replaceState(null,'','#top');return;
+      }
+    },true);
+
+    var overlay=document.querySelector('#off-canvas-20b5d70 .e-off-canvas__overlay');
+    if(overlay) overlay.addEventListener('click',closeOffCanvas);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+})();
+</script>
 </body>
 </html>
