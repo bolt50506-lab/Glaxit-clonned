@@ -5887,12 +5887,12 @@ html,body{overflow-x:hidden!important}
 .cf-home-reveal{animation:cfHomeFadeUp .75s cubic-bezier(.22,1,.36,1) both}
 @keyframes cfHomeFadeUp{from{opacity:0;transform:translate3d(0,28px,0)}to{opacity:1;transform:none}}
 /* Restore the original Professionals entrance animation without reintroducing Swiper jitter. */
-.elementor-element-9518f2b .cf-prof-heading{opacity:0;transform:translate3d(0,55px,0)}
-.elementor-element-9518f2b .cf-prof-card{opacity:0;transform:translate3d(0,55px,0)}
+.elementor-element-9518f2b .cf-prof-heading{opacity:0;transform:translate3d(0,100%,0)}
+.elementor-element-9518f2b .cf-prof-card{opacity:0;transform:translate3d(0,100%,0)}
 .elementor-element-9518f2b .cf-prof-heading.cf-prof-visible,
 .elementor-element-9518f2b .cf-prof-card.cf-prof-visible{animation:cfProfessionFadeUp .9s cubic-bezier(.22,1,.36,1) forwards}
 .elementor-element-9518f2b .cf-prof-card.cf-prof-visible{animation-delay:.3s}
-@keyframes cfProfessionFadeUp{from{opacity:0;transform:translate3d(0,55px,0)}to{opacity:1;transform:none}}
+@keyframes cfProfessionFadeUp{from{opacity:0;transform:translate3d(0,100%,0)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){
  .elementor-element-9518f2b .cf-prof-heading,.elementor-element-9518f2b .cf-prof-card{opacity:1;transform:none;animation:none!important}
 }
@@ -5967,9 +5967,9 @@ html,body{overflow-x:hidden!important}
     if(carousel.dataset.cfConfigured==='1') return true;
     carousel.dataset.cfConfigured='1';
 
-    // The original Professionals section used fadeInUp on both headings and
-    // each loop-card container (300ms delay). Recreate that entrance behavior
-    // with one observer; do not touch Swiper's DOM or transition state.
+    // Exact Glaxit-style entrance: fadeInUp from below the section, with the
+    // loop cards using the original 300ms animation delay. Swiper itself is
+    // never destroyed, reordered, or recreated.
     var headingA=section.querySelector('.elementor-element-292ba8e');
     var headingB=section.querySelector('.elementor-element-112fcf5');
     [headingA,headingB].forEach(function(el){if(el)el.classList.add('cf-prof-heading')});
@@ -6009,7 +6009,33 @@ html,body{overflow-x:hidden!important}
     return true;
   }
 
+  function repairImages(){
+    document.querySelectorAll('img').forEach(function(img){
+      ['src','data-src','srcset','data-srcset'].forEach(function(attr){
+        var value=img.getAttribute(attr);
+        if(!value)return;
+        // Browsers treat spaces inside filenames as srcset descriptors.
+        // Encode only whitespace that belongs to local URL candidates.
+        if(attr==='srcset'||attr==='data-srcset'){
+          value=value.split(',').map(function(candidate){
+            var parts=candidate.trim().split(/\\s+/);
+            if(!parts[0])return '';
+            return encodeURI(parts[0])+(parts[1]?' '+parts[1]:'');
+          }).filter(Boolean).join(', ');
+        }else if(value.indexOf(' ')>=0 && !/^data:/i.test(value)){
+          value=encodeURI(value);
+        }
+        img.setAttribute(attr,value);
+      });
+      var lazy=img.getAttribute('data-src');
+      if(lazy && (!img.getAttribute('src') || img.getAttribute('src').indexOf('data:image')===0)){
+        img.setAttribute('src',lazy);
+      }
+    });
+  }
+
   function setup(){
+    repairImages();
     var project=document.querySelector('.elementor-element-47b49c3');
     var professional=document.querySelector('.elementor-element-9518f2b');
     if(project) revealSection(project);
