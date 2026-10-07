@@ -471,118 +471,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
   </script>
 <noscript>
 </noscript>
-<style id="companyflow-counter-alignment-final">
-/* Final counter alignment: reserve the same number column so + / + / % share one vertical line. */
-.elementor-7 .elementor-element.ba95d1b .elementor-counter-number-wrapper,
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-wrapper{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:flex-start!important;
-  text-align:left!important;
-  white-space:nowrap!important;
-  font-variant-numeric:tabular-nums;
-}
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-prefix{
-  display:none!important;
-  flex:0 0 0!important;
-}
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number{
-  display:inline-block!important;
-  flex:0 0 3ch!important;
-  width:3ch!important;
-  min-width:3ch!important;
-  margin:0!important;
-  padding:0!important;
-  text-align:right!important;
-  line-height:1!important;
-}
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-suffix{
-  display:inline-block!important;
-  flex:0 0 auto!important;
-  width:auto!important;
-  min-width:0!important;
-  margin:0 0 0 .12em!important;
-  padding:0!important;
-  text-align:left!important;
-  line-height:1!important;
-}
-@media(max-width:767px){
-  .elementor-7 [data-id="ba95d1b"] .elementor-counter-number{flex-basis:3ch!important;width:3ch!important;min-width:3ch!important}
-}
-</style>
 <link rel="icon" href="./assets/companyflow-cf-favicon.svg" type="image/svg+xml">
-<style id="companyflow-stats-alignment-fix">
-/* CompanyFlow / Glaxit stats: keep all three counters on one exact baseline. */
-.elementor-element-ba95d1b{
-  display:flex !important;
-  flex-direction:row !important;
-  align-items:flex-end !important;
-  justify-content:center !important;
-  gap:clamp(24px,3vw,52px) !important;
-  width:100% !important;
-}
-.elementor-element-ba95d1b > .elementor-element{
-  flex:0 0 auto !important;
-  width:auto !important;
-  min-width:0 !important;
-  margin:0 !important;
-  align-self:flex-end !important;
-}
-.elementor-element-ba95d1b .elementor-counter{
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:flex-end !important;
-  height:100% !important;
-  margin:0 !important;
-}
-.elementor-element-ba95d1b .elementor-counter-title{
-  text-align:center !important;
-}
-.elementor-element-ba95d1b .elementor-counter-number-wrapper{
-  display:inline-flex !important;
-  flex-direction:row !important;
-  align-items:baseline !important;
-  justify-content:center !important;
-  white-space:nowrap !important;
-  line-height:1 !important;
-  height:auto !important;
-  margin:0 !important;
-  gap:0 !important;
-  vertical-align:baseline !important;
-}
-.elementor-element-ba95d1b .elementor-counter-number,
-.elementor-element-ba95d1b .elementor-counter-number-prefix,
-.elementor-element-ba95d1b .elementor-counter-number-suffix{
-  position:static !important;
-  display:inline-block !important;
-  float:none !important;
-  transform:none !important;
-  vertical-align:baseline !important;
-  line-height:1 !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-.elementor-element-ba95d1b .elementor-counter-number-suffix{
-  align-self:baseline !important;
-}
-.elementor-element-ba95d1ab .elementor-counter-number,
-.elementor-element-8bb3843 .elementor-counter-number,
-.elementor-element-702e7ba .elementor-counter-number,
-.elementor-element-ba95d1b .elementor-counter-number-suffix{
-  display:inline !important;
-  vertical-align:baseline !important;
-  line-height:1 !important;
-}
-.elementor-element-ba95d1b .elementor-counter-number-suffix{
-  margin:0 !important;
-  padding:0 !important;
-}
-@media (max-width:767px){
-  .elementor-element-ba95d1b{
-    gap:18px !important;
-  }
-}
+<style id="companyflow-counter-replacement">
+.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-wrapper{display:flex;align-items:baseline;justify-content:flex-start;gap:0;line-height:1;white-space:nowrap}
+.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-prefix{display:none}
+.elementor-7 [data-id="ba95d1b"] .elementor-counter-number,.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-suffix{flex:0 0 auto;width:auto;margin:0;padding:0}
 </style>
 </head>
 <body class="home wp-singular page-template-default page page-id-7 wp-custom-logo wp-embed-responsive wp-theme-astra wp-child-theme-astra-child theme-astra woocommerce-js ast-desktop ast-page-builder-template ast-no-sidebar astra-4.13.5 ast-single-post ast-inherit-site-logo-transparent ast-hfb-header elementor-page-2821 elementor-default elementor-template-full-width elementor-kit-10 elementor-page elementor-page-7 ast-header-loaded e--ua-blink e--ua-chrome e--ua-webkit" data-elementor-device-mode="desktop" id="top" itemscope="itemscope" itemtype="https://schema.org/WebPage" style="">
@@ -5685,63 +5578,7 @@ document.addEventListener('DOMContentLoaded',function(){
  document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id && id.length>1 && document.querySelector(id)){e.preventDefault();document.querySelector(id).scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'',id);}})});
  document.querySelectorAll('a[href*="elementor-action"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var c=document.querySelector('#contact');if(c)c.scrollIntoView({behavior:'smooth'});});});
 });
-</script><style id="companyflow-stats-alignment">
-/* CompanyFlow stats/team alignment fix */
-#ae13d56 .e-con-inner{align-items:center!important;}
-#c84a5cf{width:100%!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:60px!important;}
-#ba95d1b{flex:1 1 auto!important;width:auto!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:center!important;gap:28px!important;}
-#ba95d1b .elementor-element{width:100%!important;display:flex!important;justify-content:center!important;}
-#ba95d1b .elementor-counter{text-align:left!important;width:max-content!important;}
-#ba95d1b .elementor-counter-title{white-space:nowrap!important;}
-#ba95d1b .elementor-counter-number-wrapper{display:flex!important;align-items:baseline!important;white-space:nowrap!important;}
-#c4a22e7{flex:0 0 478px!important;width:478px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:flex-start!important;}
-#c4a22e7 .elementor-widget-image{width:100%!important;margin:0!important;}
-#c4a22e7 img{display:block!important;width:100%!important;height:100px!important;object-fit:contain!important;object-position:left center!important;}
-@media (max-width:921px){#c84a5cf{gap:30px!important;}#c4a22e7{flex-basis:380px!important;width:380px!important;}#c4a22e7 img{height:auto!important;}#ba95d1b{gap:16px!important;}}
-@media (max-width:767px){#c84a5cf{flex-direction:column!important;gap:35px!important;}#ba95d1b{width:100%!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;}#ba95d1b .elementor-counter-title{white-space:normal!important;}#c4a22e7{width:100%!important;flex-basis:auto!important;align-items:center!important;}#c4a22e7 .elementor-heading-title{text-align:center!important;}#c4a22e7 img{object-position:center center!important;}}
-</style>
-<style id="companyflow-stats-suffix-alignment">
-/* CompanyFlow stats suffix baseline alignment */
-#ba95d1b .elementor-counter-number-wrapper{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;line-height:1!important;height:auto!important;}
-#ba95d1b .elementor-counter-number-prefix,#ba95d1b .elementor-counter-number,#ba95d1b .elementor-counter-number-suffix{display:inline-flex!important;align-items:center!important;vertical-align:middle!important;line-height:1!important;margin:0!important;padding:0!important;position:static!important;transform:none!important;}
-#ba95d1b .elementor-counter-number-suffix{margin-left:4px!important;font-size:inherit!important;line-height:1!important;align-self:center!important;}
-</style>
-
-<style id="companyflow-final-counter-fix">
-/* CompanyFlow: keep Elementor counter values and suffixes on one baseline. */
-[data-id="ba95d1b"] .elementor-counter-number-wrapper{
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:baseline!important;
-  justify-content:flex-start!important;
-  flex-wrap:nowrap!important;
-  line-height:1!important;
-  height:auto!important;
-}
-[data-id="ba95d1b"] .elementor-counter-number-prefix,
-[data-id="ba95d1b"] .elementor-counter-number,
-[data-id="ba95d1b"] .elementor-counter-number-suffix{
-  position:static!important;
-  top:auto!important;
-  right:auto!important;
-  bottom:auto!important;
-  left:auto!important;
-  transform:none!important;
-  vertical-align:baseline!important;
-  line-height:1!important;
-  margin-top:0!important;
-  margin-bottom:0!important;
-  padding-top:0!important;
-  padding-bottom:0!important;
-}
-[data-id="ba95d1b"] .elementor-counter-number-suffix{
-  flex:0 0 auto!important;
-  margin-left:5px!important;
-  align-self:baseline!important;
-}
-</style>
-
-<style id="companyflow-full-width-layout">
+</script><style id="companyflow-full-width-layout">
 /* CompanyFlow: remove the narrow centered page constraint; Glaxit's desktop layout uses the available viewport with a wide 1440px content rail. */
 html,body,#page,.site-content{
   width:100%!important;
