@@ -5969,5 +5969,30 @@ body.cf-modal-open{overflow:hidden}
 .cf-contact-submit:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(9,139,106,.28)}
 .cf-contact-note{display:none}
 @media(max-width:800px){.cf-contact-card{grid-template-columns:1fr;max-height:94vh}.cf-contact-info{padding:38px 28px;min-height:auto}.cf-contact-form-wrap{padding:34px 26px}.cf-contact-form{grid-template-columns:1fr}.cf-contact-field.full,.cf-consent,.cf-recaptcha,.cf-contact-submit{grid-column:auto}.cf-recaptcha{width:100%}.cf-contact-title{font-size:clamp(36px,10vw,52px)}}
-</style></body>
+</style><style id="companyflow-category-carousel-exact">
+.elementor-element-0c05614 .swiper-slide .elementor-element-d381295{height:100%;min-height:520px;display:flex;flex-direction:column}
+.elementor-element-0c05614 .swiper-slide .elementor-element-f11d2fd{margin-top:auto!important}
+.elementor-element-0c05614 .swiper-slide .elementor-element-f11d2fd .elementor-button{background:#23B293;border-radius:7px}
+.elementor-element-0c05614 .swiper-slide .elementor-element-faa9c6a img{width:200px;height:200px;object-fit:contain}
+</style>
+<script id="companyflow-category-carousel-exact-script">
+(function(){
+function tune(){
+ var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
+ if(!root || !root.swiper) return false;
+ var s=root.swiper;
+ s.params.slidesPerGroup=1;
+ s.params.slidesPerGroupAuto=false;
+ s.params.slidesPerView=4;
+ if(s.params.breakpoints){
+   s.params.breakpoints=Object.assign({},s.params.breakpoints,{0:{slidesPerView:1,slidesPerGroup:1},768:{slidesPerView:2,slidesPerGroup:1},1025:{slidesPerView:4,slidesPerGroup:1}});
+ }
+ s.params.autoplay=false;
+ if(s.autoplay) s.autoplay.stop();
+ s.update();
+ return true;
+}
+var n=0;var t=setInterval(function(){if(tune()||++n>30)clearInterval(t)},250);
+})();
+</script></body>
 </html>
