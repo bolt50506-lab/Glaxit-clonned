@@ -7,14 +7,10 @@ add_action('after_setup_theme', function () {
 });
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.2.0');
+    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.3.0');
+    wp_enqueue_script('companyflow-frontend', get_theme_file_uri('assets/js/companyflow.js'), [], '1.0.0', true);
 });
 
-/*
- * The original Glaxit-cloned frontend remains the visual source of truth.
- * WordPress acts as the routing/rendering shell so the existing frontend
- * does not have to be rebuilt in Gutenberg/Elementor.
- */
 add_action('template_redirect', function () {
     if (is_404()) {
         status_header(200);
@@ -52,15 +48,44 @@ function companyflow_render_clone($path = '/') {
         return;
     }
 
-    // Render the existing clone inside WordPress without rebuilding it with blocks.
-    // Keep the original relative asset/link behavior by setting a base URL.
     $base = 'https://glaxit-clonned.onrender.com/';
     $html = preg_replace('/<head\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
     $html = preg_replace('/<script[^>]*class="rank-math-schema"[^>]*>.*?<\/script>/is', '', $html);
     $html = preg_replace('/<link[^>]+rel=["\']canonical["\'][^>]*>/i', '', $html);
 
     if (preg_match('/<body\b[^>]*>(.*)<\/body>/is', $html, $m)) {
-        echo $m[1];
+        $body = $m[1];
+
+        // The migrated theme asset owns CompanyFlow custom behavior now.
+        $body = preg_replace('/<script[^>]*id=["\']companyflow-(?:projects|button|category|counter)-[^>]*>.*?<\/script>/is', '', $body);
+
+        // Keep internal navigation on the eventual WordPress domain.
+        $wp_home = home_url('/');
+        $body = preg_replace_callback(
+            '/(<a\b[^>]*\bhref=["\'])([^"\']+)(["\'])/i',
+            function ($match) use ($wp_home) {
+                $href = $match[2];
+                if (
+                    $href === '#' ||
+                    preg_match('#^(?:https?:|mailto:|tel:|javascript:|//)#i', $href) ||
+                    str_starts_with($href, '/assets/') ||
+                    str_starts_with($href, '/wp-content/')
+                ) return $match[0];
+
+                $parts = wp_parse_url($href);
+                if (!empty($parts['host']) && $parts['host'] !== wp_parse_url(home_url('/'), PHP_URL_HOST)) return $match[0];
+
+                $path = $parts['path'] ?? $href;
+                if ($path === '/') return $match[1] . $wp_home . $match[3];
+
+                return $match[1] . trailingslashit($wp_home . ltrim($path, '/')) .
+                    (!empty($parts['query']) ? '?' . $parts['query'] : '') .
+                    (!empty($parts['fragment']) ? '#' . $parts['fragment'] : '') . $match[3];
+            },
+            $body
+        );
+
+        echo $body;
     } else {
         echo $html;
     }
