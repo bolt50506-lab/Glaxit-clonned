@@ -7,7 +7,21 @@ add_action('after_setup_theme', function () {
 });
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.1.0');
+    wp_enqueue_style('companyflow-wp-bridge', get_stylesheet_uri(), [], '1.2.0');
+});
+
+/*
+ * The original Glaxit-cloned frontend remains the visual source of truth.
+ * WordPress acts as the routing/rendering shell so the existing frontend
+ * does not have to be rebuilt in Gutenberg/Elementor.
+ */
+add_action('template_redirect', function () {
+    if (is_404()) {
+        status_header(200);
+        nocache_headers();
+        companyflow_render_clone(companyflow_clone_path());
+        exit;
+    }
 });
 
 function companyflow_clone_path() {
