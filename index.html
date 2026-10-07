@@ -6003,9 +6003,12 @@ var n=0;var t=setInterval(function(){if(tune()||++n>30)clearInterval(t)},250);
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./assets/companyflow-cms.js"></script><!-- CompanyFlow single-page scrollbar fix -->
 <style id="companyflow-single-scrollbar">
-html,body{overflow-x:hidden!important;overflow-y:auto!important}
-body{height:auto!important;min-height:100vh}
-#page,.site-content,.site-main,.elementor,.elementor-inner,.elementor-section-wrap{overflow-y:visible!important}
+html{overflow-x:hidden!important;overflow-y:auto!important}
+body{overflow-x:hidden!important;overflow-y:visible!important;height:auto!important;min-height:100vh}
+#page,.site-content,.site-main,.elementor,.elementor-inner,.elementor-section-wrap,
+.e-con,.e-con-inner,.elementor-container,.elementor-column,.elementor-widget-wrap,
+.elementor-element:not(.swiper):not(.swiper-wrapper){overflow-y:visible!important;max-height:none!important}
+.swiper,.swiper-wrapper,.e-off-canvas,.e-off-canvas__overlay,.cf-action-modal,.cf-action-modal__panel,.cf-contact-modal,.cf-contact-card,[role="dialog"]{overflow-y:auto!important}
 </style>
 <script id="companyflow-single-scrollbar-script">
 (function(){
