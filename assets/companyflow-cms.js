@@ -33,7 +33,8 @@ async function syncSite(sb){
 async function run(){
  if(!window.supabase)return;
  const sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
- await syncSite(sb);\n const {data:projects,error}=await sb.from("companyflow_projects").select("*, companyflow_categories(name,slug)").eq("published",true).order("sort_order");
+ await syncSite(sb);
+ const {data:projects,error}=await sb.from("companyflow_projects").select("*, companyflow_categories(name,slug)").eq("published",true).order("sort_order");
  if(error||!projects?.length)return;
  const path=location.pathname.replace(/\\/g,"/");
  const catMap={
