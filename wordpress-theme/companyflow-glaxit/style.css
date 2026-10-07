@@ -1,7 +1,9 @@
 /*
 Theme Name: CompanyFlow — Glaxit Frontend
-Theme URI: https://github.com/bolt50506-lab/Glaxit-clonned
 Author: CompanyFlow
-Description: WordPress bridge theme that preserves the existing CompanyFlow frontend while the project is migrated from the static Glaxit clone.
-Version: 1.0.0
+Description: Preserves the existing CompanyFlow Glaxit-cloned frontend while preparing the site for permanent WordPress hosting.
+Version: 1.1.0
 */
+html,body{margin:0;padding:0;min-height:100%;background:#10131a}
+body{overflow-x:hidden}
+.companyflow-migration-error{min-height:60vh;display:grid;place-items:center;text-align:center;color:#fff;background:#10131a;font-family:Poppins,Arial,sans-serif}
