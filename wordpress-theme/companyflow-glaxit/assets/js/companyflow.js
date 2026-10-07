@@ -1,6 +1,10 @@
 /* CompanyFlow frontend behavior migrated from the existing clone. */
 
 (function(){
+  function wpUrl(path){
+    var home=(window.CompanyFlowWP&&window.CompanyFlowWP.home)||'./';
+    return home.replace(/\\/$/,'/')+String(path).replace(/^\\.\\//,'').replace(/^\\//,'');
+  }
   /*
    * Keep the original Glaxit Swiper/Elementor carousel intact.
    * Only replace the six project contents with CompanyFlow projects.
@@ -11,31 +15,31 @@
       title:'LabStacks',
       image:'./wp-content/uploads/2025/01/LabStacks.webp',
       desc:'A multi-tenant diagnostic laboratory platform built for modern healthcare operations.',
-      url:'./blog/case-study/healthcare/'
+      url:wpUrl('blog/case-study/healthcare/')
     },
     {
       title:'Destino Travels',
       image:'./wp-content/uploads/2025/01/Destino.webp',
       desc:'A complete travel operations portal for flights, hotels, bookings, agents and customer workflows.',
-      url:'./blog/case-study/travel-transportation/'
+      url:wpUrl('blog/case-study/travel-transportation/')
     },
     {
       title:'Aurum Accessories',
       image:'./wp-content/uploads/2025/01/Aurum.webp',
       desc:'A performance-focused ecommerce experience engineered for a premium accessories brand.',
-      url:'./blog/case-study/ecommerce-retail/'
+      url:wpUrl('blog/case-study/ecommerce-retail/')
     },
     {
       title:'CompanyFlow',
       image:'./wp-content/uploads/2025/01/CompanyFlow.webp',
       desc:'A digital product studio platform bringing software, websites, ecommerce and automation together.',
-      url:'./blog/case-study/business-software/'
+      url:wpUrl('blog/case-study/business-software/')
     },
     {
       title:'AgentHub',
       image:'./wp-content/uploads/2025/01/AgentHub.webp',
       desc:'An AI-powered sales and WhatsApp automation platform built around real business conversations.',
-      url:'./blog/case-study/ai-automation/'
+      url:wpUrl('blog/case-study/ai-automation/')'
     },
     {
       title:'AI Sales Agent',
