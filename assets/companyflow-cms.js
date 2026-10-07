@@ -5,7 +5,7 @@ function slugify(s){return String(s||"").toLowerCase().trim().replace(/[^a-z0-9]
 function esc(s){const d=document.createElement("div");d.textContent=s??"";return d.innerHTML}
 
 async function syncSite(sb){
- const [{data:h},{data:a}]=await Promise.all([
+ const [{data:h},{data:a},{data:o}]=await Promise.all([
   sb.from("companyflow_site_content").select("value").eq("key","homepage").maybeSingle(),
   sb.from("companyflow_animation_settings").select("value").eq("key","global").maybeSingle(),
   sb.from("companyflow_site_content").select("value").eq("key","visual_editor").maybeSingle()
