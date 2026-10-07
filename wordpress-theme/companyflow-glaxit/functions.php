@@ -22,7 +22,7 @@ add_action('template_redirect', function () {
         strpos($path, 'blog/case-study/') === 0
     );
 
-    if ($is_clone_route || is_404()) {
+    if ($is_clone_route) {
         status_header(200);
         nocache_headers();
         companyflow_render_local(companyflow_clone_path());
