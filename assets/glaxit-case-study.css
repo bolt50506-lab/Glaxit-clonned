@@ -225,16 +225,8 @@
 <style>
     .woocommerce-product-gallery{ opacity: 1 !important; }
    </style>
-<style id="companyflow-counter-replacement">
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-wrapper{display:flex;align-items:baseline;justify-content:flex-start;gap:0;line-height:1;white-space:nowrap}
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-prefix{display:none}
-.elementor-7 [data-id="ba95d1b"] .elementor-counter-number,.elementor-7 [data-id="ba95d1b"] .elementor-counter-number-suffix{flex:0 0 auto;width:auto;margin:0;padding:0}
-</style>
-<style id="companyflow-counter-safety">
-.elementor-counter-number-prefix,
-.elementor-counter-number-suffix { white-space: normal; }
-.elementor-counter .elementor-counter-number-wrapper { display:flex; align-items:baseline; white-space:nowrap; }
-</style><style id="glaxit-category-page">
+
+<style id="glaxit-category-page">
 html,body{margin:0;background:#181C14;color:#fff;font-family:Poppins,Arial,sans-serif}
 body{overflow-x:hidden}
 .gx-case-main{background:#181C14;color:#fff}
