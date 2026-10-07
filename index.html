@@ -4084,7 +4084,7 @@ Others
 </div>
 <div class="elementor-element elementor-element-96761b6 elementor-widget__width-initial elementor-invisible elementor-widget elementor-widget-heading" data-e-type="widget" data-element_type="widget" data-id="96761b6" data-settings='{"_animation":"fadeInUp"}' data-widget_type="heading.default">
 <h2 class="elementor-heading-title elementor-size-default">
-          Projects That Show What We Can Build
+          Projects That Shows Our Excellence
          </h2>
 </div>
 <div class="elementor-element elementor-element-0c05614 slick-track elementor-arrows-position-inside elementor-widget elementor-widget-loop-carousel e-widget-swiper" data-e-type="widget" data-element_type="widget" data-id="0c05614" data-settings='{"template_id":465,"slides_to_show":"4","image_spacing_custom":{"unit":"px","size":20,"sizes":[]},"autoplay_speed":300,"speed":1400,"_skin":"post","slides_to_show_tablet":"2","slides_to_show_mobile":"1","slides_to_scroll":"1","edit_handle_selector":".elementor-loop-container","autoplay":"yes","pause_on_hover":"yes","pause_on_interaction":"yes","infinite":"yes","offset_sides":"none","arrows":"yes","image_spacing_custom_tablet":{"unit":"px","size":"","sizes":[]},"image_spacing_custom_mobile":{"unit":"px","size":"","sizes":[]}}' data-widget_type="loop-carousel.post">
@@ -5670,155 +5670,228 @@ document.addEventListener('DOMContentLoaded',function(){
 }
 </style>
 
-<style id="companyflow-industries-projects">
-/* CompanyFlow project industries — keeps the original Glaxit project-card structure/animation. */
-.companyflow-industry-nav{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin:0 0 42px;padding:0;border-bottom:1px solid rgba(0,0,0,.14)}
-.companyflow-industry-btn{appearance:none;border:0;background:transparent;padding:0 0 15px;margin:0;color:inherit;font:inherit;font-size:16px;font-weight:500;line-height:1.2;cursor:pointer;position:relative;transition:opacity .25s ease}
-.companyflow-industry-btn:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
-.companyflow-industry-btn:hover{opacity:.65}.companyflow-industry-btn.is-active{font-weight:600}.companyflow-industry-btn.is-active:after{transform:scaleX(1)}
-.companyflow-project-filtered{display:none!important}.companyflow-industry-nav{overflow-x:auto;scrollbar-width:none}.companyflow-industry-nav::-webkit-scrollbar{display:none}
-@media(max-width:767px){.companyflow-industry-nav{gap:20px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:0;margin-bottom:28px;scrollbar-width:none}.companyflow-industry-nav::-webkit-scrollbar{display:none}.companyflow-industry-btn{white-space:nowrap;font-size:14px}}
+<style id="companyflow-full-width-layout">
+/* CompanyFlow: remove the narrow centered page constraint; Glaxit's desktop layout uses the available viewport with a wide 1440px content rail. */
+html,body,#page,.site-content{
+  width:100%!important;
+  max-width:none!important;
+}
+.ast-page-builder-template .site-content>.ast-container,
+.elementor-location-single>.elementor,
+.elementor-7{
+  width:100%!important;
+  max-width:none!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.elementor-7>.e-con.e-parent{
+  width:100%!important;
+  max-width:none!important;
+}
+.elementor-7 .e-con-inner{
+  width:calc(100% - 48px);
+  max-width:1440px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(max-width:767px){
+  .elementor-7 .e-con-inner{width:calc(100% - 28px)}
+}
 </style>
-<script id="companyflow-industries-projects-script">
+<style id="companyflow-projects-exact">
+/* CompanyFlow: match the Glaxit project section — full-width section, four visible cards, native Swiper movement. */
+.elementor-7 .elementor-element.elementor-element-47b49c3{
+  width:100vw!important;
+  max-width:none!important;
+  margin-left:calc(50% - 50vw)!important;
+  margin-right:calc(50% - 50vw)!important;
+}
+.elementor-7 .elementor-element.elementor-element-47b49c3 > .e-con-inner{
+  width:100%!important;
+  max-width:1440px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.elementor-7 .elementor-element.elementor-element-0c05614{
+  width:100%!important;
+  max-width:none!important;
+}
+.elementor-7 .elementor-element.elementor-element-0c05614 .elementor-loop-container{
+  width:100%!important;
+}
+@media(max-width:1500px){
+  .elementor-7 .elementor-element.elementor-element-47b49c3 > .e-con-inner{
+    width:calc(100% - 48px)!important;
+  }
+}
+@media(max-width:767px){
+  .elementor-7 .elementor-element.elementor-element-47b49c3 > .e-con-inner{
+    width:calc(100% - 28px)!important;
+  }
+}
+
+/* The original Glaxit cards use the four-up loop carousel. Never hide slides for an industry filter. */
+.elementor-7 .elementor-element.elementor-element-0c05614 .swiper-slide{
+  box-sizing:border-box;
+}
+
+/* Exact suffix treatment: the value and +/% are one typographic unit on one baseline. */
+[data-id="ba95d1b"] .elementor-counter-number-wrapper{
+  display:inline-flex!important;
+  flex-direction:row!important;
+  align-items:baseline!important;
+  justify-content:flex-start!important;
+  flex-wrap:nowrap!important;
+  width:auto!important;
+  white-space:nowrap!important;
+  line-height:1!important;
+  vertical-align:baseline!important;
+}
+[data-id="ba95d1b"] .elementor-counter-number-prefix{
+  display:none!important;
+}
+[data-id="ba95d1b"] .elementor-counter-number{
+  display:inline-block!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  position:static!important;
+  transform:none!important;
+  line-height:1!important;
+  vertical-align:baseline!important;
+}
+[data-id="ba95d1b"] .elementor-counter-number-suffix{
+  display:inline-block!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  margin:0 0 0 3px!important;
+  padding:0!important;
+  position:static!important;
+  transform:none!important;
+  line-height:1!important;
+  vertical-align:baseline!important;
+  font-size:1em!important;
+  font-weight:inherit!important;
+}
+
+@media(max-width:767px){
+  [data-id="ba95d1b"] .elementor-counter-number-suffix{margin-left:2px!important}
+}
+</style>
+<script id="companyflow-projects-exact-script">
 (function(){
   /*
-   * CompanyFlow project catalogue
-   * Add each new project to this map and assign it to one industry.
-   * The industry buttons below are generated from the industries array.
+   * Keep the original Glaxit Swiper/Elementor carousel intact.
+   * Only replace the six project contents with CompanyFlow projects.
+   * data-swiper-slide-index identifies the real slide even when Swiper creates clones.
    */
-  var industries=[
-    'Healthcare',
-    'Travel & Transportation',
-    'E-commerce & Retail',
-    'Business Software',
-    'AI & Automation'
-  ];
-
-  var projectMap={
-    'LabStacks':{
-      industry:'Healthcare',
+  var projects=[
+    {
+      title:'LabStacks',
       image:'./wp-content/uploads/2025/01/LabStacks.webp',
       desc:'A multi-tenant diagnostic laboratory platform built for modern healthcare operations.',
       url:'./blog/case-study/healthcare/'
     },
-    'Destino Travels':{
-      industry:'Travel & Transportation',
+    {
+      title:'Destino Travels',
       image:'./wp-content/uploads/2025/01/Destino.webp',
       desc:'A complete travel operations portal for flights, hotels, bookings, agents and customer workflows.',
       url:'./blog/case-study/travel-transportation/'
     },
-    'Aurum Accessories':{
-      industry:'E-commerce & Retail',
+    {
+      title:'Aurum Accessories',
       image:'./wp-content/uploads/2025/01/Aurum.webp',
       desc:'A performance-focused ecommerce experience engineered for a premium accessories brand.',
       url:'./blog/case-study/ecommerce-retail/'
     },
-    'CompanyFlow':{
-      industry:'Business Software',
+    {
+      title:'CompanyFlow',
       image:'./wp-content/uploads/2025/01/CompanyFlow.webp',
       desc:'A digital product studio platform bringing software, websites, ecommerce and automation together.',
       url:'./blog/case-study/business-software/'
     },
-    'AgentHub':{
-      industry:'AI & Automation',
+    {
+      title:'AgentHub',
       image:'./wp-content/uploads/2025/01/AgentHub.webp',
       desc:'An AI-powered sales and WhatsApp automation platform built around real business conversations.',
       url:'./blog/case-study/ai-automation/'
     },
-    'AI Sales Agent':{
-      industry:'AI & Automation',
+    {
+      title:'AI Sales Agent',
       image:'./wp-content/uploads/2025/01/AISalesAgent.webp',
       desc:'An AI sales agent that discovers prospects, enriches leads and supports automated outreach.',
       url:'./blog/case-study/ai-automation/'
-    },
-    'Business Operations':{
-      industry:'Business Software',
-      image:'./wp-content/uploads/2025/01/CompanyFlow.webp',
-      desc:'Business management software designed to streamline operations, workflows and reporting.',
-      url:'./blog/case-study/business-software/'
     }
-  };
+  ];
 
-  function initCompanyFlowProjects(){
-    var carousel=document.querySelector('.elementor-loop-container');
-    if(!carousel || carousel.dataset.companyflowReady) return;
-    carousel.dataset.companyflowReady='1';
+  function applyProjects(){
+    var carousel=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
+    if(!carousel) return;
 
     var slides=Array.from(carousel.querySelectorAll('.swiper-slide'));
     if(!slides.length) return;
 
     slides.forEach(function(slide){
-      var titleEl=slide.querySelector('.elementor-heading-title');
-      if(!titleEl) return;
+      var index=parseInt(slide.getAttribute('data-swiper-slide-index'),10);
+      if(isNaN(index) || !projects[index]) return;
 
-      var title=titleEl.textContent.trim();
-      var item=projectMap[title];
-      if(!item) return;
+      var item=projects[index];
 
-      slide.dataset.companyflowIndustry=item.industry;
+      var titleEl=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title,.elementor-heading-title');
+      if(titleEl) titleEl.textContent=item.title;
 
-      var img=slide.querySelector('img');
+      var img=slide.querySelector('.elementor-element-faa9c6a img,img');
       if(img){
         img.src=item.image;
         img.setAttribute('data-src',item.image);
+        img.removeAttribute('data-srcset');
+        img.removeAttribute('data-lazy-src');
         img.removeAttribute('data-lazyloaded');
       }
 
       var desc=slide.querySelector('.elementor-widget-text-editor');
       if(desc) desc.innerHTML='<p>'+item.desc+'</p>';
 
-      var link=slide.querySelector('.elementor-widget-button a');
-      if(link) link.href=item.url;
-    });
-
-    var nav=document.createElement('div');
-    nav.className='companyflow-industry-nav';
-    nav.setAttribute('aria-label','Project industries');
-
-    function filterProjects(industry){
-      slides.forEach(function(slide){
-        var show=slide.dataset.companyflowIndustry===industry;
-        slide.classList.toggle('companyflow-project-filtered',!show);
-        slide.setAttribute('aria-hidden',show?'false':'true');
-      });
-
-      if(carousel.swiper){
-        carousel.swiper.update();
-        carousel.swiper.slideTo(0,0);
+      var link=slide.querySelector('.elementor-element-f11d2fd a,.elementor-widget-button a');
+      if(link){
+        link.href=item.url;
+        link.removeAttribute('data-elementor-open-lightbox');
       }
-    }
 
-    industries.forEach(function(industry,index){
-      var b=document.createElement('button');
-      b.type='button';
-      b.className='companyflow-industry-btn'+(index===0?' is-active':'');
-      b.textContent=industry;
-      b.dataset.industry=industry;
-
-      b.addEventListener('click',function(){
-        nav.querySelectorAll('.companyflow-industry-btn').forEach(function(x){
-          x.classList.toggle('is-active',x===b);
-        });
-        filterProjects(industry);
-      });
-
-      nav.appendChild(b);
+      slide.dataset.companyflowProject=item.title;
     });
 
-    var widget=carousel.parentElement;
-    widget.insertBefore(nav,carousel);
+    if(carousel.swiper){
+      carousel.swiper.params.slidesPerView=4;
+      carousel.swiper.params.slidesPerGroup=1;
+      carousel.swiper.params.spaceBetween=20;
+      carousel.swiper.params.autoplay={
+        delay:300,
+        disableOnInteraction:false,
+        pauseOnMouseEnter:true
+      };
+      carousel.swiper.params.speed=1400;
+      carousel.swiper.update();
+    }
+  }
 
-    /* Show the first industry on initial load instead of mixing all projects. */
-    filterProjects(industries[0]);
+  function start(){
+    applyProjects();
+    setTimeout(applyProjects,250);
+    setTimeout(applyProjects,1000);
+    setTimeout(applyProjects,2000);
   }
 
   if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',initCompanyFlowProjects);
+    document.addEventListener('DOMContentLoaded',start);
   }else{
-    initCompanyFlowProjects();
+    start();
   }
-
-  setTimeout(initCompanyFlowProjects,1200);
 })();
 </script>
 <style id="companyflow-button-behavior">
