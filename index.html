@@ -5779,6 +5779,37 @@ body.cf-modal-open{overflow:hidden}
     if(opener) opener.setAttribute('aria-expanded','false');
   }
 
+  function ensureContactModal(){
+    var modal=document.getElementById('cf-contact-modal');
+    if(modal) return modal;
+    modal=document.createElement('div');
+    modal.id='cf-contact-modal'; modal.className='cf-contact-modal'; modal.setAttribute('aria-hidden','true');
+    modal.innerHTML='<div class="cf-contact-card" role="dialog" aria-modal="true" aria-labelledby="cf-contact-title">'+
+      '<button type="button" class="cf-contact-close" aria-label="Close">×</button>'+
+      '<div class="cf-contact-info"><p class="cf-contact-kicker">Start a conversation</p><h2 id="cf-contact-title" class="cf-contact-title">Let’s build something that works for your business.</h2><p class="cf-contact-copy">Tell us what you are looking to build. We’ll review your requirements and get back to you with the right next step.</p><div class="cf-contact-details"><span>✦ Websites &amp; ecommerce</span><span>✦ Custom software &amp; automation</span><span>✦ AI &amp; business systems</span><span>✦ WhatsApp: +92 340 746 5567</span></div></div>'+
+      '<div class="cf-contact-form-wrap"><form class="cf-contact-form" id="cf-contact-form">'+
+      '<div class="cf-contact-field"><label for="cf-name">Name *</label><input id="cf-name" name="name" required placeholder="Your name"></div>'+
+      '<div class="cf-contact-field"><label for="cf-email">Email *</label><input id="cf-email" name="email" type="email" required placeholder="you@company.com"></div>'+
+      '<div class="cf-contact-field"><label for="cf-phone">Phone / WhatsApp</label><input id="cf-phone" name="phone" placeholder="+92..."></div>'+
+      '<div class="cf-contact-field"><label for="cf-service">What do you need?</label><select id="cf-service" name="service"><option>Website / Landing Page</option><option>Ecommerce</option><option>Custom Software</option><option>AI / Automation</option><option>Other</option></select></div>'+
+      '<div class="cf-contact-field full"><label for="cf-message">Tell us about your project *</label><textarea id="cf-message" name="message" required placeholder="What are you looking to build?"></textarea></div>'+
+      '<p class="cf-contact-note">Your enquiry will be prepared with all the details you provide.</p><button class="cf-contact-submit" type="submit">Send Enquiry →</button>'+
+      '</form></div></div>';
+    document.body.appendChild(modal);
+    modal.querySelector('.cf-contact-close').addEventListener('click',closeContactModal);
+    modal.addEventListener('click',function(e){if(e.target===modal) closeContactModal();});
+    modal.querySelector('#cf-contact-form').addEventListener('submit',function(e){
+      e.preventDefault();
+      var f=new FormData(e.target);
+      var body='Name: '+f.get('name')+'\nEmail: '+f.get('email')+'\nPhone / WhatsApp: '+f.get('phone')+'\nService: '+f.get('service')+'\n\nProject details:\n'+f.get('message');
+      window.location.href='mailto:alihotspot1@gmail.com?subject='+encodeURIComponent('New CompanyFlow project enquiry')+'&body='+encodeURIComponent(body);
+      setTimeout(closeContactModal,300);
+    });
+    return modal;
+  }
+  function openContactModal(){var modal=ensureContactModal();modal.classList.add('is-open');modal.setAttribute('aria-hidden','false');document.body.classList.add('cf-modal-open');setTimeout(function(){var n=document.getElementById('cf-name');if(n)n.focus();},350);}
+  function closeContactModal(){var modal=document.getElementById('cf-contact-modal');if(!modal)return;modal.classList.remove('is-open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('cf-modal-open');}
+
   function ensureModal(){
     var modal=document.getElementById('cf-action-modal');
     if(modal) return modal;
@@ -5817,7 +5848,7 @@ body.cf-modal-open{overflow:hidden}
   }
 
   function bind(){
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeOffCanvas();}});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();closeContactModal();closeOffCanvas();}});
     document.addEventListener('click',function(e){
       var a=e.target.closest && e.target.closest('a');
       if(!a) return;
@@ -5839,6 +5870,7 @@ body.cf-modal-open{overflow:hidden}
         openModal(title,desc);
         return;
       }
+      if((href==='#contact' || text==='Connect Now' || text==='Contact Us') && !href.includes('elementor-action')){ e.preventDefault(); e.stopImmediatePropagation(); closeOffCanvas(); openContactModal(); return; }
       if(href.charAt(0)==='#' && href.length>1){
         if(smoothTo(href)){e.preventDefault();closeOffCanvas();}
         return;
@@ -5854,5 +5886,28 @@ body.cf-modal-open{overflow:hidden}
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
 })();
 </script>
-</body>
+<style id="companyflow-contact-form">
+.cf-contact-modal{position:fixed;inset:0;z-index:2147483645;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(4,10,9,.72);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
+.cf-contact-modal.is-open{opacity:1;visibility:visible}
+.cf-contact-card{position:relative;width:min(920px,100%);max-height:92vh;overflow:auto;display:grid;grid-template-columns:.82fr 1.18fr;background:#fff;border-radius:24px;box-shadow:0 30px 100px rgba(0,0,0,.35);transform:translateY(35px) scale(.97);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+.cf-contact-modal.is-open .cf-contact-card{transform:none}
+.cf-contact-info{padding:48px;background:#101615;color:#fff;display:flex;flex-direction:column;justify-content:center}
+.cf-contact-kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#23b293;font-weight:700;margin:0 0 14px}
+.cf-contact-title{font-size:clamp(32px,4vw,52px);line-height:1.02;margin:0 0 18px}
+.cf-contact-copy{color:rgba(255,255,255,.72);font-size:15px;line-height:1.7;margin:0}
+.cf-contact-details{margin-top:32px;display:grid;gap:12px;color:rgba(255,255,255,.9);font-size:14px}
+.cf-contact-form-wrap{padding:44px}
+.cf-contact-close{position:absolute;right:18px;top:15px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:27px;line-height:1;cursor:pointer;z-index:2}
+.cf-contact-form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cf-contact-field{display:flex;flex-direction:column;gap:7px}
+.cf-contact-field.full{grid-column:1/-1}
+.cf-contact-field label{font-size:12px;font-weight:600;color:#27312e}
+.cf-contact-field input,.cf-contact-field select,.cf-contact-field textarea{width:100%;box-sizing:border-box;border:1px solid #d9dfdc;border-radius:10px;background:#fff;padding:13px 14px;font:inherit;font-size:14px;color:#18201e;outline:none;transition:border-color .2s,box-shadow .2s}
+.cf-contact-field input:focus,.cf-contact-field select:focus,.cf-contact-field textarea:focus{border-color:#23b293;box-shadow:0 0 0 3px rgba(35,178,147,.12)}
+.cf-contact-field textarea{min-height:125px;resize:vertical}
+.cf-contact-submit{grid-column:1/-1;border:0;border-radius:10px;padding:15px 22px;background:linear-gradient(90deg,#0f5848,#23b293);color:#fff;font:inherit;font-weight:700;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.cf-contact-submit:hover{transform:translateY(-2px);box-shadow:0 12px 25px rgba(15,88,72,.22)}
+.cf-contact-note{grid-column:1/-1;margin:0;color:#6d7773;font-size:12px;line-height:1.5}
+@media(max-width:720px){.cf-contact-card{grid-template-columns:1fr;max-height:94vh}.cf-contact-info{padding:30px}.cf-contact-form-wrap{padding:28px 22px}.cf-contact-form{grid-template-columns:1fr}.cf-contact-field.full,.cf-contact-submit,.cf-contact-note{grid-column:auto}.cf-contact-details{margin-top:20px}}
+</style></body>
 </html>
