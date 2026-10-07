@@ -4,6 +4,7 @@ if (!defined('ABSPATH')) exit;
 add_action('after_setup_theme', function () {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    // The existing GitHub HTML document is rendered directly; WordPress does not inject a replacement header/footer.
 });
 
 add_action('template_redirect', function () {
