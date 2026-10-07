@@ -5967,22 +5967,7 @@ body{overflow-x:hidden!important;overflow-y:visible!important;height:auto!import
   else {fix();setTimeout(fix,800);setTimeout(fix,2000)}
 })();
 </script>
-<style id="companyflow-home-sections-restore">
-/* CompanyFlow: restore the two homepage sections after removing legacy Elementor animation runtime */
-.elementor-element-47b49c3,
-.elementor-element-9518f2b{visibility:visible!important;opacity:1!important;display:block!important}
-.elementor-element-aebf35f,.elementor-element-96761b6,
-.elementor-element-292ba8e,.elementor-element-112fcf5,
-.elementor-element-0c05614,.elementor-element-2b3344e{visibility:visible!important;opacity:1!important}
-.elementor-element-0c05614 .elementor-loop-container,
-.elementor-element-2b3344e .elementor-loop-container{visibility:visible!important;opacity:1!important}
-.elementor-element-0c05614 .swiper-slide,
-.elementor-element-2b3344e .swiper-slide{visibility:visible!important}
-.elementor-element-0c05614 .swiper-slide .elementor-invisible,
-.elementor-element-2b3344e .swiper-slide .elementor-invisible{visibility:visible!important;opacity:1!important;transform:none!important}
-.elementor-element-0c05614 .elementor-element-d381295{opacity:1!important;visibility:visible!important}
-.elementor-element-2b3344e .elementor-element-8d49ab3{opacity:1!important;visibility:visible!important;transform:none!important}
-</style>
+
 <script id="companyflow-home-sections-restore-script">
 (function(){
   function restore(){
@@ -6129,5 +6114,131 @@ body{overflow-x:hidden!important;overflow-y:visible!important;height:auto!import
   else boot();
 })();
 </script>
-</body>
+<style id="companyflow-home-audit-fix">
+html,body{overflow-x:hidden!important}
+.elementor-element-47b49c3,
+.elementor-element-9518f2b{width:100%!important;max-width:none!important;overflow:hidden!important}
+.elementor-element-47b49c3>.e-con-inner,
+.elementor-element-9518f2b>.e-con-inner{width:100%!important;max-width:1440px!important;margin-left:auto!important;margin-right:auto!important}
+.elementor-element-0c05614,
+.elementor-element-0c05614 .elementor-loop-container{width:100%!important;max-width:none!important;overflow:hidden!important}
+.elementor-element-0c05614 .swiper-wrapper{will-change:transform}
+.elementor-element-2b3344e,
+.elementor-element-2b3344e .elementor-loop-container{width:100%!important;max-width:none!important;overflow:hidden!important}
+.elementor-element-2b3344e .swiper-wrapper{will-change:transform}
+.cf-home-reveal{animation:cfHomeFadeUp .75s cubic-bezier(.22,1,.36,1) both}
+@keyframes cfHomeFadeUp{from{opacity:0;transform:translate3d(0,28px,0)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.cf-home-reveal{animation:none!important}}
+</style>
+<script id="companyflow-home-audit-fix-script">
+(function(){
+  var projects=[
+    {title:'LabStacks',image:'./wp-content/uploads/2025/01/LabStacks.webp',desc:'A multi-tenant diagnostic laboratory platform built for modern healthcare operations.',url:'./blog/case-study/labstacks/'},
+    {title:'Destino Travels',image:'./wp-content/uploads/2025/01/Destino.webp',desc:'A complete travel operations portal for flights, hotels, bookings, agents and customer workflows.',url:'./blog/case-study/destino-travels/'},
+    {title:'Aurum Accessories',image:'./wp-content/uploads/2025/01/Aurum.webp',desc:'A performance-focused ecommerce experience engineered for a premium accessories brand.',url:'./blog/case-study/aurum-accessories/'},
+    {title:'CompanyFlow',image:'./wp-content/uploads/2025/01/CompanyFlow.webp',desc:'A digital product studio bringing websites, ecommerce, custom software and automation together.',url:'./blog/case-study/companyflow/'},
+    {title:'AgentHub',image:'./wp-content/uploads/2025/01/AgentHub.webp',desc:'An AI-powered sales and WhatsApp automation platform built around real business conversations.',url:'./blog/case-study/agenthub/'},
+    {title:'AI Sales Agent',image:'./wp-content/uploads/2025/01/AISalesAgent.webp',desc:'An AI sales agent that discovers prospects, enriches leads and supports automated outreach.',url:'./blog/case-study/ai-sales-agent/'}
+  ];
+
+  function revealSection(section){
+    if(!section||section.dataset.cfRevealed==='1') return;
+    section.dataset.cfRevealed='1';
+    section.querySelectorAll('.elementor-invisible').forEach(function(el){
+      el.classList.remove('elementor-invisible','elementor-hidden');
+      el.hidden=false;
+      el.classList.add('cf-home-reveal');
+    });
+  }
+
+  function setupProjectCarousel(){
+    var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
+    if(!root||!root.swiper||root.dataset.cfConfigured==='1') return !!root;
+    root.dataset.cfConfigured='1';
+    var s=root.swiper;
+
+    root.querySelectorAll('.swiper-slide').forEach(function(slide){
+      var i=parseInt(slide.getAttribute('data-swiper-slide-index'),10);
+      if(isNaN(i)||!projects[i]) return;
+      var p=projects[i];
+      var title=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title');
+      var img=slide.querySelector('.elementor-element-faa9c6a img');
+      var desc=slide.querySelector('.elementor-element-5fd08fc');
+      var link=slide.querySelector('.elementor-element-f11d2fd a');
+      if(title) title.textContent=p.title;
+      if(img){
+        img.src=p.image;
+        img.setAttribute('data-src',p.image);
+        img.removeAttribute('srcset');
+        img.removeAttribute('data-srcset');
+        img.removeAttribute('data-lazyloaded');
+      }
+      if(desc) desc.textContent=p.desc;
+      if(link){
+        link.href=p.url;
+        link.removeAttribute('data-elementor-open-lightbox');
+      }
+    });
+
+    // Configure the already-initialized Swiper once. Never reorder/destroy/recreate it.
+    s.params.slidesPerView=4;
+    s.params.slidesPerGroup=1;
+    s.params.spaceBetween=20;
+    s.params.speed=1400;
+    s.params.autoplay={delay:4500,disableOnInteraction:false,pauseOnMouseEnter:true};
+    s.update();
+    if(s.autoplay){s.autoplay.stop();s.autoplay.start();}
+    return true;
+  }
+
+  function setupProfessionals(){
+    var section=document.querySelector('.elementor-element-9518f2b');
+    if(!section) return false;
+    revealSection(section);
+    var carousel=document.querySelector('.elementor-element-2b3344e .elementor-loop-container');
+    if(!carousel||!carousel.swiper) return true;
+    if(carousel.dataset.cfConfigured==='1') return true;
+    carousel.dataset.cfConfigured='1';
+    carousel.querySelectorAll('.elementor-invisible').forEach(function(el){
+      el.classList.remove('elementor-invisible','elementor-hidden');
+      el.hidden=false;
+    });
+    var s=carousel.swiper;
+    s.params.slidesPerView=4;
+    s.params.slidesPerGroup=1;
+    s.params.spaceBetween=10;
+    s.params.speed=500;
+    s.params.autoplay={delay:5000,disableOnInteraction:false,pauseOnMouseEnter:true};
+    s.update();
+    if(s.autoplay){s.autoplay.stop();s.autoplay.start();}
+    return true;
+  }
+
+  function setup(){
+    var project=document.querySelector('.elementor-element-47b49c3');
+    var professional=document.querySelector('.elementor-element-9518f2b');
+    if(project) revealSection(project);
+    if(professional){
+      if('IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){revealSection(e.target);io.unobserve(e.target);}
+          });
+        },{threshold:.08,rootMargin:'0px 0px -40px'});
+        io.observe(professional);
+      }else revealSection(professional);
+    }
+    setupProjectCarousel();
+    setupProfessionals();
+    // Swiper is sometimes initialized a tick after DOMContentLoaded.
+    setTimeout(setupProjectCarousel,250);
+    setTimeout(setupProfessionals,250);
+    setTimeout(setupProjectCarousel,900);
+    setTimeout(setupProfessionals,900);
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setup);
+  else setup();
+})();
+</script></body>
 </html>
