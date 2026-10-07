@@ -6001,5 +6001,33 @@ var n=0;var t=setInterval(function(){if(tune()||++n>30)clearInterval(t)},250);
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
-</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./assets/companyflow-cms.js"></script></body>
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./assets/companyflow-cms.js"></script><!-- CompanyFlow single-page scrollbar fix -->
+<style id="companyflow-single-scrollbar">
+html,body{overflow-x:hidden!important;overflow-y:auto!important}
+body{height:auto!important;min-height:100vh}
+#page,.site-content,.site-main,.elementor,.elementor-inner,.elementor-section-wrap{overflow-y:visible!important}
+</style>
+<script id="companyflow-single-scrollbar-script">
+(function(){
+  function fix(){
+    var keep=function(el){
+      return el.matches('.swiper,.swiper-wrapper,.e-off-canvas,.e-off-canvas__overlay,.cf-action-modal,.cf-action-modal__panel,.cf-contact-modal,.cf-contact-card,[role="dialog"]');
+    };
+    document.querySelectorAll('*').forEach(function(el){
+      if(keep(el)) return;
+      var cs=getComputedStyle(el);
+      if((cs.overflowY==='auto'||cs.overflowY==='scroll') && el.scrollHeight>el.clientHeight+2){
+        el.style.setProperty('overflow-y','visible','important');
+        el.style.setProperty('height','auto','important');
+        el.style.setProperty('max-height','none','important');
+      }
+    });
+    document.documentElement.style.setProperty('overflow-y','auto','important');
+    document.body.style.setProperty('overflow-y','auto','important');
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){fix();setTimeout(fix,800);setTimeout(fix,2000)});
+  else {fix();setTimeout(fix,800);setTimeout(fix,2000)}
+})();
+</script>
+</body>
 </html>
