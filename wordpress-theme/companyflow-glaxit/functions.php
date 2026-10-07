@@ -110,6 +110,36 @@ function companyflow_render_local($path = '/') {
         $html
     );
 
+    // Remaining WordPress/plugin runtime files used by the original page
+    // are bundled too, so the migrated theme does not depend on the old host.
+    $html = str_replace(
+        [
+            './wp-content/plugins/litespeed-cache/assets/js/css_async.min.js',
+            'wp-content/plugins/litespeed-cache/assets/js/css_async.min.js',
+            './wp-includes/js/jquery/jquery.min.js',
+            'wp-includes/js/jquery/jquery.min.js',
+            './wp-includes/js/wp-emoji-release.min.js',
+            'wp-includes/js/wp-emoji-release.min.js',
+            './wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js',
+            'wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js',
+            './wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js',
+            'wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js',
+        ],
+        [
+            $original_assets . 'runtime/css_async.min.js',
+            $original_assets . 'runtime/css_async.min.js',
+            $original_assets . 'runtime/jquery.min.js',
+            $original_assets . 'runtime/jquery.min.js',
+            $original_assets . 'runtime/wp-emoji-release.min.js',
+            $original_assets . 'runtime/wp-emoji-release.min.js',
+            $original_assets . 'runtime/dialog.min.js',
+            $original_assets . 'runtime/dialog.min.js',
+            $original_assets . 'runtime/swiper.min.js',
+            $original_assets . 'runtime/swiper.min.js',
+        ],
+        $html
+    );
+
     // CompanyFlow branding and migrated theme assets.
     $html = str_replace(
         [
