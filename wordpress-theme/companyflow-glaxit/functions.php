@@ -100,8 +100,36 @@ function companyflow_render_clone($path = '/') {
         '#(?:https?:\\/\\/glaxit-clonned\\.onrender\\.com\\/)?(?:\\.\\/)?wp-content\\/litespeed\\/(css|js)\\/([^"\\\'\\s?]+\\.(?:css|js))#i',
         function ($m) use ($original_assets) {
             $type = strtolower($m[1]);
-            return $original_assets . $type . '/' . basename($m[2]);
+            $file = basename($m[2]);
+            $local = $original_assets . $type . '/' . $file;
+
+            // Only rewrite when the migrated theme actually contains the file.
+            // Otherwise leave the original URL intact so the frontend does not
+            // lose a required dependency during the incremental migration.
+            $path = trailingslashit(get_stylesheet_directory()) . 'assets/original/' . $type . '/' . $file;
+            return file_exists($path) ? $local : $m[0];
         },
+        $html
+    );
+
+    // WordPress runtime files are not part of the custom theme migration.
+    // Keep the exact frontend dependency URLs until their behavior is replaced
+    // by WordPress-native equivalents.
+    $html = str_replace(
+        [
+            './wp-content/plugins/litespeed-cache/assets/js/css_async.min.js',
+            './wp-includes/js/jquery/jquery.min.js',
+            './wp-includes/js/wp-emoji-release.min.js',
+            './wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js',
+            './wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js',
+        ],
+        [
+            'wp-content/plugins/litespeed-cache/assets/js/css_async.min.js',
+            'wp-includes/js/jquery/jquery.min.js',
+            'wp-includes/js/wp-emoji-release.min.js',
+            'wp-content/plugins/elementor/assets/lib/dialog/dialog.min.js',
+            'wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js',
+        ],
         $html
     );
 
