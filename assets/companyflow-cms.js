@@ -3,10 +3,25 @@ const SUPA_URL="https://ozlovfaxljojheykroax.supabase.co";
 const SUPA_KEY="sb_publishable_9mQ3omzC2ws9obM5i-ZroQ_qMzohZQ7";
 function slugify(s){return String(s||"").toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
 function esc(s){const d=document.createElement("div");d.textContent=s??"";return d.innerHTML}
+
+async function syncSite(sb){
+ const [{data:h},{data:a}]=await Promise.all([
+  sb.from("companyflow_site_content").select("value").eq("key","homepage").maybeSingle(),
+  sb.from("companyflow_animation_settings").select("value").eq("key","global").maybeSingle()
+ ]);
+ const home=h?.value;
+ if(home){
+  const replaceExact=(from,to)=>{if(!from||to==null)return;document.querySelectorAll("*").forEach(el=>{if(el.children.length===0&&el.textContent.trim()===from)el.textContent=to})};
+  replaceExact("Digital products built around your business.",home.heroTitle);
+  replaceExact("Websites, ecommerce, custom software and AI automation built around the way your business works.",home.heroText);
+  replaceExact("10+",home.years);replaceExact("500+",home.projects);replaceExact("100%",home.clients);
+ }
+ if(a?.value?.duration){document.documentElement.style.setProperty("--companyflow-animation-duration",a.value.duration+"ms")}
+}
 async function run(){
  if(!window.supabase)return;
  const sb=window.supabase.createClient(SUPA_URL,SUPA_KEY);
- const {data:projects,error}=await sb.from("companyflow_projects").select("*, companyflow_categories(name,slug)").eq("published",true).order("sort_order");
+ await syncSite(sb);\n const {data:projects,error}=await sb.from("companyflow_projects").select("*, companyflow_categories(name,slug)").eq("published",true).order("sort_order");
  if(error||!projects?.length)return;
  const path=location.pathname.replace(/\\/g,"/");
  const catMap={
