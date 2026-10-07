@@ -49,49 +49,63 @@ function companyflow_fetch_clone($path = '/') {
 function companyflow_render_clone($path = '/') {
     $html = companyflow_fetch_clone($path);
     if (!$html) {
-        echo '<main class="companyflow-migration-error"><h1>CompanyFlow</h1><p>The existing frontend is temporarily unavailable.</p></main>';
+        echo '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CompanyFlow</title></head><body><main class="companyflow-migration-error"><h1>CompanyFlow</h1><p>The existing frontend is temporarily unavailable.</p></main></body></html>';
         return;
     }
 
+    /*
+     * IMPORTANT:
+     * The GitHub clone is the source of truth.
+     * Do not rebuild its header, footer, hero, project section, animations,
+     * styles or scripts with WordPress blocks/theme markup.
+     *
+     * We render the complete existing HTML document so the original
+     * header/footer and all frontend behavior remain intact.
+     */
     $base = 'https://glaxit-clonned.onrender.com/';
-    $html = preg_replace('/<head\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
-    $html = preg_replace('/<script[^>]*class="rank-math-schema"[^>]*>.*?<\/script>/is', '', $html);
-    $html = preg_replace('/<link[^>]+rel=["\']canonical["\'][^>]*>/i', '', $html);
+    $html = preg_replace('/<base\\b[^>]*>/i', '', $html);
+    $html = preg_replace('/<head\\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
 
-    if (preg_match('/<body\b[^>]*>(.*)<\/body>/is', $html, $m)) {
-        $body = $m[1];
+    // Keep internal navigation ready for the eventual WordPress domain,
+    // while leaving external URLs, assets and scripts untouched.
+    $wp_home = home_url('/');
+    $wp_host = wp_parse_url($wp_home, PHP_URL_HOST);
 
-        // The migrated theme asset owns CompanyFlow custom behavior now.
-        $body = preg_replace('/<script[^>]*id=["\']companyflow-(?:projects|button|category|counter)-[^>]*>.*?<\/script>/is', '', $body);
+    $html = preg_replace_callback(
+        '/(<a\\b[^>]*\\bhref=["\\'])([^"\\']+)(["\\'])/i',
+        function ($match) use ($wp_home, $wp_host) {
+            $href = $match[2];
 
-        // Keep internal navigation on the eventual WordPress domain.
-        $wp_home = home_url('/');
-        $body = preg_replace_callback(
-            '/(<a\b[^>]*\bhref=["\'])([^"\']+)(["\'])/i',
-            function ($match) use ($wp_home) {
-                $href = $match[2];
-                if (
-                    $href === '#' ||
-                    preg_match('#^(?:https?:|mailto:|tel:|javascript:|//)#i', $href) ||
-                    str_starts_with($href, '/assets/') ||
-                    str_starts_with($href, '/wp-content/')
-                ) return $match[0];
+            if (
+                $href === '#' ||
+                preg_match('#^(?:https?:|mailto:|tel:|javascript:|//)#i', $href)
+            ) {
+                return $match[0];
+            }
 
-                $parts = wp_parse_url($href);
-                if (!empty($parts['host']) && $parts['host'] !== wp_parse_url(home_url('/'), PHP_URL_HOST)) return $match[0];
+            $parts = wp_parse_url($href);
+            if (!empty($parts['host']) && $parts['host'] !== $wp_host) {
+                return $match[0];
+            }
 
-                $path = $parts['path'] ?? $href;
-                if ($path === '/') return $match[1] . $wp_home . $match[3];
+            $path = $parts['path'] ?? $href;
+            if ($path === '/' || $path === '') {
+                $new = $wp_home;
+            } else {
+                $new = trailingslashit($wp_home . ltrim($path, '/'));
+            }
 
-                return $match[1] . trailingslashit($wp_home . ltrim($path, '/')) .
-                    (!empty($parts['query']) ? '?' . $parts['query'] : '') .
-                    (!empty($parts['fragment']) ? '#' . $parts['fragment'] : '') . $match[3];
-            },
-            $body
-        );
+            if (!empty($parts['query'])) {
+                $new .= '?' . $parts['query'];
+            }
+            if (!empty($parts['fragment'])) {
+                $new .= '#' . $parts['fragment'];
+            }
 
-        echo $body;
-    } else {
-        echo $html;
-    }
+            return $match[1] . esc_url($new) . $match[3];
+        },
+        $html
+    );
+
+    echo $html;
 }
