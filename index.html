@@ -5886,6 +5886,16 @@ html,body{overflow-x:hidden!important}
 .elementor-element-2b3344e .swiper-wrapper{will-change:transform}
 .cf-home-reveal{animation:cfHomeFadeUp .75s cubic-bezier(.22,1,.36,1) both}
 @keyframes cfHomeFadeUp{from{opacity:0;transform:translate3d(0,28px,0)}to{opacity:1;transform:none}}
+/* Restore the original Professionals entrance animation without reintroducing Swiper jitter. */
+.elementor-element-9518f2b .cf-prof-heading{opacity:0;transform:translate3d(0,55px,0)}
+.elementor-element-9518f2b .cf-prof-card{opacity:0;transform:translate3d(0,55px,0)}
+.elementor-element-9518f2b .cf-prof-heading.cf-prof-visible,
+.elementor-element-9518f2b .cf-prof-card.cf-prof-visible{animation:cfProfessionFadeUp .9s cubic-bezier(.22,1,.36,1) forwards}
+.elementor-element-9518f2b .cf-prof-card.cf-prof-visible{animation-delay:.3s}
+@keyframes cfProfessionFadeUp{from{opacity:0;transform:translate3d(0,55px,0)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+ .elementor-element-9518f2b .cf-prof-heading,.elementor-element-9518f2b .cf-prof-card{opacity:1;transform:none;animation:none!important}
+}
 @media(prefers-reduced-motion:reduce){.cf-home-reveal{animation:none!important}}
 </style>
 <script id="companyflow-home-audit-fix-script">
@@ -5952,15 +5962,42 @@ html,body{overflow-x:hidden!important}
   function setupProfessionals(){
     var section=document.querySelector('.elementor-element-9518f2b');
     if(!section) return false;
-    revealSection(section);
     var carousel=document.querySelector('.elementor-element-2b3344e .elementor-loop-container');
     if(!carousel||!carousel.swiper) return true;
     if(carousel.dataset.cfConfigured==='1') return true;
     carousel.dataset.cfConfigured='1';
-    carousel.querySelectorAll('.elementor-invisible').forEach(function(el){
-      el.classList.remove('elementor-invisible','elementor-hidden');
-      el.hidden=false;
+
+    // The original Professionals section used fadeInUp on both headings and
+    // each loop-card container (300ms delay). Recreate that entrance behavior
+    // with one observer; do not touch Swiper's DOM or transition state.
+    var headingA=section.querySelector('.elementor-element-292ba8e');
+    var headingB=section.querySelector('.elementor-element-112fcf5');
+    [headingA,headingB].forEach(function(el){if(el)el.classList.add('cf-prof-heading')});
+    carousel.querySelectorAll('.swiper-slide .elementor-element-8d49ab3').forEach(function(el){
+      el.classList.add('cf-prof-card');
     });
+
+    var reveal=function(){
+      [headingA,headingB].forEach(function(el){
+        if(el)el.classList.add('cf-prof-visible');
+      });
+      carousel.querySelectorAll('.swiper-slide .cf-prof-card').forEach(function(el){
+        el.classList.add('cf-prof-visible');
+      });
+    };
+
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            reveal();
+            io.disconnect();
+          }
+        });
+      },{threshold:.12,rootMargin:'0px 0px -45px'});
+      io.observe(section);
+    }else reveal();
+
     var s=carousel.swiper;
     s.params.slidesPerView=4;
     s.params.slidesPerGroup=1;
@@ -5976,16 +6013,9 @@ html,body{overflow-x:hidden!important}
     var project=document.querySelector('.elementor-element-47b49c3');
     var professional=document.querySelector('.elementor-element-9518f2b');
     if(project) revealSection(project);
-    if(professional){
-      if('IntersectionObserver' in window){
-        var io=new IntersectionObserver(function(entries){
-          entries.forEach(function(e){
-            if(e.isIntersecting){revealSection(e.target);io.unobserve(e.target);}
-          });
-        },{threshold:.08,rootMargin:'0px 0px -40px'});
-        io.observe(professional);
-      }else revealSection(professional);
-    }
+    // Professionals owns its own entrance observer so its original
+    // fadeInUp animation is triggered when the section enters the viewport.
+    if(professional) professional.dataset.cfAnimationReady='1';
     setupProjectCarousel();
     setupProfessionals();
     // Swiper is sometimes initialized a tick after DOMContentLoaded.
