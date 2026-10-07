@@ -8,7 +8,20 @@ add_action('after_setup_theme', function () {
 });
 
 add_action('template_redirect', function () {
-    if (is_404()) {
+    $path = trim(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
+
+    /*
+     * The existing GitHub frontend remains the source of truth.
+     * Intercept the homepage and every existing case-study route so
+     * WordPress page-builder content cannot replace the original UI.
+     */
+    $is_frontend_clone_route = (
+        $path === '' ||
+        $path === 'home' ||
+        strpos($path, 'blog/case-study/') === 0
+    );
+
+    if ($is_frontend_clone_route || is_404()) {
         status_header(200);
         nocache_headers();
         companyflow_render_clone(companyflow_clone_path());
