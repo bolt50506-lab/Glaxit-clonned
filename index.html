@@ -5630,5 +5630,69 @@ document.addEventListener('DOMContentLoaded',function(){
   align-self:baseline!important;
 }
 </style>
+
+<style id="companyflow-industries-projects">
+/* CompanyFlow project industries — keeps the original Glaxit project-card structure/animation. */
+.companyflow-industry-nav{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin:0 0 42px;padding:0;border-bottom:1px solid rgba(0,0,0,.14)}
+.companyflow-industry-btn{appearance:none;border:0;background:transparent;padding:0 0 15px;margin:0;color:inherit;font:inherit;font-size:16px;font-weight:500;line-height:1.2;cursor:pointer;position:relative;transition:opacity .25s ease}
+.companyflow-industry-btn:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.companyflow-industry-btn:hover{opacity:.65}.companyflow-industry-btn.is-active{font-weight:600}.companyflow-industry-btn.is-active:after{transform:scaleX(1)}
+.companyflow-project-filtered{display:none!important}
+@media(max-width:767px){.companyflow-industry-nav{gap:20px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:0;margin-bottom:28px;scrollbar-width:none}.companyflow-industry-nav::-webkit-scrollbar{display:none}.companyflow-industry-btn{white-space:nowrap;font-size:14px}}
+</style>
+<script id="companyflow-industries-projects-script">
+(function(){
+  function initCompanyFlowProjects(){
+    var carousel=document.querySelector('.elementor-loop-container');
+    if(!carousel || carousel.dataset.companyflowReady) return;
+    carousel.dataset.companyflowReady='1';
+    var slides=Array.from(carousel.querySelectorAll('.swiper-slide'));
+    if(!slides.length) return;
+    var projectMap={
+      'LabStacks':{industry:'Healthcare',image:'./wp-content/uploads/2025/01/LabStacks.webp',desc:'A multi-tenant diagnostic laboratory platform built for modern healthcare operations.',url:'./blog/case-study/labstacks/'},
+      'Destino Travels':{industry:'Travel & Transportation',image:'./wp-content/uploads/2025/01/Destino.webp',desc:'A complete travel operations portal for flights, hotels, bookings, agents and customer workflows.',url:'./blog/case-study/destino-travels/'},
+      'Aurum Accessories':{industry:'E-commerce & Retail',image:'./wp-content/uploads/2025/01/Aurum.webp',desc:'A performance-focused ecommerce experience engineered for a premium accessories brand.',url:'./blog/case-study/aurum-accessories/'},
+      'CompanyFlow':{industry:'Business Software',image:'./wp-content/uploads/2025/01/CompanyFlow.webp',desc:'A digital product studio platform bringing software, websites, ecommerce and automation together.',url:'./blog/case-study/companyflow/'},
+      'AgentHub':{industry:'AI & Automation',image:'./wp-content/uploads/2025/01/AgentHub.webp',desc:'An AI-powered sales and WhatsApp automation platform built around real business conversations.',url:'./blog/case-study/agenthub/'},
+      'AI Sales Agent':{industry:'AI & Automation',image:'./wp-content/uploads/2025/01/AISalesAgent.webp',desc:'An AI sales agent that discovers prospects, enriches leads and supports automated outreach.',url:'./blog/case-study/ai-sales-agent/'},
+      'Business Operations':{industry:'Business Software',image:'./wp-content/uploads/2025/01/CompanyFlow.webp',desc:'Business management software designed to streamline operations, workflows and reporting.',url:'./blog/case-study/companyflow/'}
+    };
+    slides.forEach(function(slide){
+      var titleEl=slide.querySelector('.elementor-heading-title');
+      if(!titleEl) return;
+      var title=titleEl.textContent.trim();
+      var item=projectMap[title];
+      if(!item) return;
+      slide.dataset.companyflowIndustry=item.industry;
+      var img=slide.querySelector('img');
+      if(img){img.src=item.image;img.setAttribute('data-src',item.image);img.removeAttribute('data-lazyloaded');}
+      var desc=slide.querySelector('.elementor-widget-text-editor');
+      if(desc) desc.innerHTML='<p>'+item.desc+'</p>';
+      var link=slide.querySelector('.elementor-widget-button a');
+      if(link) link.href=item.url;
+    });
+    var nav=document.createElement('div');nav.className='companyflow-industry-nav';nav.setAttribute('aria-label','Project industries');
+    var industries=['All Industries','Healthcare','Travel & Transportation','E-commerce & Retail','Business Software','AI & Automation'];
+    industries.forEach(function(industry,index){
+      var b=document.createElement('button');b.type='button';b.className='companyflow-industry-btn'+(index===0?' is-active':'');b.textContent=industry;b.dataset.industry=industry;
+      b.addEventListener('click',function(){
+        nav.querySelectorAll('.companyflow-industry-btn').forEach(function(x){x.classList.toggle('is-active',x===b)});
+        var target=industry==='All Industries'?null:industry;
+        slides.forEach(function(slide){
+          var show=!target || slide.dataset.companyflowIndustry===target;
+          slide.classList.toggle('companyflow-project-filtered',!show);
+          slide.setAttribute('aria-hidden',show?'false':'true');
+        });
+        if(carousel.swiper){carousel.swiper.update();carousel.swiper.slideTo(0,0);}
+      });
+      nav.appendChild(b);
+    });
+    var widget=carousel.parentElement;
+    widget.insertBefore(nav,carousel);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initCompanyFlowProjects); else initCompanyFlowProjects();
+  setTimeout(initCompanyFlowProjects,1200);
+})();
+</script>
 </body>
 </html>
