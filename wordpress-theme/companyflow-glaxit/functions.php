@@ -93,6 +93,17 @@ function companyflow_render_clone($path = '/') {
     );
     $html = preg_replace('/<base\\b[^>]*>/i', '', $html);
     $html = preg_replace('/<head\\b[^>]*>/i', '<head><base href="' . esc_url($base) . '">', $html, 1);
+    
+    // Resolve the original site's bundled LiteSpeed CSS/JS through the
+    // WordPress theme when those exact files are present in the theme.
+    $html = preg_replace_callback(
+        '#(?:https?:\\/\\/glaxit-clonned\\.onrender\\.com\\/)?(?:\\.\\/)?wp-content\\/litespeed\\/(css|js)\\/([^"\\\'\\s?]+\\.(?:css|js))#i',
+        function ($m) use ($original_assets) {
+            $type = strtolower($m[1]);
+            return $original_assets . $type . '/' . basename($m[2]);
+        },
+        $html
+    );
 
     /*
      * Keep the frontend markup untouched, but serve the migrated CompanyFlow
