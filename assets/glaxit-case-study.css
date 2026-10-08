@@ -254,3 +254,37 @@ html,body{background:#10131a}
     display:block!important;
   }
 }
+
+
+/* Restore native Swiper track/touch behavior on mobile.
+   The previous width:100% wrapper rule prevented the calculated track
+   from moving even though the cards were correctly sized. */
+@media (max-width:767px){
+  .elementor-element-0c05614{
+    touch-action:pan-y!important;
+    -webkit-user-select:none!important;
+    user-select:none!important;
+  }
+  .elementor-element-0c05614 .elementor-loop-container{
+    overflow:hidden!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .elementor-element-0c05614 .swiper-wrapper{
+    width:auto!important;
+    max-width:none!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow:visible!important;
+    transform-style:preserve-3d;
+  }
+  .elementor-element-0c05614 .swiper-slide,
+  .elementor-element-0c05614 .swiper-slide-duplicate{
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin-right:0!important;
+  }
+}
