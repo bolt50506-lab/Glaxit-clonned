@@ -6098,5 +6098,28 @@ body.cf-modal-open{overflow:hidden}
   var tries=0;
   var timer=setInterval(function(){if(tune() || ++tries>40) clearInterval(timer);},250);
 })();
-</script></body>
+</script><script id="companyflow-company-nav-fix">
+(function () {
+  function bindCompanyNav() {
+    document.querySelectorAll('a').forEach(function (link) {
+      var text = (link.textContent || '').trim().replace(/\s+/g, ' ');
+      if (text === 'Company') {
+        link.setAttribute('href', '/company/');
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          window.location.assign('/company/');
+        }, true);
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindCompanyNav);
+  } else {
+    bindCompanyNav();
+  }
+  new MutationObserver(bindCompanyNav).observe(document.documentElement, {childList:true, subtree:true});
+})();
+</script>
+</body>
 </html>
