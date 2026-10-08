@@ -6122,5 +6122,75 @@ body.cf-modal-open{overflow:hidden}
   new MutationObserver(bindCompanyNav).observe(document.documentElement, {childList:true, subtree:true});
 })();
 </script>
+
+<script id="companyflow-mobile-carousel-final-fix">
+(function(){
+  function repair(){
+    if(!window.matchMedia || !window.matchMedia('(max-width: 767px)').matches) return;
+    var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
+    if(!root || !root.swiper) return;
+    var s=root.swiper;
+
+    /* Do not let the desktop 4-up settings or the old tuning timer
+       lock the mobile instance. */
+    s.params.slidesPerView=1;
+    s.params.slidesPerGroup=1;
+    s.params.slidesPerColumn=1;
+    s.params.spaceBetween=20;
+    s.params.loop=true;
+    s.params.allowTouchMove=true;
+    s.params.simulateTouch=true;
+    s.params.touchRatio=1;
+    s.params.threshold=5;
+    s.params.speed=700;
+    s.params.preventInteractionOnTransition=false;
+    s.params.autoplay={
+      delay:3000,
+      disableOnInteraction:true,
+      pauseOnMouseEnter:false
+    };
+
+    /* Remove the runtime breakpoint override on mobile so a later
+       Swiper update cannot switch this back to four cards. */
+    s.params.breakpoints=undefined;
+
+    s.allowTouchMove=true;
+    s.allowSlideNext=true;
+    s.allowSlidePrev=true;
+
+    if(s.updateSize) s.updateSize();
+    if(s.updateSlides) s.updateSlides();
+    if(s.updateProgress) s.updateProgress();
+    if(s.updateSlidesClasses) s.updateSlidesClasses();
+
+    /* Recalculate the loop after the mobile dimensions are restored. */
+    if(s.update) s.update();
+
+    if(s.autoplay){
+      s.autoplay.stop();
+      s.autoplay.start();
+    }
+  }
+
+  var attempts=0;
+  var timer=setInterval(function(){
+    repair();
+    attempts++;
+    if(attempts>24) clearInterval(timer);
+  },500);
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',repair);
+  }else{
+    repair();
+  }
+
+  window.addEventListener('resize',function(){
+    if(window.matchMedia && window.matchMedia('(max-width: 767px)').matches){
+      setTimeout(repair,80);
+    }
+  });
+})();
+</script>
 </body>
 </html>
