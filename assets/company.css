@@ -428,3 +428,18 @@
 .cf-company-page .cf-partner-logo .rating{position:static!important;margin:0!important;padding:0!important;color:#202421!important;font:700 12px/1.1 Arial,sans-serif!important;letter-spacing:.03em!important}
 @media(max-width:900px){.cf-company-page .cf-partner-logos{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:640px){.cf-company-page .cf-partner-logos{gap:12px!important}.cf-company-page .cf-partner-logo{min-height:92px!important;padding:14px 8px!important}.cf-company-page .cf-partner-logo .partner-mark.shopify{font-size:18px!important}.cf-company-page .cf-partner-logo .partner-mark.trustpilot{font-size:16px!important}.cf-company-page .cf-partner-logo .partner-mark.google{font-size:20px!important}.cf-company-page .cf-partner-logo .partner-mark.clutch{font-size:17px!important}}
+
+/* LOCAL PARTNER SVG LOCKUPS */
+.cf-company-page .cf-partner-logo .partner-lockup{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;min-height:38px!important;width:100%!important;position:static!important}
+.cf-company-page .cf-partner-logo .partner-lockup img{display:block!important;width:34px!important;height:34px!important;max-width:34px!important;max-height:34px!important;min-width:34px!important;object-fit:contain!important;object-position:center!important;position:static!important;transform:none!important;filter:none!important}
+.cf-company-page .cf-partner-logo .partner-lockup strong{display:block!important;position:static!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;background:none!important;color:#171a18!important;font:700 22px/1 Arial,Helvetica,sans-serif!important;letter-spacing:-.045em!important;white-space:nowrap!important}
+.cf-company-page .cf-partner-logo:nth-child(4) .partner-lockup img{width:96px!important;max-width:96px!important;height:36px!important;max-height:36px!important}
+.cf-company-page .cf-partner-logo:nth-child(4) .partner-lockup strong{display:none!important}
+.cf-company-page .cf-partner-logo .partner-lockup + .stars,.cf-company-page .cf-partner-logo .partner-lockup + .rating{margin-top:2px!important}
+/* Disable every previous pseudo-logo construction so no global span/em/b rules can corrupt the SVG lockups. */
+.cf-company-page .cf-partner-logo .partner-mark:before,.cf-company-page .cf-partner-logo .partner-mark:after{content:none!important;display:none!important}
+@media(max-width:640px){
+ .cf-company-page .cf-partner-logo .partner-lockup img{width:29px!important;height:29px!important;max-width:29px!important;max-height:29px!important;min-width:29px!important}
+ .cf-company-page .cf-partner-logo .partner-lockup strong{font-size:17px!important}
+ .cf-company-page .cf-partner-logo:nth-child(4) .partner-lockup img{width:78px!important;max-width:78px!important;height:30px!important;max-height:30px!important}
+}
