@@ -389,3 +389,22 @@
     width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important;max-width:72px!important;max-height:72px!important;
   }
 }
+
+/* Partner platform marks — real brand wordmarks, icons, and review badges */
+.cf-company-page .cf-partner-logos{max-width:1120px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;align-items:stretch}
+.cf-company-page .cf-partner-logos .cf-partner-logo{min-width:0;min-height:108px;padding:20px 18px;background:#fff;color:#202520;border:1px solid rgba(255,255,255,.12);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 12px 35px rgba(0,0,0,.18);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s,border-color .3s}
+.cf-company-page .cf-partner-logo:hover{transform:translateY(-7px);box-shadow:0 22px 50px rgba(0,0,0,.28);border-color:#23b293}
+.cf-company-page .cf-partner-logo .partner-mark{display:flex;align-items:center;justify-content:center;gap:7px;min-height:31px;font-family:Poppins,Arial,sans-serif;font-weight:700;letter-spacing:-.03em;line-height:1}
+.cf-company-page .cf-partner-logo .partner-mark.shopify{font-size:22px;color:#171717}
+.cf-company-page .cf-partner-logo .partner-mark.shopify:before{content:"S";width:29px;height:29px;border-radius:7px;display:grid;place-items:center;background:#95bf47;color:#fff;font-size:17px;font-weight:800}
+.cf-company-page .cf-partner-logo .partner-mark.trustpilot{font-size:19px;color:#111}
+.cf-company-page .cf-partner-logo .partner-mark.trustpilot:before{content:"★";display:grid;place-items:center;width:29px;height:29px;background:#00b67a;color:#fff;font-size:17px}
+.cf-company-page .cf-partner-logo .partner-mark.google{font-size:21px;color:#4285f4}
+.cf-company-page .cf-partner-logo .partner-mark.google span{color:#34a853}.cf-company-page .cf-partner-logo .partner-mark.google em{color:#fbbc05;font-style:normal}.cf-company-page .cf-partner-logo .partner-mark.google b{color:#ea4335}
+.cf-company-page .cf-partner-logo .partner-mark.clutch{font-size:19px;color:#111}
+.cf-company-page .cf-partner-logo .partner-mark.clutch:before{content:"✱";width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#111;color:#fff;font-size:14px}
+.cf-company-page .cf-partner-logo small{font:600 8px/1 Montserrat,Arial,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#69716c}
+.cf-company-page .cf-partner-logo .rating{font:700 12px/1 Poppins,Arial,sans-serif;color:#111;letter-spacing:1px}
+.cf-company-page .cf-partner-logo .stars{font-size:14px;letter-spacing:2px;color:#00b67a}
+@media(max-width:900px){.cf-company-page .cf-partner-logos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.cf-company-page .cf-partner-logos{grid-template-columns:1fr 1fr;gap:12px}.cf-company-page .cf-partner-logos .cf-partner-logo{min-height:92px;padding:14px 8px}.cf-company-page .cf-partner-logo .partner-mark.shopify{font-size:17px}.cf-company-page .cf-partner-logo .partner-mark.trustpilot,.cf-company-page .cf-partner-logo .partner-mark.clutch{font-size:15px}.cf-company-page .cf-partner-logo .partner-mark.google{font-size:17px}.cf-company-page .cf-partner-logo small{font-size:6px}.cf-company-page .cf-partner-logo .rating{font-size:9px}.cf-company-page .cf-partner-logo .stars{font-size:11px}}
