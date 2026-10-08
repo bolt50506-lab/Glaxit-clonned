@@ -93,3 +93,5 @@
 .gx-case-hero .gx-case-btn{animation:cfFadeInRight 1s .3s both}
 html,body{background:#10131a}
 .gx-case-main{background:#10131a;color:#fff}
+
+.gx-project-contactbar{display:flex;align-items:center;justify-content:center;gap:34px;max-width:1110px;margin:0 auto 70px;padding:18px 28px;border:1px solid rgba(35,178,147,.28);border-radius:12px;background:#151a21;color:#fff}.gx-project-contactbar a{color:#fff;text-decoration:none}.gx-project-contactbar a:hover{color:#23b293}.gx-project-contactbar span{display:inline-flex;align-items:center;gap:9px;font-size:14px;color:#c4c9d1}.gx-project-contactbar strong{color:#23b293;font-weight:500}@media(max-width:640px){.gx-project-contactbar{flex-direction:column;gap:12px;margin:0 18px 50px;padding:18px}.gx-project-contactbar span{font-size:13px}}
