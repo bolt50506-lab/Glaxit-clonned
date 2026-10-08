@@ -5835,9 +5835,25 @@ body.cf-modal-open{overflow:hidden}
     modal.querySelector('#cf-contact-form').addEventListener('submit',function(e){
       e.preventDefault();
       var f=new FormData(e.target);
-      var body='Name: '+f.get('firstName')+' '+f.get('lastName')+'\nEmail: '+f.get('email')+'\nCompany: '+f.get('company')+'\nHow they heard about us: '+f.get('hear')+'\n\nProject message:\n'+f.get('message');
-      window.location.href='mailto:alihotspot1@gmail.com?subject='+encodeURIComponent('New CompanyFlow project enquiry')+'&body='+encodeURIComponent(body);
-      setTimeout(closeContactModal,300);
+      var submit=e.target.querySelector('.cf-contact-submit');
+      var original=submit.innerHTML;
+      submit.disabled=true;
+      submit.innerHTML='Sending... <span>→</span>';
+      var message='Project message:\n'+(f.get('message')||'')+'\n\nCompany: '+(f.get('company')||'')+'\nHow they heard about us: '+(f.get('hear')||'');
+      var data=new URLSearchParams();
+      data.append('entry.2005620554',(f.get('firstName')||'')+' '+(f.get('lastName')||''));
+      data.append('entry.1045781291',f.get('email')||'');
+      data.append('entry.1166974658','');
+      data.append('entry.839337160',message);
+      fetch('https://docs.google.com/forms/d/e/1FAIpQLSczDbHYfeMCvGtU7SBdfyiFDarTshAfMG_eGfSb4Yfz_cMv5g/formResponse',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString(),keepalive:true}).then(function(){
+        submit.innerHTML='Sent ✓';
+        e.target.reset();
+        setTimeout(function(){closeContactModal();submit.disabled=false;submit.innerHTML=original;},900);
+      }).catch(function(){
+        submit.disabled=false;
+        submit.innerHTML=original;
+        window.location.href='mailto:alihotspot1@gmail.com?subject='+encodeURIComponent('New CompanyFlow project enquiry')+'&body='+encodeURIComponent('Name: '+f.get('firstName')+' '+f.get('lastName')+'\nEmail: '+f.get('email')+'\nCompany: '+f.get('company')+'\nHow they heard about us: '+f.get('hear')+'\n\nProject message:\n'+f.get('message'));
+      });
     });
     return modal;
   }
