@@ -77,5 +77,27 @@ var b=document.querySelector('.gx-menu-toggle'),p=document.querySelector('.gx-mo
 if(b&&p)b.addEventListener('click',function(){var o=p.classList.toggle('is-open');b.setAttribute('aria-expanded',o?'true':'false')});
 });
 </script>
-<script>(function(){const c=document.querySelectorAll('[data-count]');const run=e=>{const target=+e.dataset.count,start=Math.max(0,target-2),s=target===100?'%':'+';const t=performance.now();(function f(n){const p=Math.min(1,(n-t)/900);e.textContent=Math.floor(start+(target-start)*p)+s;if(p<1)requestAnimationFrame(f)})(performance.now())};const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){c.forEach(run);io.disconnect()}}),{threshold:.35});const s=document.querySelector('.cf-stats-wrap');if(s)io.observe(s);document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelector('.cf-video-modal')?.classList.remove('is-open')})})();</script></body>
+<script>
+(function(){
+ const counters=document.querySelectorAll('[data-count]');
+ let started=false;
+ function run(el){
+   const target=Number(el.dataset.count), suffix=target===100?'%':'+', duration=1900;
+   const start=performance.now();
+   function tick(now){
+     const p=Math.min(1,(now-start)/duration);
+     const eased=1-Math.pow(1-p,3);
+     el.textContent=Math.floor(target*eased)+suffix;
+     if(p<1) requestAnimationFrame(tick); else el.textContent=target+suffix;
+   }
+   requestAnimationFrame(tick);
+ }
+ const stats=document.querySelector('.cf-stats-wrap');
+ const io=new IntersectionObserver(entries=>{
+   if(!started && entries.some(e=>e.isIntersecting)){started=true;counters.forEach((el,i)=>setTimeout(()=>run(el),i*130));io.disconnect();}
+ },{threshold:.35});
+ if(stats) io.observe(stats);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelector('.cf-video-modal')?.classList.remove('is-open')});
+})();
+</script></body>
 </html>
