@@ -82,3 +82,18 @@
   .gx-mobile-solutions strong{display:block;padding:8px 0;color:#23b293;font-size:12px}
   .gx-mobile-solutions a{padding:7px 4px}
 }
+
+/* Case-study hero final overrides */
+.gx-case-hero{text-align:center}
+.gx-case-hero h1{max-width:900px;margin:0 auto 22px;font-size:clamp(34px,4.6vw,56px);line-height:1.2;letter-spacing:-.02em;font-weight:600;color:#fff}
+.gx-case-hero p{max-width:560px;margin:0 auto 28px;color:#fff;font-size:18px;line-height:1.5}
+.gx-case-btn{background-image:linear-gradient(to right,#0E8E75 0%,rgb(0 0 0 / .6) 51%,#0E8E75 100%);background-color:transparent;background-size:200% auto;background-position:left center;border:0;color:#fff!important;font-size:16px;font-weight:500;padding:13px 30px;transition:background-position .5s ease}
+.gx-case-btn:hover{background-position:right center;color:#fff!important;transform:none;box-shadow:none;border:0}
+.gx-case-hero .gx-case-btn{border-radius:40px}
+.gx-case-cta .gx-case-btn{border-radius:4px}
+.gx-case-btn:nth-child(2){background-image:linear-gradient(to right,#0E8E75 0%,rgb(0 0 0 / .6) 51%,#0E8E75 100%)!important;background-color:transparent!important;color:#fff!important}
+@keyframes cfFadeInUp{from{opacity:0;transform:translate3d(0,40px,0)}to{opacity:1;transform:none}}
+@keyframes cfFadeInRight{from{opacity:0;transform:translate3d(40px,0,0)}to{opacity:1;transform:none}}
+.gx-case-hero h1{animation:cfFadeInUp 1s both}
+.gx-case-hero p{animation:cfFadeInUp 1s .15s both}
+.gx-case-hero .gx-case-btn{animation:cfFadeInRight 1s .3s both}
