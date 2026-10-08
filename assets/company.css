@@ -352,3 +352,40 @@
  .cf-company-page .gx-wa svg{width:29px!important;height:29px!important}
  .cf-company-page .cf-expert-grid article p{padding:14px 13px}
 }
+
+
+/* Normalize every expert portrait to a true circle — prevent grid/flex sizing from creating oval crops. */
+.cf-company-page .cf-expert-grid article i{
+  width:88px!important;
+  height:88px!important;
+  min-width:88px!important;
+  min-height:88px!important;
+  max-width:88px!important;
+  max-height:88px!important;
+  aspect-ratio:1 / 1!important;
+  flex:0 0 88px!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  display:block!important;
+  transform:translateX(-50%)!important;
+}
+.cf-company-page .cf-expert-grid article i img{
+  width:88px!important;
+  height:88px!important;
+  min-width:88px!important;
+  min-height:88px!important;
+  max-width:88px!important;
+  max-height:88px!important;
+  aspect-ratio:1 / 1!important;
+  display:block!important;
+  border-radius:50%!important;
+  object-fit:cover!important;
+}
+@media(max-width:640px){
+  .cf-company-page .cf-expert-grid article i{
+    width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important;max-width:72px!important;max-height:72px!important;flex-basis:72px!important;
+  }
+  .cf-company-page .cf-expert-grid article i img{
+    width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important;max-width:72px!important;max-height:72px!important;
+  }
+}
