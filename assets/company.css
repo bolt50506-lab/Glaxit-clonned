@@ -443,3 +443,8 @@
  .cf-company-page .cf-partner-logo .partner-lockup strong{font-size:17px!important}
  .cf-company-page .cf-partner-logo:nth-child(4) .partner-lockup img{width:78px!important;max-width:78px!important;height:30px!important;max-height:30px!important}
 }
+
+/* WhatsApp SVG normalization */
+.cf-company-page .gx-wa svg{width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;display:block!important;overflow:visible!important;fill:#fff!important;color:#fff!important;stroke:none!important;position:static!important;margin:0!important;padding:0!important}
+.cf-company-page .gx-wa svg path{fill:#fff!important;stroke:none!important}
+@media(max-width:640px){.cf-company-page .gx-wa svg{width:29px!important;height:29px!important;min-width:29px!important;min-height:29px!important}}
