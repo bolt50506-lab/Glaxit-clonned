@@ -5896,7 +5896,7 @@ body.cf-modal-open{overflow:hidden}
         openModal(title,desc);
         return;
       }
-      if((href==='#contact' || text==='Connect Now' || text==='Contact Us' || text==='Contact Us Now' || text==='Talk Now' || text==="Let's Talk" || text==='Start a Conversation' || text==='Talk to Us' || text==='Get in Touch') && !href.includes('elementor-action')){ e.preventDefault(); e.stopImmediatePropagation(); closeOffCanvas(); window.location.href='https://wa.me/923407465567?text='+encodeURIComponent('Hi CompanyFlow, I would like to discuss a project.'); return; }
+      if((text==='Talk Now' || text==="Let's Talk" || text==='Start a Conversation' || text==='Talk to Us') && !href.includes('wa.me') && !href.includes('elementor-action')){ e.preventDefault(); e.stopImmediatePropagation(); closeOffCanvas(); window.location.href='https://wa.me/923407465567?text='+encodeURIComponent('Hi CompanyFlow, I would like to discuss a project.'); return; }
       if(href.charAt(0)==='#' && href.length>1){
         if(smoothTo(href)){e.preventDefault();closeOffCanvas();}
         return;
