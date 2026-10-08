@@ -5951,27 +5951,104 @@ body.cf-modal-open{overflow:hidden}
 </style>
 <script id="companyflow-category-carousel-exact-script">
 (function(){
-function tune(){
- var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
- if(!root || !root.swiper) return false;
- var s=root.swiper;
- if(s.params.loop && typeof s.loopDestroy==='function'){s.loopDestroy();}
- s.params.loop=false;
- var desired=[0,1,5,2,3,4], slides=Array.prototype.slice.call(root.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)')), by={};
- slides.forEach(function(el){by[el.getAttribute('data-swiper-slide-index')]=el;});
- desired.forEach(function(idx){if(by[idx]) root.querySelector('.swiper-wrapper').appendChild(by[idx]);});
- s.params.slidesPerGroup=1;
- s.params.slidesPerGroupAuto=false;
- s.params.slidesPerView=4;
- if(s.params.breakpoints){
-   s.params.breakpoints=Object.assign({},s.params.breakpoints,{0:{slidesPerView:1,slidesPerGroup:1},768:{slidesPerView:2,slidesPerGroup:1},1025:{slidesPerView:4,slidesPerGroup:1}});
- }
- s.params.autoplay=false;
- if(s.autoplay) s.autoplay.stop();
- s.update();
- return true;
-}
-var n=0;var t=setInterval(function(){if(tune()||++n>30)clearInterval(t)},250);
+  var CATEGORY_ORDER=[1,5,2,3,4,0];
+  var CATEGORY_NAMES={
+    0:'Real-Estate',
+    1:'Donation',
+    2:'Stories',
+    3:'Self Assessment',
+    4:'Restaurant',
+    5:'Transportation'
+  };
+  var CATEGORY_URLS={
+    0:'./blog/case-study/real-estate/',
+    1:'./blog/case-study/donation/',
+    2:'./blog/case-study/stories/',
+    3:'./blog/case-study/self-assessment/',
+    4:'./blog/case-study/restaurant/',
+    5:'./blog/case-study/transportation/'
+  };
+
+  function tune(){
+    var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
+    if(!root || !root.swiper) return false;
+
+    var s=root.swiper, wrapper=root.querySelector('.swiper-wrapper');
+    if(!wrapper) return false;
+
+    if(s.autoplay) s.autoplay.stop();
+    if(s.params.loop && typeof s.loopDestroy==='function') s.loopDestroy();
+
+    s.params.loop=false;
+
+    var slides=Array.prototype.slice.call(wrapper.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)'));
+    var by={};
+    slides.forEach(function(el){
+      by[el.getAttribute('data-swiper-slide-index')]=el;
+    });
+
+    CATEGORY_ORDER.forEach(function(idx){
+      var slide=by[String(idx)];
+      if(!slide) return;
+
+      var title=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title');
+      var link=slide.querySelector('.elementor-element-f11d2fd a.elementor-button');
+      var desc=slide.querySelector('.elementor-element-5fd08fc');
+
+      if(title) title.textContent=CATEGORY_NAMES[idx];
+      if(link) link.href=CATEGORY_URLS[idx];
+      if(desc) desc.textContent={
+        0:'We delivered exceptional real estate projects of distinction',
+        1:'Charities campaigns reached global audiences with our support',
+        2:'Online retailers achieved growth through our effective tactics',
+        3:'We assisted educators in building self-learning strategies',
+        4:'Delivered restaurant industry project that set us apart',
+        5:'Look at how our transportation industry projects leading the way'
+      }[idx];
+
+      wrapper.appendChild(slide);
+    });
+
+    s.params.slidesPerGroup=1;
+    s.params.slidesPerGroupAuto=false;
+    s.params.slidesPerView=4;
+    s.params.spaceBetween=20;
+    s.params.speed=1400;
+    s.params.autoplay={
+      delay:300,
+      disableOnInteraction:false,
+      pauseOnMouseEnter:true
+    };
+    if(s.params.breakpoints){
+      s.params.breakpoints=Object.assign({},s.params.breakpoints,{
+        0:{slidesPerView:1,slidesPerGroup:1,spaceBetween:20},
+        768:{slidesPerView:2,slidesPerGroup:1,spaceBetween:20},
+        1025:{slidesPerView:4,slidesPerGroup:1,spaceBetween:20}
+      });
+    }
+
+    s.update();
+
+    if(typeof s.loopCreate==='function'){
+      s.params.loop=true;
+      s.loopCreate();
+      s.update();
+    }else{
+      s.params.loop=true;
+      s.update();
+    }
+
+    if(typeof s.slideToLoop==='function') s.slideToLoop(0,0,false);
+    else s.slideTo(0,0,false);
+
+    if(s.autoplay) s.autoplay.start();
+    return true;
+  }
+
+  var tries=0;
+  var timer=setInterval(function(){
+    if(tune() || ++tries>40) clearInterval(timer);
+  },250);
 })();
 </script><script id="companyflow-counter-motion">
 (function(){
