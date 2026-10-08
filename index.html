@@ -4042,12 +4042,12 @@ Others
 <div class="e-con-inner">
 <div class="elementor-element elementor-element-aebf35f elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading" data-e-type="widget" data-element_type="widget" data-id="aebf35f" data-settings='{"_animation":"fadeInUp"}' data-widget_type="heading.default">
 <h4 class="elementor-heading-title elementor-size-default">
-          Our True Mastery
+          Our Work
          </h4>
 </div>
 <div class="elementor-element elementor-element-96761b6 elementor-widget__width-initial elementor-invisible elementor-widget elementor-widget-heading" data-e-type="widget" data-element_type="widget" data-id="96761b6" data-settings='{"_animation":"fadeInUp"}' data-widget_type="heading.default">
 <h2 class="elementor-heading-title elementor-size-default">
-          Projects That Shows Our Excellence
+          Digital Products Built Around Your Business
          </h2>
 </div>
 <div class="elementor-element elementor-element-0c05614 slick-track elementor-arrows-position-inside elementor-widget elementor-widget-loop-carousel e-widget-swiper" data-e-type="widget" data-element_type="widget" data-id="0c05614" data-settings='{"template_id":465,"slides_to_show":"4","image_spacing_custom":{"unit":"px","size":20,"sizes":[]},"autoplay_speed":300,"speed":1400,"_skin":"post","slides_to_show_tablet":"2","slides_to_show_mobile":"1","slides_to_scroll":"1","edit_handle_selector":".elementor-loop-container","autoplay":"yes","pause_on_hover":"yes","pause_on_interaction":"yes","infinite":"yes","offset_sides":"none","arrows":"yes","image_spacing_custom_tablet":{"unit":"px","size":"","sizes":[]},"image_spacing_custom_mobile":{"unit":"px","size":"","sizes":[]}}' data-widget_type="loop-carousel.post">
@@ -4423,12 +4423,12 @@ Others
 <div class="e-con-inner">
 <div class="elementor-element elementor-element-292ba8e elementor-widget__width-inherit elementor-invisible elementor-widget elementor-widget-heading" data-e-type="widget" data-element_type="widget" data-id="292ba8e" data-settings='{"_animation":"fadeInUp"}' data-widget_type="heading.default">
 <h4 class="elementor-heading-title elementor-size-default">
-          Our Unmatched Professionals
+          Our Capabilities
          </h4>
 </div>
 <div class="elementor-element elementor-element-112fcf5 elementor-widget__width-initial elementor-invisible elementor-widget elementor-widget-heading" data-e-type="widget" data-element_type="widget" data-id="112fcf5" data-settings='{"_animation":"fadeInUp"}' data-widget_type="heading.default">
 <h2 class="elementor-heading-title elementor-size-default">
-          Flexible Digital Talent For Your Business
+          Built Around The Way Your Business Works
          </h2>
 </div>
 <div class="elementor-element elementor-element-2b3344e elementor-pagination-position-inside elementor-pagination-type-bullets elementor-arrows-position-inside elementor-widget elementor-widget-loop-carousel e-widget-swiper" data-e-type="widget" data-element_type="widget" data-id="2b3344e" data-settings='{"template_id":"1206","slides_to_show":"4","_skin":"post","slides_to_show_tablet":"2","slides_to_show_mobile":"1","slides_to_scroll":"1","edit_handle_selector":".elementor-loop-container","autoplay":"yes","autoplay_speed":5000,"pause_on_hover":"yes","pause_on_interaction":"yes","infinite":"yes","speed":500,"offset_sides":"none","arrows":"yes","pagination":"bullets","image_spacing_custom":{"unit":"px","size":10,"sizes":[]},"image_spacing_custom_tablet":{"unit":"px","size":"","sizes":[]},"image_spacing_custom_mobile":{"unit":"px","size":"","sizes":[]}}' data-widget_type="loop-carousel.post">
@@ -5952,61 +5952,55 @@ body.cf-modal-open{overflow:hidden}
 </style>
 <script id="companyflow-category-carousel-exact-script">
 (function(){
-  var CATEGORY_ORDER=[1,5,2,3,4,0];
+  var CATEGORY_ORDER=[0,1,2,3,4,5];
   var CATEGORY_NAMES={
-    0:'Real-Estate',
-    1:'Donation',
-    2:'Stories',
-    3:'Self Assessment',
-    4:'Restaurant',
-    5:'Transportation'
+    0:'Real Estate',
+    1:'Business Software',
+    2:'Healthcare',
+    3:'E-commerce & Retail',
+    4:'AI & Automation',
+    5:'Travel & Transportation'
   };
   var CATEGORY_URLS={
     0:'./blog/case-study/real-estate/',
-    1:'./blog/case-study/donation/',
-    2:'./blog/case-study/stories/',
-    3:'./blog/case-study/self-assessment/',
-    4:'./blog/case-study/restaurant/',
-    5:'./blog/case-study/transportation/'
+    1:'./blog/case-study/business-software/',
+    2:'./blog/case-study/healthcare/',
+    3:'./blog/case-study/ecommerce-retail/',
+    4:'./blog/case-study/ai-automation/',
+    5:'./blog/case-study/travel-transportation/'
+  };
+  var CATEGORY_DESCRIPTIONS={
+    0:'Digital experiences and property platforms built for modern real estate businesses',
+    1:'Custom business software that turns complex workflows into simple digital systems',
+    2:'Healthcare platforms designed around real operational workflows and patient services',
+    3:'High-converting ecommerce experiences built for growing product brands',
+    4:'AI-powered sales, automation and intelligent business workflows',
+    5:'Travel and transportation platforms that connect customers, agents and operations'
   };
 
   function tune(){
     var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
     if(!root || !root.swiper) return false;
-
     var s=root.swiper, wrapper=root.querySelector('.swiper-wrapper');
     if(!wrapper) return false;
 
     if(s.autoplay) s.autoplay.stop();
     if(s.params.loop && typeof s.loopDestroy==='function') s.loopDestroy();
-
     s.params.loop=false;
 
     var slides=Array.prototype.slice.call(wrapper.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)'));
     var by={};
-    slides.forEach(function(el){
-      by[el.getAttribute('data-swiper-slide-index')]=el;
-    });
+    slides.forEach(function(el){by[el.getAttribute('data-swiper-slide-index')]=el;});
 
     CATEGORY_ORDER.forEach(function(idx){
       var slide=by[String(idx)];
       if(!slide) return;
-
       var title=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title');
       var link=slide.querySelector('.elementor-element-f11d2fd a.elementor-button');
       var desc=slide.querySelector('.elementor-element-5fd08fc');
-
       if(title) title.textContent=CATEGORY_NAMES[idx];
       if(link) link.href=CATEGORY_URLS[idx];
-      if(desc) desc.textContent={
-        0:'We delivered exceptional real estate projects of distinction',
-        1:'Charities campaigns reached global audiences with our support',
-        2:'Online retailers achieved growth through our effective tactics',
-        3:'We assisted educators in building self-learning strategies',
-        4:'Delivered restaurant industry project that set us apart',
-        5:'Look at how our transportation industry projects leading the way'
-      }[idx];
-
+      if(desc) desc.textContent=CATEGORY_DESCRIPTIONS[idx];
       wrapper.appendChild(slide);
     });
 
@@ -6015,11 +6009,7 @@ body.cf-modal-open{overflow:hidden}
     s.params.slidesPerView=4;
     s.params.spaceBetween=20;
     s.params.speed=1400;
-    s.params.autoplay={
-      delay:300,
-      disableOnInteraction:false,
-      pauseOnMouseEnter:true
-    };
+    s.params.autoplay={delay:300,disableOnInteraction:false,pauseOnMouseEnter:true};
     if(s.params.breakpoints){
       s.params.breakpoints=Object.assign({},s.params.breakpoints,{
         0:{slidesPerView:1,slidesPerGroup:1,spaceBetween:20},
@@ -6027,29 +6017,17 @@ body.cf-modal-open{overflow:hidden}
         1025:{slidesPerView:4,slidesPerGroup:1,spaceBetween:20}
       });
     }
-
     s.update();
-
-    if(typeof s.loopCreate==='function'){
-      s.params.loop=true;
-      s.loopCreate();
-      s.update();
-    }else{
-      s.params.loop=true;
-      s.update();
-    }
-
-    if(typeof s.slideToLoop==='function') s.slideToLoop(0,0,false);
-    else s.slideTo(0,0,false);
-
+    s.params.loop=true;
+    if(typeof s.loopCreate==='function') s.loopCreate();
+    s.update();
+    if(typeof s.slideToLoop==='function') s.slideToLoop(0,0,false); else s.slideTo(0,0,false);
     if(s.autoplay) s.autoplay.start();
     return true;
   }
 
   var tries=0;
-  var timer=setInterval(function(){
-    if(tune() || ++tries>40) clearInterval(timer);
-  },250);
+  var timer=setInterval(function(){if(tune() || ++tries>40) clearInterval(timer);},250);
 })();
 </script><script id="companyflow-counter-motion">
 (function(){
@@ -6078,6 +6056,41 @@ body.cf-modal-open{overflow:hidden}
    els.forEach(function(el){io.observe(el)});
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script><script id="companyflow-professionals-own-content">
+(function(){
+  var items=[
+    ['01','Custom Software','Business platforms built around your exact workflows'],
+    ['02','Web Development','Fast, responsive websites and landing pages that convert'],
+    ['03','E-commerce','Scalable online stores built for real products and real customers'],
+    ['04','AI Automation','AI agents and automations that reduce repetitive business work'],
+    ['05','UI / UX Design','Clear, modern interfaces designed around how people actually use products'],
+    ['06','Cloud & DevOps','Reliable deployment, hosting and infrastructure for production systems'],
+    ['07','Healthcare Platforms','Purpose-built digital tools for clinics, labs and healthcare teams'],
+    ['08','Travel Platforms','Booking, agent and operations systems for travel businesses'],
+    ['09','Business Automation','Connected workflows that keep sales, operations and customer service moving']
+  ];
+
+  function tune(){
+    var root=document.querySelector('.elementor-element-2b3344e .elementor-loop-container');
+    if(!root || !root.swiper) return false;
+    var slides=root.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)');
+    Array.prototype.forEach.call(slides,function(slide,i){
+      var item=items[i % items.length];
+      var num=slide.querySelector('.elementor-element-db3f3d1 .elementor-heading-title');
+      var title=slide.querySelector('.elementor-element-63d55ac .elementor-heading-title');
+      var desc=slide.querySelector('.elementor-element-b601661');
+      var button=slide.querySelector('.elementor-element-62167d6 .elementor-button-text');
+      if(num) num.textContent=item[0];
+      if(title) title.textContent=item[1];
+      if(desc) desc.textContent=item[2];
+      if(button) button.textContent='Explore';
+    });
+    return true;
+  }
+
+  var tries=0;
+  var timer=setInterval(function(){if(tune() || ++tries>40) clearInterval(timer);},250);
 })();
 </script></body>
 </html>
