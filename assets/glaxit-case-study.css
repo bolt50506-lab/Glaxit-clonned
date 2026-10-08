@@ -162,3 +162,95 @@ html,body{background:#10131a}
     white-space:normal!important;
   }
 }
+
+
+/* Final mobile override for the homepage Our Work carousel.
+   This block is intentionally scoped to <=767px so PC/tablet are unchanged. */
+@media (max-width:767px){
+  .elementor-element-0c05614{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  .elementor-element-0c05614 .elementor-loop-container{
+    display:flex!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    padding:0!important;
+  }
+  .elementor-element-0c05614 .swiper-wrapper{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:stretch!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .elementor-element-0c05614 .swiper-slide,
+  .elementor-element-0c05614 .swiper-slide-duplicate{
+    display:flex!important;
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin-right:20px!important;
+    box-sizing:border-box!important;
+    align-items:stretch!important;
+  }
+  .elementor-element-0c05614 .swiper-slide > .e-con-full,
+  .elementor-element-0c05614 .swiper-slide > .elementor-element-d381295,
+  .elementor-element-0c05614 .swiper-slide .elementor-element-d381295{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    flex:1 1 100%!important;
+    flex-basis:100%!important;
+    --flex-basis:100%!important;
+    --width:100%!important;
+    box-sizing:border-box!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-widget{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    flex:0 0 auto!important;
+    --width:100%!important;
+    --flex-basis:auto!important;
+    box-sizing:border-box!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-widget-image{
+    width:100%!important;
+    align-self:stretch!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-widget-image img{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    margin:0 auto!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-heading-title,
+  .elementor-element-0c05614 .swiper-slide .elementor-widget-text-editor,
+  .elementor-element-0c05614 .swiper-slide .elementor-widget-text-editor *,
+  .elementor-element-0c05614 .swiper-slide .elementor-button{
+    width:auto!important;
+    max-width:100%!important;
+    min-width:0!important;
+    white-space:normal!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
+    hyphens:none!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-heading-title{
+    display:block!important;
+  }
+  .elementor-element-0c05614 .swiper-slide .elementor-widget-text-editor{
+    display:block!important;
+  }
+}
