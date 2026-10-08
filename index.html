@@ -5952,31 +5952,34 @@ body.cf-modal-open{overflow:hidden}
 </style>
 <script id="companyflow-category-carousel-exact-script">
 (function(){
-  var CATEGORY_ORDER=[0,1,2,3,4,5];
-  var CATEGORY_NAMES={
-    0:'Real Estate',
-    1:'Business Software',
-    2:'Healthcare',
-    3:'E-commerce & Retail',
-    4:'AI & Automation',
-    5:'Travel & Travel & Transportation'
-  };
-  var CATEGORY_URLS={
-    0:'./blog/case-study/real-estate/',
-    1:'./blog/case-study/business-software/',
-    2:'./blog/case-study/healthcare/',
-    3:'./blog/case-study/ecommerce-retail/',
-    4:'./blog/case-study/ai-automation/',
-    5:'./blog/case-study/travel-transportation/'
-  };
-  var CATEGORY_DESCRIPTIONS={
-    0:'Digital experiences and property platforms built for modern real estate businesses',
-    1:'Custom business software that turns complex workflows into simple digital systems',
-    2:'Healthcare platforms designed around real operational workflows and patient services',
-    3:'High-converting ecommerce experiences built for growing product brands',
-    4:'AI-powered sales, automation and intelligent business workflows',
-    5:'Travel and transportation platforms that connect customers, agents and operations'
-  };
+  var ITEMS=[
+    {name:'Real Estate',desc:'Digital experiences and property platforms built for modern real estate businesses',url:'./blog/case-study/real-estate/',image:'./wp-content/uploads/2025/01/CompanyFlow.webp'},
+    {name:'Business Software',desc:'Custom business software that turns complex workflows into simple digital systems',url:'./blog/case-study/business-software/',image:'./wp-content/uploads/2025/01/CompanyFlow.webp'},
+    {name:'Healthcare',desc:'Healthcare platforms designed around real operational workflows and patient services',url:'./blog/case-study/healthcare/',image:'./wp-content/uploads/2025/01/LabStacks.webp'},
+    {name:'E-commerce & Retail',desc:'High-converting ecommerce experiences built for growing product brands',url:'./blog/case-study/ecommerce-retail/',image:'./wp-content/uploads/2025/01/Aurum.webp'},
+    {name:'AI & Automation',desc:'AI-powered sales, automation and intelligent business workflows',url:'./blog/case-study/ai-automation/',image:'./wp-content/uploads/2025/01/AgentHub.webp'},
+    {name:'Travel & Transportation',desc:'Travel and transportation platforms that connect customers, agents and operations',url:'./blog/case-study/travel-transportation/',image:'./wp-content/uploads/2025/01/Destino.webp'}
+  ];
+
+  function setSlide(slide,index){
+    var item=ITEMS[index];
+    if(!item) return;
+    var title=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title');
+    var desc=slide.querySelector('.elementor-element-5fd08fc');
+    var link=slide.querySelector('.elementor-element-f11d2fd a.elementor-button');
+    var img=slide.querySelector('.elementor-element-faa9c6a img');
+    if(title) title.textContent=item.name;
+    if(desc) desc.textContent=item.desc;
+    if(link) link.href=item.url;
+    if(img){
+      img.removeAttribute('data-lazyloaded');
+      img.src=item.image;
+      img.removeAttribute('srcset');
+      img.removeAttribute('data-srcset');
+      img.setAttribute('data-src',item.image);
+      img.alt=item.name+' — CompanyFlow';
+    }
+  }
 
   function tune(){
     var root=document.querySelector('.elementor-element-0c05614 .elementor-loop-container');
@@ -5984,50 +5987,29 @@ body.cf-modal-open{overflow:hidden}
     var s=root.swiper, wrapper=root.querySelector('.swiper-wrapper');
     if(!wrapper) return false;
 
-    if(s.autoplay) s.autoplay.stop();
-    if(s.params.loop && typeof s.loopDestroy==='function') s.loopDestroy();
-    s.params.loop=false;
-
-    var slides=Array.prototype.slice.call(wrapper.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)'));
-    var by={};
-    slides.forEach(function(el){by[el.getAttribute('data-swiper-slide-index')]=el;});
-
-    CATEGORY_ORDER.forEach(function(idx){
-      var slide=by[String(idx)];
-      if(!slide) return;
-      var title=slide.querySelector('.elementor-element-44e3b4d .elementor-heading-title');
-      var link=slide.querySelector('.elementor-element-f11d2fd a.elementor-button');
-      var desc=slide.querySelector('.elementor-element-5fd08fc');
-      if(title) title.textContent=CATEGORY_NAMES[idx];
-      if(link) link.href=CATEGORY_URLS[idx];
-      if(desc) desc.textContent=CATEGORY_DESCRIPTIONS[idx];
-      wrapper.appendChild(slide);
+    Array.prototype.forEach.call(wrapper.querySelectorAll('.swiper-slide'),function(slide){
+      var idx=parseInt(slide.getAttribute('data-swiper-slide-index'),10);
+      if(!isNaN(idx)) setSlide(slide,idx);
     });
 
     s.params.slidesPerGroup=1;
-    s.params.slidesPerGroupAuto=false;
-    s.params.slidesPerView=4;
-    s.params.spaceBetween=20;
     s.params.speed=1400;
+    s.params.spaceBetween=20;
     s.params.autoplay={delay:300,disableOnInteraction:false,pauseOnMouseEnter:true};
     if(s.params.breakpoints){
-      s.params.breakpoints=Object.assign({},s.params.breakpoints,{
-        0:{slidesPerView:1,slidesPerGroup:1,spaceBetween:20},
-        768:{slidesPerView:2,slidesPerGroup:1,spaceBetween:20},
-        1025:{slidesPerView:4,slidesPerGroup:1,spaceBetween:20}
-      });
+      s.params.breakpoints[0]={slidesPerView:1,slidesPerGroup:1,spaceBetween:20};
+      s.params.breakpoints[768]={slidesPerView:2,slidesPerGroup:1,spaceBetween:20};
+      s.params.breakpoints[1025]={slidesPerView:4,slidesPerGroup:1,spaceBetween:20};
     }
     s.update();
-    s.params.loop=true;
-    if(typeof s.loopCreate==='function') s.loopCreate();
-    s.update();
-    if(typeof s.slideToLoop==='function') s.slideToLoop(0,0,false); else s.slideTo(0,0,false);
     if(s.autoplay) s.autoplay.start();
     return true;
   }
 
   var tries=0;
-  var timer=setInterval(function(){if(tune() || ++tries>40) clearInterval(timer);},250);
+  var timer=setInterval(function(){
+    if(tune() || ++tries>60) clearInterval(timer);
+  },250);
 })();
 </script><script id="companyflow-counter-motion">
 (function(){
