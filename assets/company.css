@@ -187,3 +187,83 @@
  .cf-partners{padding:55px 20px 70px}.cf-partner-logos span{min-width:145px}
 }
 @media(prefers-reduced-motion:reduce){.cf-reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+
+/* FINAL COMPANY PAGE REFERENCE POLISH — keep CompanyFlow content, match the clone scale/motion */
+.cf-company-page .cf-founder-avatar,
+.cf-company-page .cf-expert-grid article i,
+.cf-company-page .cf-avatar-row img{overflow:hidden}
+.cf-company-page .cf-founder-avatar img,
+.cf-company-page .cf-expert-grid article i img,
+.cf-company-page .cf-avatar-row img{
+  display:block;
+  object-fit:cover;
+  object-position:center top;
+}
+.cf-company-page .cf-founder-avatar img{width:100%;height:100%}
+.cf-company-page .cf-expert-grid article i img{width:100%;height:100%}
+.cf-company-page .cf-avatar-row img{flex:0 0 auto}
+
+.cf-company-page .cf-vision-card span{
+  width:56px;height:56px;flex-basis:56px;
+  font-size:30px;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.cf-company-page .cf-play span{
+  width:72px;height:72px;
+  font-size:19px;
+  box-shadow:inset 0 0 0 8px #10150f,0 0 0 1px #23b293,0 12px 35px rgba(0,0,0,.22);
+}
+.cf-company-page .cf-expert-grid article i{
+  width:88px;height:88px;
+  top:-32px;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
+.cf-company-page .cf-expert-grid article{
+  padding-top:82px;
+}
+.cf-company-page .cf-avatar-row img{
+  width:50px;height:50px;
+}
+.cf-company-page .cf-reveal{
+  transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);
+}
+.cf-company-page .cf-reveal.is-visible .cf-vision-card,
+.cf-company-page .cf-reveal.is-visible .cf-expert-grid article{
+  animation:cfReferenceRise .85s cubic-bezier(.16,1,.3,1) both;
+}
+.cf-company-page .cf-reveal.is-visible .cf-vision-card:nth-child(2),
+.cf-company-page .cf-reveal.is-visible .cf-expert-grid article:nth-child(2){animation-delay:.08s}
+.cf-company-page .cf-reveal.is-visible .cf-vision-card:nth-child(3),
+.cf-company-page .cf-reveal.is-visible .cf-expert-grid article:nth-child(3){animation-delay:.16s}
+.cf-company-page .cf-reveal.is-visible .cf-expert-grid article:nth-child(4){animation-delay:.24s}
+.cf-company-page .cf-team-mini,
+.cf-company-page .cf-stat{transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.cf-company-page .cf-stat:hover{transform:translateY(-4px)}
+.cf-company-page .cf-avatar-row img{transition:transform .35s cubic-bezier(.16,1,.3,1),margin .35s}
+.cf-company-page .cf-avatar-row img:hover{transform:translateY(-7px) scale(1.08);z-index:3}
+.cf-company-page .cf-paper-front{animation:cfPaperFloat 5s ease-in-out infinite}
+.cf-company-page .cf-paper-back{animation:cfPaperBack 6s ease-in-out infinite}
+@keyframes cfReferenceRise{
+  from{opacity:0;transform:translate3d(0,38px,0) scale(.97)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@keyframes cfPaperFloat{
+  0%,100%{transform:translate3d(0,0,0) rotate(0)}
+  50%{transform:translate3d(0,-9px,0) rotate(-1.2deg)}
+}
+@keyframes cfPaperBack{
+  0%,100%{transform:rotate(10deg) translateY(0)}
+  50%{transform:rotate(8deg) translateY(-7px)}
+}
+@media(max-width:640px){
+  .cf-company-page .cf-play span{width:60px;height:60px;font-size:16px}
+  .cf-company-page .cf-vision-card span{width:48px;height:48px;flex-basis:48px;font-size:25px}
+  .cf-company-page .cf-expert-grid article i{width:72px;height:72px;top:-25px}
+  .cf-company-page .cf-expert-grid article{padding-top:68px}
+  .cf-company-page .cf-avatar-row img{width:34px;height:34px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cf-company-page .cf-paper-front,.cf-company-page .cf-paper-back{animation:none}
+}
