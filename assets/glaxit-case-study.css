@@ -383,3 +383,7 @@ html,body{background:#10131a}
     hyphens:none!important;
   }
 }
+
+/* Match the floating WhatsApp button to the exact icon used on the homepage. */
+.gx-wa{background:transparent url('../wp-content/uploads/2024/11/whatsapp-button-icon.png') center/contain no-repeat!important;border-radius:0!important;box-shadow:none!important;font-size:0!important;color:transparent!important;}
+.gx-wa svg{display:none!important;}
