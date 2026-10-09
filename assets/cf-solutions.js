@@ -82,21 +82,26 @@
     'staff-augmentation':'photo-1521737711867-e3b97375f902',
     'project-base':'photo-1460925895917-afdab827c52f'
   };
-  var slug = location.pathname.replace(/\\/+$/, '').split('/').pop();
+  var slug = location.pathname.replace(/\/+$/, '').split('/').pop();
   var photo = solutionVisuals[slug];
-  if (photo && document.querySelector('.sv-art')) {
-    var heroImage = 'https://images.unsplash.com/' + photo + '?auto=format&fit=crop&w=1200&q=85';
-    var art = document.querySelector('.sv-art');
-    art.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.08),rgba(10,20,16,.18)),url("' + heroImage + '")';
-    art.style.backgroundSize = 'cover';
-    art.style.backgroundPosition = 'center';
-    art.querySelectorAll('svg').forEach(function(svg){svg.style.display='none';});
+  if (photo) {
+    var stockImage = 'https://images.unsplash.com/' + photo + '?auto=format&fit=crop&w=1400&q=85';
+    // Apply the page-specific image to the hero illustration and the About Services collage.
+    document.querySelectorAll('.sv-art').forEach(function(art){
+      art.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.08),rgba(10,20,16,.22)),url("' + stockImage + '")';
+      art.style.backgroundSize = 'cover';
+      art.style.backgroundPosition = 'center';
+      art.querySelectorAll('svg').forEach(function(svg){svg.style.display='none';});
+    });
     var collage = document.querySelector('.sv-collage');
     if (collage) {
-      collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.22)),url("' + heroImage + '")';
+      collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.28)),url("' + stockImage + '")';
       collage.style.backgroundSize = 'cover';
       collage.style.backgroundPosition = 'center';
-      collage.querySelectorAll('.big,.small').forEach(function(el){el.style.background='rgba(255,255,255,.12)';el.style.backdropFilter='blur(2px)';});
+      collage.querySelectorAll('.big,.small').forEach(function(el){
+        el.style.background = 'rgba(255,255,255,.12)';
+        el.style.backdropFilter = 'blur(2px)';
+      });
     }
   }
 })();
