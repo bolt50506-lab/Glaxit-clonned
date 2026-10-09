@@ -46,4 +46,55 @@
     var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.style.animationPlayState='running';observer.unobserve(entry.target);}});},{threshold:.08});
     document.querySelectorAll('.sv-rv').forEach(function(el){el.style.animationPlayState='paused';observer.observe(el);});
   }
+
+  // Use contextual photography on the newly added solution pages instead of generic SVG mockups.
+  var solutionVisuals = {
+    'ai-automation':'photo-1677442136019-21780ecad995',
+    'ai-sales-agents':'photo-1551434678-e076c223a692',
+    'ai-solutions':'photo-1677442136019-21780ecad995',
+    'analytics-tracking':'photo-1460925895917-afdab827c52f',
+    'application-hardening':'photo-1550751827-4bd374c3f58b',
+    'authentication-access':'photo-155594共同',
+    'business-intelligence':'photo-1460925895917-afdab827c52f',
+    'business-management-systems':'photo-1556761175-b413da4baf72',
+    'cloud-infrastructure':'photo-1451187580459-43490279c0fa',
+    'content-systems':'photo-1497366754035-f200968a6e72',
+    'conversion-focused-landing-pages':'photo-1460925895917-afdab827c52f',
+    'creative-digital-experiences':'photo-1558655146-9f40138edfeb',
+    'custom-business-software':'photo-1551288049-bebda4e38f71',
+    'digital-growth':'photo-1552664730-d307ca884978',
+    'documentation-training':'photo-1516321318423-f06f85e504b3',
+    'domain-hosting':'photo-1451187580459-43490279c0fa',
+    'ecommerce-development':'photo-1556742049-0cfed4f6a45d',
+    'lead-generation':'photo-1552581234-26160f608093',
+    'mobile-web-apps':'photo-1512941937669-90a1b58e7e9c',
+    'performance-marketing':'photo-1460925895917-afdab827c52f',
+    'product-ui-ux':'photo-1586717791821-3f44a563fa4c',
+    'reliable-backups':'photo- backup',
+    'secure-business-systems':'photo-1550751827-4bd374c3f58b',
+    'security-reviews':'photo-1563013544-824ae1b704d3',
+    'seo':'photo-1432888622747-4eb9a8efeb07',
+    'technical-documentation':'photo-1516321318423-f06f85e504b3',
+    'ui-ux-product-design':'photo-1586717791821-3f44a563fa4c',
+    'website-content':'photo-1455390582262-044cdecka8b',
+    'websites-landing-pages':'photo-1460925895917-afdab827c52f',
+    'workflow-automation':'photo-1556761175-b413da4baf72'
+  };
+  var slug = location.pathname.replace(/\\/+$/, '').split('/').pop();
+  var photo = solutionVisuals[slug];
+  if (photo && document.querySelector('.sv-art')) {
+    var heroImage = 'https://images.unsplash.com/' + photo + '?auto=format&fit=crop&w=1200&q=85';
+    var art = document.querySelector('.sv-art');
+    art.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.08),rgba(10,20,16,.18)),url("' + heroImage + '")';
+    art.style.backgroundSize = 'cover';
+    art.style.backgroundPosition = 'center';
+    art.querySelectorAll('svg').forEach(function(svg){svg.style.display='none';});
+    var collage = document.querySelector('.sv-collage');
+    if (collage) {
+      collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.22)),url("' + heroImage + '")';
+      collage.style.backgroundSize = 'cover';
+      collage.style.backgroundPosition = 'center';
+      collage.querySelectorAll('.big,.small').forEach(function(el){el.style.background='rgba(255,255,255,.12)';el.style.backdropFilter='blur(2px)';});
+    }
+  }
 })();
