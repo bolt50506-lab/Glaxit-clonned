@@ -100,6 +100,7 @@
       if (icon) chip.appendChild(icon);
       chip.appendChild(document.createTextNode(index === 0 ? 'Built around your goals' : 'Support that scales with you'));
     });
+    document.querySelectorAll('.sv-chip').forEach(function(chip,index){var icon=chip.querySelector('i');chip.textContent='';if(icon)chip.appendChild(icon);chip.appendChild(document.createTextNode(index===0?'Built Around Your Goals':'Support That Scales With You'));});
     var collage = document.querySelector('.sv-collage');
     if (collage) {
       collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.28)),url("' + stockImage + '")';
