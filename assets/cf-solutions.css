@@ -134,3 +134,28 @@ body.cfs .cfs-tab{color:#d3dbd3!important;}
 body.cfs .cfs-tab.is-active{background:rgba(35,178,147,.16)!important;color:#39d5ad!important;}
 body.cfs .sv-formcard{background:#20271f!important;}
 body.cfs .sv-note{color:#b7c0b7!important;}
+
+
+/* Remove the stray white separator beneath the hero section. */
+body.cfs .sv-hero{
+  border-bottom:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+  margin-bottom:0!important;
+}
+body.cfs .sv-hero::after,
+body.cfs .sv-hero + hr{
+  display:none!important;
+  content:none!important;
+  border:0!important;
+  height:0!important;
+}
+body.cfs hr{
+  border:0!important;
+  height:0!important;
+  background:transparent!important;
+}
+body.cfs .sv-hero + section{
+  margin-top:0!important;
+  border-top:0!important;
+}
