@@ -33,3 +33,9 @@ body.cfs h1,body.cfs h2,body.cfs h3,body.cfs h4,body.cfs h5,body.cfs .cfs-menu,b
  .cfs-mobile h5{color:#23b293;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
  .cfs-mobile a.sub{font-size:13px;font-weight:500;padding-left:15px;color:#c7d1cc}
 }
+
+/* Contextual stock imagery on solution-page illustration panels */
+body.cfs .sv-art{background-color:#13211c;background-size:cover;background-position:center;background-repeat:no-repeat;}
+body.cfs .sv-art svg{display:block;}
+body.cfs .sv-art:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,20,16,.08),rgba(10,20,16,.18));pointer-events:none;}
+body.cfs .sv-collage{background-size:cover;background-position:center;background-repeat:no-repeat;}
