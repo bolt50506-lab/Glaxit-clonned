@@ -1,4 +1,5 @@
 name: Build CompanyFlow solutions pages
+# Generates the static HTML pages from tools/data.py.
 
 on:
   push:
