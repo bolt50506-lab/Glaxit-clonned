@@ -78,7 +78,9 @@
     'ui-ux-product-design':'photo-1586717791821-3f44a563fa4c',
     'website-content':'photo-1455390582262-044cdead277a',
     'websites-landing-pages':'photo-1460925895917-afdab827c52f',
-    'workflow-automation':'photo-1556761175-b413da4baf72'
+    'workflow-automation':'photo-1556761175-b413da4baf72',
+    'staff-augmentation':'photo-1521737711867-e3b97375f902',
+    'project-base':'photo-1460925895917-afdab827c52f'
   };
   var slug = location.pathname.replace(/\\/+$/, '').split('/').pop();
   var photo = solutionVisuals[slug];
