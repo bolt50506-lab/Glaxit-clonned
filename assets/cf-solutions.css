@@ -171,3 +171,7 @@ body.cfs .sv-line{
   background:transparent!important;
   box-shadow:none!important;
 }
+
+/* Use the same homepage WhatsApp button artwork on every Solutions page. */
+body.cfs .cfs-wa{background:transparent url('../wp-content/uploads/2024/11/whatsapp-button-icon.png') center/contain no-repeat!important;border-radius:0!important;box-shadow:none!important;font-size:0!important;color:transparent!important;}
+body.cfs .cfs-wa svg{display:none!important;}
