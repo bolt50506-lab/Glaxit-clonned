@@ -1,0 +1,47 @@
+name: Build CompanyFlow solutions pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tools/**'
+      - 'assets/cf-solutions.css'
+      - 'assets/cf-solutions.js'
+      - '.github/workflows/build-solutions.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: companyflow-solutions-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Generate solutions pages and update inner-page headers
+        run: python tools/build_solutions.py --patch-existing
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add solutions staff-augmentation/index.html project-base/index.html
+          git add -u -- '*/index.html'
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit."
+          else
+            git commit -m "Build CompanyFlow solutions pages"
+            git push origin HEAD:main
+          fi
