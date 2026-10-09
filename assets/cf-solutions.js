@@ -112,3 +112,48 @@
     }
   }
 })();
+
+/* CompanyFlow footer newsletter forms -> Google Forms response storage */
+(function(){
+  var endpoint='https://docs.google.com/forms/d/e/1FAIpQLSeLpYPYRNYqacT73pIK3WpSHHnsVUKbq_H24jbR_NLoL9HBJg/formResponse';
+  function connectNewsletter(form){
+    if(form.dataset.cfGoogleConnected==='true') return;
+    form.dataset.cfGoogleConnected='true';
+    form.addEventListener('submit',function(event){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      var emailInput=form.querySelector('input[type="email"],input[name*="email" i]');
+      if(!emailInput || !emailInput.value.trim() || !/^\S+@\S+\.\S+$/.test(emailInput.value.trim())){
+        if(emailInput){emailInput.setCustomValidity('Please enter a valid email address.');emailInput.reportValidity();emailInput.addEventListener('input',function(){emailInput.setCustomValidity('');},{once:true});}
+        return;
+      }
+      var button=form.querySelector('button[type="submit"],button:not([type])');
+      var original=button ? button.innerHTML : '';
+      if(button){button.disabled=true;button.innerHTML='Sending…';}
+      var fields={
+        'entry.1586367275':'Newsletter',
+        'entry.302503920':'Subscriber',
+        'entry.1886860072':emailInput.value.trim(),
+        'entry.640535184':'',
+        'entry.87836562':'Newsletter subscription request',
+        'entry.1859604813':'Website footer newsletter'
+      };
+      var data=new URLSearchParams();
+      Object.keys(fields).forEach(function(key){data.append(key,fields[key]);});
+      fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString(),keepalive:true}).then(function(){
+        if(button){button.innerHTML='Subscribed ✓';}
+        form.reset();
+        var note=form.querySelector('.cf-newsletter-status');
+        if(!note){note=document.createElement('p');note.className='cf-newsletter-status';note.setAttribute('role','status');note.style.cssText='font-size:12px;margin:8px 0 0;color:inherit';form.appendChild(note);}
+        note.textContent='Thanks — your email has been submitted.';
+        setTimeout(function(){if(button){button.disabled=false;button.innerHTML=original;}},2200);
+      }).catch(function(){
+        if(button){button.disabled=false;button.innerHTML=original;}
+        var note=form.querySelector('.cf-newsletter-status');
+        if(!note){note=document.createElement('p');note.className='cf-newsletter-status';note.setAttribute('role','status');note.style.cssText='font-size:12px;margin:8px 0 0;color:inherit';form.appendChild(note);}
+        note.textContent='Could not submit right now. Please try again.';
+      });
+    },true);
+  }
+  document.querySelectorAll('form.gx-footer-form').forEach(connectNewsletter);
+})();
