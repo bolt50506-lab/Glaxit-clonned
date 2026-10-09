@@ -44,3 +44,62 @@ body.cfs .sv-collage{background-size:cover;background-position:center;background
 /* Keep About Services photography clean by removing decorative placeholder shapes and cards. */
 body.cfs .sv-collage:before,body.cfs .sv-collage:after,body.cfs .sv-collage .big,body.cfs .sv-collage .small,body.cfs .sv-collage .sv-badge{display:none!important;}
 body.cfs .sv-collage{background-color:#13211c;}
+
+
+/* Site-wide visual polish for CompanyFlow solution pages — aligned with the homepage palette. */
+body.cfs{
+  --cf-ink:#181c14;--cf-muted:#5f6b61;--cf-blue:#0e8e75;--cf-cyan:#23b293;
+  --cf-line:rgba(14,142,117,.16);--cf-soft:#edf5ef;--cf-white:#f8faf6;
+  --cf-shadow:0 18px 50px rgba(24,44,31,.09);
+  background:#f3f7f1!important;color:#181c14;
+  font-family:"Plus Jakarta Sans","Montserrat",sans-serif;
+}
+body.cfs h1,body.cfs h2,body.cfs h3,body.cfs h4,body.cfs h5,
+body.cfs .cfs-menu,body.cfs .cfs-mobile{font-family:"Poppins","Plus Jakarta Sans",sans-serif;}
+body.cfs main,body.cfs .sv-main{background:#f3f7f1;}
+body.cfs .sv-hero{
+  background:radial-gradient(ellipse at 82% 24%,rgba(35,178,147,.18),transparent 34%),
+  linear-gradient(135deg,#edf5ef 0%,#f7f8f3 56%,#e4f2e9 100%);
+  position:relative;isolation:isolate;
+}
+body.cfs .sv-hero:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:radial-gradient(rgba(14,142,117,.12) .8px,transparent .8px);background-size:22px 22px;
+  mask-image:linear-gradient(90deg,transparent,black 85%);opacity:.32;}
+body.cfs .sv-hero h1,body.cfs .sv-h2{color:#181c14;}
+body.cfs .sv-hero p,body.cfs .sv-about p,body.cfs .sv-ben-sub{color:#5f6b61;}
+body.cfs .sv-about,body.cfs .sv-ben,body.cfs .sv-exp{background:#f8faf6;}
+body.cfs .sv-tech,body.cfs .sv-faq,body.cfs .sv-form{background:#eaf2eb;}
+body.cfs .sv-art{border:1px solid rgba(14,142,117,.18);border-radius:28px;box-shadow:0 24px 65px rgba(24,44,31,.12);}
+body.cfs .sv-collage{border:1px solid rgba(14,142,117,.18);box-shadow:0 24px 65px rgba(24,44,31,.10);}
+body.cfs .sv-card,body.cfs .sv-formcard{background:#fbfcf8;border-color:rgba(14,142,117,.16);box-shadow:0 14px 38px rgba(24,44,31,.07);}
+body.cfs .sv-card:hover{border-color:rgba(14,142,117,.4);box-shadow:0 22px 45px rgba(24,44,31,.12);}
+body.cfs .sv-tile,body.cfs .sv-b{background:#f8faf6;border-color:rgba(14,142,117,.16);}
+body.cfs .sv-tile:hover{background:#e1f2e8;border-color:#23b293;transform:translateY(-3px);}
+body.cfs .sv-tile,body.cfs .sv-card,body.cfs .sv-b,body.cfs .sv-q,body.cfs .sv-chip{transition:background-color .25s ease,border-color .25s ease,box-shadow .25s ease,transform .25s ease;}
+body.cfs .sv-chip{background:#f8faf6;border-color:rgba(14,142,117,.2);color:#27382d;}
+body.cfs .sv-chip:hover{background:#e1f2e8;transform:translateY(-2px);}
+body.cfs .sv-techpanel .sv-tile{border-radius:16px;}
+body.cfs .sv-qart{background:linear-gradient(145deg,#dceee2,#eff5ed);border:1px solid rgba(14,142,117,.15);}
+body.cfs .sv-q{border-bottom-color:rgba(14,142,117,.18);}
+body.cfs .sv-q summary{color:#202b22;}
+body.cfs .sv-formcard input,body.cfs .sv-formcard textarea{background:#f8faf6;border-color:#d5e3d7;color:#181c14;transition:border-color .2s,box-shadow .2s,background .2s;}
+body.cfs .sv-formcard input:focus,body.cfs .sv-formcard textarea:focus{background:#fff;border-color:#23b293;box-shadow:0 0 0 4px rgba(35,178,147,.13);}
+body.cfs .cfs-btn,body.cfs .cfs-contact{background:linear-gradient(120deg,#0e8e75,#23b293);border-radius:12px;letter-spacing:.005em;transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;}
+body.cfs .cfs-btn:hover,body.cfs .cfs-contact:hover{transform:translateY(-3px);filter:saturate(1.12);box-shadow:0 15px 30px rgba(14,142,117,.27);}
+body.cfs .sv-cta{background:linear-gradient(115deg,#181c14 0%,#164d3d 52%,#0e8e75 100%);}
+body.cfs .sv-cta .cfs-btn{background:#f6faf4;color:#0e8e75!important;}
+body.cfs .sv-cta .cfs-btn:last-child{background:transparent;color:#fff!important;border-color:rgba(255,255,255,.48);}
+body.cfs .cfs-footer{background:#181c14;}
+body.cfs .cfs-footer a{transition:color .2s ease;}
+body.cfs .cfs-wa{transition:transform .25s ease,box-shadow .25s ease;}
+body.cfs .cfs-wa:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 14px 32px rgba(31,189,104,.35);}
+@keyframes cfSoftReveal{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+body.cfs .sv-rv{animation:cfSoftReveal .72s cubic-bezier(.2,.7,.2,1) both;}
+body.cfs .sv-rv:nth-child(2){animation-delay:.08s;}
+body.cfs .sv-rv:nth-child(3){animation-delay:.16s;}
+@media(prefers-reduced-motion:reduce){body.cfs *,body.cfs *:before,body.cfs *:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}}
+@media(max-width:760px){
+  body.cfs .sv-hero{background:linear-gradient(145deg,#edf5ef,#f7f8f3 72%,#e4f2e9);}
+  body.cfs .sv-art,body.cfs .sv-collage{border-radius:20px;}
+  body.cfs .sv-cta{padding:46px 0;}
+}
