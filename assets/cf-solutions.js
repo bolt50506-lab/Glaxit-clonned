@@ -86,30 +86,49 @@
   var photo = solutionVisuals[slug];
   if (photo) {
     var stockImage = 'https://images.unsplash.com/' + photo + '?auto=format&fit=crop&w=1400&q=85';
-    // Apply the page-specific image to the hero illustration and the About Services collage.
-    document.querySelectorAll('.sv-art').forEach(function(art){
-      art.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.08),rgba(10,20,16,.22)),url("' + stockImage + '")';
-      art.style.backgroundSize = 'cover';
-      art.style.backgroundPosition = 'center';
-      art.querySelectorAll('svg').forEach(function(svg){svg.style.display='none';});
-    });
-    // Use wording that matches Glaxit's original company messaging.
+    var fallbackImage = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80';
+    function applyPhoto(url) {
+      document.querySelectorAll('.sv-art').forEach(function(art){
+        art.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.08),rgba(10,20,16,.22)),url("' + url + '")';
+        art.style.backgroundSize = 'cover';
+        art.style.backgroundPosition = 'center';
+        art.style.backgroundRepeat = 'no-repeat';
+        art.querySelectorAll('svg').forEach(function(svg){svg.style.display='none';});
+      });
+      var collage = document.querySelector('.sv-collage');
+      if (collage) {
+        collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.28)),url("' + url + '")';
+        collage.style.backgroundSize = 'cover';
+        collage.style.backgroundPosition = 'center';
+        collage.style.backgroundRepeat = 'no-repeat';
+        collage.querySelectorAll('.big,.small').forEach(function(el){
+          el.style.background = 'rgba(255,255,255,.12)';
+          el.style.backdropFilter = 'blur(2px)';
+        });
+      }
+    }
+    // Preload first so broken or blocked stock-image URLs never leave an empty hero.
+    var probe = new Image();
+    probe.onload = function(){ applyPhoto(stockImage); };
+    probe.onerror = function(){
+      var fallback = new Image();
+      fallback.onload = function(){ applyPhoto(fallbackImage); };
+      fallback.onerror = function(){
+        document.querySelectorAll('.sv-art').forEach(function(art){
+          art.style.backgroundImage = 'linear-gradient(135deg,#17382e,#23b293)';
+          art.querySelectorAll('svg').forEach(function(svg){svg.style.display='block';});
+        });
+      };
+      fallback.src = fallbackImage;
+    };
+    probe.src = stockImage;
+    // Keep the service-specific labels used in the original CompanyFlow design.
     document.querySelectorAll('.sv-chip').forEach(function(chip,index){
       var icon=chip.querySelector('i');
       chip.textContent='';
       if(icon)chip.appendChild(icon);
       chip.appendChild(document.createTextNode(index===0?'Our Vision':'Our Mission'));
     });
-    var collage = document.querySelector('.sv-collage');
-    if (collage) {
-      collage.style.backgroundImage = 'linear-gradient(180deg,rgba(10,20,16,.04),rgba(10,20,16,.28)),url("' + stockImage + '")';
-      collage.style.backgroundSize = 'cover';
-      collage.style.backgroundPosition = 'center';
-      collage.querySelectorAll('.big,.small').forEach(function(el){
-        el.style.background = 'rgba(255,255,255,.12)';
-        el.style.backdropFilter = 'blur(2px)';
-      });
-    }
   }
 })();
 
