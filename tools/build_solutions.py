@@ -102,15 +102,15 @@ def footer(R):
          ("AI Automation","ai-automation"),("Application Security","application-hardening"),("Digital Growth","digital-growth")]
     ql = "".join('<li><a href="%ssolutions/%s/">%s</a></li>' % (R, s, E(n)) for n, s in q)
     return ('<footer class="cfs-footer"><div class="cfs-fgrid"><div class="cfs-fbrand"><a href="%(R)s"><img src="%(R)sassets/companyflow-logo-new.svg" alt="CompanyFlow"></a>'
-      '<p>Step into the future of practical digital solutions, where technology meets your business challenges and drives impactful growth.</p><div class="cfs-soc"><a href="https://www.linkedin.com/" aria-label="LinkedIn">in</a><a href="https://x.com/" aria-label="X">X</a></div></div>'
+      '<p>Step into the future of practical digital solutions, where technology meets your business challenges and drives impactful growth.</p><div class="cfs-soc"><a href="https://www.linkedin.com/" aria-label="LinkedIn">in</a><a href="https://x.com/" aria-label="X">X</a><a href="https://www.facebook.com/" aria-label="Facebook">f</a><a href="https://www.instagram.com/" aria-label="Instagram">ig</a><a href="https://www.pinterest.com/" aria-label="Pinterest">P</a></div></div>'
       '<div><h3>Quick Links</h3><ul>%(ql)s</ul></div>'
       '<div><h3>Company</h3><ul><li><a href="%(R)scompany/">Company</a></li><li><a href="%(R)sblog/case-study/">Projects</a></li><li><a href="%(R)sstaff-augmentation/">Staff Augmentation</a></li><li><a href="%(R)sproject-base/">Project Base</a></li><li><a href="%(R)scontact-us/">Contact Us</a></li><li><a href="%(R)sprivacy-policy/">Privacy Policy</a></li><li><a href="%(R)sterms-and-conditions/">Terms &amp; Conditions</a></li></ul></div>'
-      '<div><h3>Contact Us</h3><div class="cfs-fline">&#9993; <a href="mailto:alihotspot1@gmail.com">alihotspot1@gmail.com</a></div><div class="cfs-fline">&#9742; <a href="tel:+923407465567">+92 340 746 5567</a></div><a class="cfs-btn sq" style="margin-top:14px" href="%(R)scontact-us/">Start an Enquiry &#8599;</a></div></div>'
+      '<div><h3>Contact Us</h3><div class="cfs-fline">&#9993; <a href="mailto:alihotspot1@gmail.com">alihotspot1@gmail.com</a></div><div class="cfs-fline">&#9742; <a href="tel:+923407465567">+92 340 746 5567</a></div><a class="cfs-btn sq" style="margin-top:14px" href="%(R)scontact-us/">Start an Enquiry &#8599;</a><form class="cfs-news" onsubmit="return false"><input type="email" placeholder="Enter email address" aria-label="Email address"><button type="submit" aria-label="Subscribe">&rarr;</button></form></div></div>'
       '<div class="cfs-fbottom">&copy; 2026 CompanyFlow. All Rights Reserved</div></footer>'
       '<a class="cfs-wa" href="%(wa)s" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1l-1 1.2c-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.3-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.100 3.200 5.100 4.500 1.900.8 2.600.9 3.500.7.600-.1 1.800-.7 2-1.400.3-.7.3-1.300.2-1.400-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 00-8.600 15L2 22l5.200-1.400A10 10 0 1012 2z"/></svg></a>'
       '<script src="%(R)sassets/cf-solutions.js" defer></script></body></html>') % dict(R=R, ql=ql, wa=WA)
 
-CTA = ('<section class="sv-cta"><div class="sv-wrap sv-cta-in"><h2>Your Solutions Are One Call Away Lets Reach Out Today!</h2>'
+CTA = ('<section class="sv-cta"><div class="sv-wrap sv-cta-in sv-rv"><h2>Your Solutions Are One Call Away Lets Reach Out Today!</h2>'
        '<div class="sv-cta-btns"><a class="cfs-btn sq" href="%(R)scontact-us/">Contact Us</a><a class="cfs-btn sq" href="' + WA.replace('%','%%') + '">Talk Now</a></div></div></section>')
 
 # ---------- service page ----------
