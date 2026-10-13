@@ -15,14 +15,16 @@
  <section class="intro">
   <p class="eyebrow">ONE-TIME MIGRATION TOOL</p>
   <h1>Bring your existing pages into the editor</h1>
-  <p>Select the extracted website repository folder. This tool reads HTML files locally in your browser, extracts page metadata and basic content sections, and imports them as <b>drafts</b> into the CompanyFlow CMS.</p>
-  <div class="warning"><b>Important:</b> This does not copy exact CSS/layouts into the editor and does not publish to the live website. Keep your source repository as the original. Imported pages are drafts for review.</div>
+  <p>Load the HTML files directly from the CompanyFlow development branch or select a local repository folder. The tool extracts page metadata and basic content sections, then imports them as <b>drafts</b> into the CompanyFlow CMS.</p>
+  <div class="warning"><b>Important:</b> This does not copy exact CSS/layouts into the editor and does not publish to the live website. Imported pages are drafts for review. The GitHub source must be publicly readable for direct loading.</div>
  </section>
  <section class="panel">
-  <h2>1. Choose the website folder</h2>
-  <p class="muted">Download the <code>feature/companyflow-admin-panel</code> branch ZIP from GitHub, extract it, then select the extracted repository folder below. The browser will only read the files you select.</p>
-  <label class="folder-picker" for="folderInput"><span class="folder-icon">▣</span><span><b>Select extracted repository folder</b><small>HTML files are scanned locally; nothing is uploaded as a ZIP.</small></span><input id="folderInput" type="file" webkitdirectory directory multiple accept=".html,.htm,text/html"></label>
-  <p id="folderStatus" class="status" role="status">No folder selected yet.</p>
+  <h2>1. Load website source</h2>
+  <p class="muted">Recommended: load the current <code>feature/companyflow-admin-panel</code> branch directly. Or select the extracted repository folder from your computer.</p>
+  <div class="source-actions"><button id="remoteBtn" class="primary">Load HTML from GitHub branch</button><span class="muted">Repository: bolt50506-lab/Glaxit-clonned</span></div>
+  <div class="or-divider"><span>OR SELECT LOCAL FOLDER</span></div>
+  <label class="folder-picker" for="folderInput"><span class="folder-icon">▣</span><span><b>Select extracted repository folder</b><small>HTML files are read locally; nothing is uploaded as a ZIP.</small></span><input id="folderInput" type="file" webkitdirectory directory multiple accept=".html,.htm,text/html"></label>
+  <p id="folderStatus" class="status" role="status">No source loaded yet.</p>
   <div id="fileSummary" class="file-summary hidden"></div>
  </section>
  <section class="panel">
