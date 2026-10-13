@@ -44,6 +44,21 @@ The admin interface has no password form; it uses Supabase's email magic-link fl
 - JSON-valued global settings.
 - SEO metadata completeness report.
 
+## Import existing static HTML pages
+
+The isolated admin includes a browser-based migration helper at `/admin/import-pages.html`.
+
+1. Download the ZIP for the `feature/companyflow-admin-panel` branch and extract it locally.
+2. Sign in to the authorised admin account on the **isolated preview deployment**.
+3. Open **Import website pages** in the dashboard.
+4. Select the extracted repository folder. The browser scans HTML files locally and excludes admin pages, WordPress internals, vendor libraries and assets.
+5. Review the detected page list. Leave **Update existing CMS pages** unchecked for a safe first run.
+6. Import selected pages. All imported records are saved as **drafts** and revision snapshots are created.
+
+The importer extracts page titles, meta descriptions, canonical URLs and starter sections from headings, paragraphs and images. It does **not** reproduce exact CSS, layouts, animations or scripts. Review imported content in the visual editor. If the repository contains duplicate slugs, import only the intended version. Do not run an import from an untrusted folder.
+
+The importer only works when this branch's admin files are actually deployed on a preview site and the authenticated browser session can access the dedicated CMS Supabase project. Creating the files in GitHub alone does not deploy them.
+
 ## Important publishing boundary
 
 The current public site is still static HTML. The CMS stores editable content in Supabase, but the public site has **not** yet been connected to consume these records, and saving/publishing a CMS record does not update the public website. The next phase must implement and test a controlled export/publish adapter that preserves the existing markup, CSS, animation, URLs, metadata, and generated solution pages. Keep all work on this branch and do not merge/deploy until preview tests pass.
