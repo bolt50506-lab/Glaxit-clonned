@@ -265,12 +265,12 @@ document.addEventListener('click',async e=>{
   const preview=e.target.closest('[data-preview-page]');if(preview){previewPage(preview.dataset.previewPage);return;}
   const delAsset=e.target.closest('[data-delete-asset]');if(delAsset){await deleteAsset(delAsset.dataset.deleteAsset);return;}
   const copy=e.target.closest('[data-copy-url]');if(copy){try{await navigator.clipboard.writeText(copy.dataset.copyUrl);showNotice('Public asset URL copied.');}catch{showNotice('Could not access clipboard; open the asset and copy its URL.',true);}return;}
-  const editSetting=e.target.closest('[data-edit-setting]');if(editSetting){const setting=state.settings.find(s=>s.setting_key===editSetting.dataset.editSetting);if(setting){$('settingKey').value=setting.setting_key;$('settingValue').value=JSON.stringify(setting.setting_value,null,2);$('settingKey').readOnly=true;navigate('settings');$('settingsForm').scrollIntoView({behavior:'smooth'});}return;}
+  const editSetting=e.target.closest('[data-edit-setting]');if(editSetting){const setting=state.settings.find(s=>s.setting_key===editSetting.dataset.editSetting);if(setting){$('settingKey').value=setting.setting_key;$('settingKey').readOnly=false;$('settingValue').value=JSON.stringify(setting.setting_value,null,2);navigate('settings');$('settingsForm').scrollIntoView({behavior:'smooth'});}return;}
   const delSetting=e.target.closest('[data-delete-setting]');if(delSetting){await deleteSetting(delSetting.dataset.deleteSetting);return;}
   const restore=e.target.closest('[data-restore-revision]');if(restore){await restoreRevision(restore.dataset.restoreRevision);return;}
   const view=e.target.closest('[data-view-revision]');if(view){viewRevision(view.dataset.viewRevision);}
 });
-$('settingKey').addEventListener('input',()=>{$('settingKey').readOnly=false;});
+
 
 try {
   const {data,error}=await supabase.auth.getSession();
