@@ -89,6 +89,7 @@ function openEditor(page=null) {
   $('pageEditor').classList.remove('hidden');
   $('editorHeading').textContent=page?'Edit page':'Create page';
   $('pageId').value=page?.id||'';
+  $('pageSlug').dataset.touched=page?'true':'false';
   $('pageTitle').value=page?.title||'';
   $('pageSlug').value=page?.slug||'';
   $('pageType').value=page?.page_type||'page';
@@ -147,8 +148,9 @@ async function deletePage(id) {
 }
 function previewPage(id) {
   const page=state.pages.find(p=>p.id===id);if(!page)return;
-  const win=window.open('','_blank','noopener,noreferrer');
+  const win=window.open('about:blank','_blank');
   if(!win){showNotice('Please allow pop-ups to preview the structured content.',true);return;}
+  win.opener=null;
   const safe=escapeHtml(JSON.stringify(page.content,null,2));
   win.document.write('<!doctype html><html><head><title>'+escapeHtml(page.title)+' — CMS content preview</title><meta name="robots" content="noindex,nofollow"><style>body{font:14px system-ui;max-width:900px;margin:40px auto;padding:0 20px;color:#17202b}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f4f7f9;padding:20px;border-radius:10px}</style></head><body><h1>'+escapeHtml(page.title)+'</h1><p>This is a structured content preview, not the rendered public page.</p><pre>'+safe+'</pre></body></html>');
   win.document.close();
@@ -199,7 +201,7 @@ async function saveSetting(event) {
   const key=$('settingKey').value.trim();
   const {error}=await supabase.from('cms_settings').upsert({setting_key:key,setting_value:value,updated_by:state.user.id,updated_at:new Date().toISOString()});
   if(error){showNotice('Could not save setting: '+error.message,true);return;}
-  await refreshAll();showNotice('Setting saved.');
+  await refreshAll();$('settingKey').readOnly=false;showNotice('Setting saved.');
 }
 async function loadRevisions() {
   const {data,error}=await supabase.from('cms_revisions').select('*, cms_pages(title,slug)').order('created_at',{ascending:false}).limit(100);
@@ -213,6 +215,7 @@ async function loadRevisions() {
 async function viewRevision(id) {
   const r=state.revisions.find(x=>x.id===id);if(!r)return;
   const win=window.open('','_blank','noopener,noreferrer');if(!win){showNotice('Please allow pop-ups to view revision JSON.',true);return;}
+  win.opener=null;
   win.document.write('<!doctype html><html><head><title>CMS revision</title><meta name="robots" content="noindex,nofollow"><style>body{font:13px system-ui;max-width:900px;margin:35px auto;padding:0 20px}pre{white-space:pre-wrap;background:#f5f7fa;padding:18px}</style></head><body><h1>Revision snapshot</h1><pre>'+escapeHtml(JSON.stringify(r.snapshot,null,2))+'</pre></body></html>');win.document.close();
 }
 async function restoreRevision(id) {
@@ -265,7 +268,7 @@ document.addEventListener('click',async e=>{
   const preview=e.target.closest('[data-preview-page]');if(preview){previewPage(preview.dataset.previewPage);return;}
   const delAsset=e.target.closest('[data-delete-asset]');if(delAsset){await deleteAsset(delAsset.dataset.deleteAsset);return;}
   const copy=e.target.closest('[data-copy-url]');if(copy){try{await navigator.clipboard.writeText(copy.dataset.copyUrl);showNotice('Public asset URL copied.');}catch{showNotice('Could not access clipboard; open the asset and copy its URL.',true);}return;}
-  const editSetting=e.target.closest('[data-edit-setting]');if(editSetting){const setting=state.settings.find(s=>s.setting_key===editSetting.dataset.editSetting);if(setting){$('settingKey').value=setting.setting_key;$('settingKey').readOnly=false;$('settingValue').value=JSON.stringify(setting.setting_value,null,2);navigate('settings');$('settingsForm').scrollIntoView({behavior:'smooth'});}return;}
+  const editSetting=e.target.closest('[data-edit-setting]');if(editSetting){const setting=state.settings.find(s=>s.setting_key===editSetting.dataset.editSetting);if(setting){$('settingKey').value=setting.setting_key;$('settingKey').readOnly=true;$('settingValue').value=JSON.stringify(setting.setting_value,null,2);navigate('settings');$('settingsForm').scrollIntoView({behavior:'smooth'});}return;}
   const delSetting=e.target.closest('[data-delete-setting]');if(delSetting){await deleteSetting(delSetting.dataset.deleteSetting);return;}
   const restore=e.target.closest('[data-restore-revision]');if(restore){await restoreRevision(restore.dataset.restoreRevision);return;}
   const view=e.target.closest('[data-view-revision]');if(view){viewRevision(view.dataset.viewRevision);}
