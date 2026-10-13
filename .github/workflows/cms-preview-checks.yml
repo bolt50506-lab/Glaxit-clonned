@@ -51,8 +51,8 @@ jobs:
 
       - name: Validate browser JavaScript syntax
         run: |
-          node --check admin/admin.js
-          node --check admin/builder.js
+          node --input-type=module --check < admin/admin.js
+          node --input-type=module --check < admin/builder.js
           echo "Browser JavaScript syntax is valid."
 
       - name: Validate local admin asset references
