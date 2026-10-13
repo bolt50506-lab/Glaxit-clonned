@@ -16,8 +16,9 @@ function cleanText(el){return (el?.textContent||'').replace(/\s+/g,' ').trim()}
 function meta(doc,name,attr='name'){return doc.querySelector('meta['+attr+'="'+name+'"]')?.content?.trim()||''}
 function pageType(path){if(/^solutions\//i.test(path))return 'solution';if(/case-stud|project/i.test(path))return 'case-study';if(/landing/i.test(path))return 'landing';return 'page'}
 function slugFromPath(path){let p=path.replace(/\\/g,'/').replace(/^\.\//,'').replace(/(^|\/)index\.html?$/i,'').replace(/\.html?$/i,'').replace(/^\/+|\/+$/g,'');return p||'home'}
-function absoluteUrl(value,doc){try{return new URL(value,doc.baseURI).href}catch{return ''}}
-function extractSections(doc,canonical){
+function absoluteUrl(value,baseUrl){try{return new URL(value,baseUrl||'https://companyflow.co.uk/').href}catch{return ''}}
+function extractSections(doc,canonical,sourcePath){
+ const pageBase=canonical||new URL(sourcePath||'/', 'https://companyflow.co.uk/').href;
  const root=doc.querySelector('main')||doc.querySelector('[role="main"]')||doc.body;
  let source=[...root.querySelectorAll('section')].filter(s=>!s.parentElement?.closest('section'));
  if(!source.length)source=[root];
@@ -30,8 +31,8 @@ function extractSections(doc,canonical){
   const title=cleanText(heading), text=paras.join('\n\n');
   if(!title&&!text&&!img)continue;
   const isHero=!!node.querySelector('h1')&&!out.some(s=>s.type==='hero');
-  const imageUrl=img?absoluteUrl(img.getAttribute('src'),doc):'';
-  const btnUrl=button?.tagName==='A'?absoluteUrl(button.getAttribute('href'),doc):'';
+  const imageUrl=img?absoluteUrl(img.getAttribute('src'),pageBase):'';
+  const btnUrl=button?.tagName==='A'?absoluteUrl(button.getAttribute('href'),pageBase):'';
   const section={type:isHero?'hero':img?'image':'text',eyebrow:'',title:title.slice(0,180),text:text.slice(0,1800),buttonText:button?cleanText(button).slice(0,80):'',buttonUrl:btnUrl,background:isHero?'#111a22':'#ffffff',align:isHero?'center':'left'};
   if(img){section.imageUrl=imageUrl;section.imageAlt=img.getAttribute('alt')||''}
   if(!section.title&&!section.text&&!section.imageUrl)continue;
@@ -65,9 +66,9 @@ async function scan(){
    const canonical=doc.querySelector('link[rel="canonical"]')?.href||'';
    const description=meta(doc,'description');
    const slug=slugFromPath(path);
-   const sections=extractSections(doc,canonical);
+   const sections=extractSections(doc,canonical,path);
    const firstImg=doc.querySelector('main img[src], body img[src]');
-   pages.push({slug,title,page_type:pageType(slug),status:'draft',content:{sections,importedFrom:{sourcePath:path,canonicalUrl:canonical,importedAt:new Date().toISOString(),note:'Content and metadata were extracted from the static HTML. Original CSS, animation and exact layout are not converted; review before any future publishing.'}},seo_title:doc.title?.trim()||title,seo_description:description||null,canonical_url:canonical||null,robots_index:!/(noindex)/i.test(meta(doc,'robots')),og_image_path:null,published_at:null,sourcePath:path,sectionCount:sections.length,firstImage:firstImg?absoluteUrl(firstImg.getAttribute('src'),doc):''});
+   pages.push({slug,title,page_type:pageType(slug),status:'draft',content:{sections,importedFrom:{sourcePath:path,canonicalUrl:canonical,importedAt:new Date().toISOString(),note:'Content and metadata were extracted from the static HTML. Original CSS, animation and exact layout are not converted; review before any future publishing.'}},seo_title:doc.title?.trim()||title,seo_description:description||null,canonical_url:canonical||null,robots_index:!/(noindex)/i.test(meta(doc,'robots')),og_image_path:null,published_at:null,sourcePath:path,sectionCount:sections.length,firstImage:firstImg?absoluteUrl(firstImg.getAttribute('src'),canonical||new URL(path,'https://companyflow.co.uk/').href):''});
   }catch(e){console.warn('Could not parse',path,e)}
  }
  pages.sort((a,b)=>a.slug.localeCompare(b.slug));
