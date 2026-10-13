@@ -69,7 +69,7 @@ function renderFields(){
 }
 function moveSection(delta){const next=state.selected+delta;if(next<0||next>=state.sections.length)return;[state.sections[state.selected],state.sections[next]]=[state.sections[next],state.sections[state.selected]];state.selected=next;setDirty();renderSections();renderFields();renderCanvas()}
 function safeColor(value,fallback){const v=String(value||'').trim();return /^#[0-9a-f]{3}(?:[0-9a-f]{3})?(?:[0-9a-f]{2})?$/i.test(v)?v:fallback}
-function safeHref(value){const v=String(value||'').trim();if(!v)return '#';if(/^https?:\\/\\//i.test(v)||/^\\/(?!\\/)/.test(v)||/^#[a-z0-9_-]+$/i.test(v))return v;return '#'}
+function safeHref(value){const v=String(value||'').trim();if(!v)return '#';if(/^https?:\/\//i.test(v)||/^\/(?!\/)/.test(v)||/^#[a-z0-9_-]+$/i.test(v))return v;return '#'}
 function renderCanvas(){
  const canvas=$('siteCanvas');canvas.className='sitecanvas '+(state.device==='desktop'?'':state.device);
  if(state.preview==='live')return;
@@ -85,7 +85,7 @@ function renderCanvas(){
   const button=s.buttonText?'<a class="pv-button" href="'+esc(safeHref(s.buttonUrl))+'" target="_blank" rel="noopener">'+esc(s.buttonText)+'</a>':'';
   let content='';
   if(s.type==='image'){
-   const image=s.imageUrl&&/^https?:\\/\\//i.test(String(s.imageUrl).trim())?'<img loading="lazy" src="'+esc(s.imageUrl.trim())+'" alt="'+esc(s.imageAlt||'')+'">':'<div class="placeholder">Add a public HTTPS image URL in section settings</div>';
+   const image=s.imageUrl&&/^https?:\/\//i.test(String(s.imageUrl).trim())?'<img loading="lazy" src="'+esc(s.imageUrl.trim())+'" alt="'+esc(s.imageAlt||'')+'">':'<div class="placeholder">Add a public HTTPS image URL in section settings</div>';
    content='<div class="image-layout"><div class="image-copy">'+eyebrow+heading+paragraph+button+'</div><div class="imagepreview">'+image+'</div></div>';
   }else{
    content=eyebrow+heading+paragraph;
