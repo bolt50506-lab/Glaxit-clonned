@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Import Existing Website Pages | CompanyFlow</title>
+<link rel="stylesheet" href="./import-pages.css">
+</head>
+<body>
+<header class="topbar">
+ <a class="brand" href="./index.html"><span class="logo">CF</span><span>CompanyFlow <small>STATIC PAGE IMPORTER</small></span></a>
+ <nav><a href="./index.html">← Admin</a><a href="./builder.html">Visual editor ↗</a></nav>
+</header>
+<main class="shell">
+ <section class="intro">
+  <p class="eyebrow">ONE-TIME MIGRATION TOOL</p>
+  <h1>Bring your existing pages into the editor</h1>
+  <p>Select the extracted website repository folder. This tool reads HTML files locally in your browser, extracts page metadata and basic content sections, and imports them as <b>drafts</b> into the CompanyFlow CMS.</p>
+  <div class="warning"><b>Important:</b> This does not copy exact CSS/layouts into the editor and does not publish to the live website. Keep your source repository as the original. Imported pages are drafts for review.</div>
+ </section>
+ <section class="panel">
+  <h2>1. Choose the website folder</h2>
+  <p class="muted">Download the <code>feature/companyflow-admin-panel</code> branch ZIP from GitHub, extract it, then select the extracted repository folder below. The browser will only read the files you select.</p>
+  <label class="folder-picker" for="folderInput"><span class="folder-icon">▣</span><span><b>Select extracted repository folder</b><small>HTML files are scanned locally; nothing is uploaded as a ZIP.</small></span><input id="folderInput" type="file" webkitdirectory directory multiple accept=".html,.htm,text/html"></label>
+  <p id="folderStatus" class="status" role="status">No folder selected yet.</p>
+  <div id="fileSummary" class="file-summary hidden"></div>
+ </section>
+ <section class="panel">
+  <h2>2. Choose import behaviour</h2>
+  <label class="check"><input id="replaceExisting" type="checkbox"><span><b>Update existing CMS pages with matching slugs</b><small>Off by default: existing pages are skipped to avoid overwriting your work.</small></span></label>
+  <label class="check"><input id="includeUtility" type="checkbox"><span><b>Include legal and utility pages</b><small>Includes privacy policy, terms, refund policy and blog pages. Admin, WordPress internals, vendor libraries and assets are always excluded.</small></span></label>
+  <button id="scanBtn" class="primary" disabled>Scan selected files</button>
+ </section>
+ <section id="reviewPanel" class="panel hidden">
+  <div class="panel-heading"><div><h2>3. Review pages</h2><p id="reviewSummary" class="muted"></p></div><button id="importBtn" class="primary" disabled>Import selected drafts</button></div>
+  <div class="table-wrap"><table><thead><tr><th><input id="selectAll" type="checkbox" checked aria-label="Select all pages"></th><th>Page</th><th>Type</th><th>Content found</th><th>Source file</th></tr></thead><tbody id="reviewRows"></tbody></table></div>
+  <p class="muted small">Imported status is always <b>draft</b>. No live-site changes occur.</p>
+ </section>
+ <section id="progressPanel" class="panel hidden" aria-live="polite">
+  <h2>Import results</h2><p id="progressText" class="muted">Starting…</p><div class="progress"><span id="progressBar"></span></div><div id="resultList" class="result-list"></div>
+  <a id="openBuilder" class="primary inline hidden" href="./builder.html">Open visual editor ↗</a>
+ </section>
+</main>
+<script type="module" src="./import-pages.js"></script>
+</body></html>
