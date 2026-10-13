@@ -46,6 +46,9 @@ jobs:
           test -f admin/builder.html
           test -f admin/builder.js
           test -f admin/builder.css
+          test -f admin/import-pages.html
+          test -f admin/import-pages.js
+          test -f admin/import-pages.css
           test -f admin/README.md
           echo "Required CMS and visual editor files exist."
 
@@ -53,6 +56,7 @@ jobs:
         run: |
           node --input-type=module --check < admin/admin.js
           node --input-type=module --check < admin/builder.js
+          node --input-type=module --check < admin/import-pages.js
           echo "Browser JavaScript syntax is valid."
 
       - name: Validate local admin asset references
@@ -62,7 +66,7 @@ jobs:
           from pathlib import Path
           import sys
 
-          pages = [Path("admin/index.html"), Path("admin/builder.html")]
+          pages = [Path("admin/index.html"), Path("admin/builder.html"), Path("admin/import-pages.html")]
           root = Path("admin").resolve()
           missing = []
 
