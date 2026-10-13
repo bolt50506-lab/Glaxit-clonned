@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>CompanyFlow Visual Editor</title>
+<link rel="stylesheet" href="./builder.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./index.html"><span class="logo">CF</span><span>CompanyFlow <small>VISUAL EDITOR</small></span></a>
+  <div class="topcenter"><span class="live-dot"></span><span id="saveState">All changes saved</span></div>
+  <div class="topactions"><a href="./index.html" class="back">← Admin</a><button id="saveBtn" class="save">Save draft</button></div>
+</header>
+<div class="workspace">
+  <aside class="leftbar">
+    <div class="sideheading"><span>CONTENT</span><button id="refreshBtn" title="Refresh pages">↻</button></div>
+    <label class="searchlabel" for="pageSearch">Pages</label><input id="pageSearch" placeholder="Find a page…">
+    <div id="pageList" class="pagelist"><div class="loading">Loading pages…</div></div>
+    <div class="leftfoot"><span class="lock">▣</span><div><b>Protected workspace</b><small>Only authorised admins</small></div></div>
+  </aside>
+  <main class="editor">
+    <div class="editorhead"><div><div class="crumb">WEBSITE / <span id="pageCrumb">SELECT A PAGE</span></div><h1 id="pageHeading">Choose a page to edit</h1><p id="pageMeta">Edit page sections and preview your changes here.</p></div><div class="pageactions"><button id="viewLiveBtn" class="secondary">View live site ↗</button></div></div>
+    <div class="buildergrid">
+      <section class="sectionsPanel">
+        <div class="paneltitle"><div><h2>Page sections</h2><p>Choose a section to edit its content.</p></div><button id="addSectionBtn" class="add">＋ Add section</button></div>
+        <div id="sectionList" class="sectionlist"><div class="empty">Select a page to see its sections.</div></div>
+        <div id="fieldsPanel" class="fieldsPanel"><div class="empty">Select a section or add one to begin editing.</div></div>
+      </section>
+      <section class="previewPanel">
+        <div class="previewtoolbar"><div class="previewtabs"><button class="active" data-preview="canvas">Editor preview</button><button data-preview="live">Live website</button></div><div class="devices"><button class="active" data-device="desktop" title="Desktop preview">▰</button><button data-device="tablet" title="Tablet preview">▯</button><button data-device="mobile" title="Mobile preview">▯</button></div></div>
+        <div class="canvaswrap" id="canvasWrap"><div id="siteCanvas" class="sitecanvas"><div class="emptycanvas"><span>CF</span><h2>Your page preview</h2><p>Select a page from the left to preview and edit its sections.</p></div></div></div>
+        <iframe id="liveFrame" class="liveframe hidden" title="Current live CompanyFlow website" src="https://companyflow.co.uk/" loading="lazy"></iframe>
+        <div class="previewfoot"><span>Preview is responsive</span><span id="sectionCount">0 sections</span></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script type="module" src="./builder.js"></script>
+</body></html>
