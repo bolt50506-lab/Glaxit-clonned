@@ -48,11 +48,11 @@ The admin interface has no password form; it uses Supabase's email magic-link fl
 
 The isolated admin includes a browser-based migration helper at `/admin/import-pages.html`.
 
-1. Download the ZIP for the `feature/companyflow-admin-panel` branch and extract it locally.
-2. Sign in to the authorised admin account on the **isolated preview deployment**.
-3. Open **Import website pages** in the dashboard.
-4. Select the extracted repository folder. The browser scans HTML files locally and excludes admin pages, WordPress internals, vendor libraries and assets.
-5. Review the detected page list. Leave **Update existing CMS pages** unchecked for a safe first run.
+1. Sign in to the authorised admin account on the **isolated preview deployment**.
+2. Open **Import website pages** in the dashboard.
+3. Click **Load HTML from GitHub branch** to read eligible HTML from `feature/companyflow-admin-panel` directly. The repository must be publicly readable and the browser must be able to reach GitHub. Alternatively, select the extracted repository folder to scan locally.
+4. Review the detected page list. Legal/utility pages are excluded unless you opt in. Admin pages, WordPress internals, vendor libraries and assets are always excluded.
+5. Leave **Update existing CMS pages** unchecked for a safe first run.
 6. Import selected pages. All imported records are saved as **drafts** and revision snapshots are created.
 
 The importer extracts page titles, meta descriptions, canonical URLs and starter sections from headings, paragraphs and images. It does **not** reproduce exact CSS, layouts, animations or scripts. Review imported content in the visual editor. If the repository contains duplicate slugs, import only the intended version. Do not run an import from an untrusted folder.
