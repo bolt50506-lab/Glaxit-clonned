@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="same-origin">
+  <title>CompanyFlow Admin</title>
+  <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+  <div id="authGate" class="auth-gate">
+    <div class="auth-card">
+      <div class="brand-mark">CF</div>
+      <p class="eyebrow">COMPANYFLOW CONTROL ROOM</p>
+      <h1>Admin access</h1>
+      <p class="muted">This area is restricted to approved CompanyFlow administrators. Enter your pre-authorised admin email to receive a secure sign-in link.</p>
+      <form id="magicLinkForm">
+        <label for="adminEmail">Admin email</label>
+        <input id="adminEmail" type="email" autocomplete="email" required placeholder="you@companyflow.co.uk">
+        <button class="primary full" type="submit">Send secure sign-in link</button>
+      </form>
+      <p id="authMessage" class="message" role="status" aria-live="polite"></p>
+      <p class="tiny muted">Only accounts granted the CompanyFlow admin role can access site content.</p>
+    </div>
+  </div>
+
+  <div id="adminApp" class="app-shell hidden">
+    <aside class="sidebar">
+      <a class="brand" href="./" aria-label="CompanyFlow admin home"><span class="brand-mark">CF</span><span><b>CompanyFlow</b><small>CONTROL ROOM</small></span></a>
+      <nav id="mainNav" aria-label="Admin sections">
+        <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+        <button class="nav-item" data-view="pages"><span>▤</span> Pages & content</button>
+        <button class="nav-item" data-view="media"><span>▧</span> Media library</button>
+        <button class="nav-item" data-view="seo"><span>⌕</span> SEO controls</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Site settings</button>
+        <button class="nav-item" data-view="revisions"><span>↶</span> Revision history</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="secure-dot"></span><span>Protected workspace</span>
+        <button id="signOutBtn" class="text-button">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><p class="eyebrow">WEBSITE MANAGEMENT</p><h1 id="viewTitle">Overview</h1></div>
+        <div class="top-actions"><span id="userBadge" class="user-badge">Admin</span><a href="https://companyflow.co.uk/" target="_blank" rel="noopener">View live site ↗</a></div>
+      </header>
+      <div id="notice" class="notice hidden" role="status" aria-live="polite"></div>
+
+      <section id="view-overview" class="view">
+        <div class="welcome-panel"><div><p class="eyebrow">YOUR WEBSITE, ONE WORKSPACE</p><h2>Good to have you here.</h2><p>Manage content, metadata, media and settings from one protected place.</p></div><span class="welcome-orb">CF</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-label">Total pages</span><strong id="statPages">—</strong><small>Stored in CMS</small></article>
+          <article class="stat-card"><span class="stat-label">Published</span><strong id="statPublished">—</strong><small>Marked as published</small></article>
+          <article class="stat-card"><span class="stat-label">Drafts</span><strong id="statDrafts">—</strong><small>Not published</small></article>
+          <article class="stat-card"><span class="stat-label">Media assets</span><strong id="statAssets">—</strong><small>Stored in library</small></article>
+        </div>
+        <div class="two-col">
+          <article class="panel"><div class="panel-head"><div><h3>Quick actions</h3><p class="muted">Start a common task</p></div></div><div class="quick-actions"><button class="quick-action" data-go="pages"><b>＋ Create a page</b><span>Add content and SEO fields</span></button><button class="quick-action" data-go="media"><b>↑ Upload media</b><span>Add images and other assets</span></button><button class="quick-action" data-go="seo"><b>⌕ Review SEO</b><span>Check metadata coverage</span></button></div></article>
+          <article class="panel"><div class="panel-head"><div><h3>Safety status</h3><p class="muted">Current workspace boundaries</p></div></div><ul class="safety-list"><li><span class="check">✓</span><div><b>Separate CMS database</b><small>CompanyFlow-only project</small></div></li><li><span class="check">✓</span><div><b>Admin role required</b><small>Database policies enforce access</small></div></li><li><span class="check">✓</span><div><b>Public site unchanged</b><small>CMS edits are not live-site publishing yet</small></div></li></ul></article>
+        </div>
+        <article class="panel"><div class="panel-head"><div><h3>Recently updated pages</h3><p class="muted">Latest CMS records</p></div><button class="secondary" data-go="pages">Manage pages</button></div><div id="recentPages" class="table-wrap"></div></article>
+      </section>
+
+      <section id="view-pages" class="view hidden">
+        <div class="section-toolbar"><div><h2>Pages & content</h2><p class="muted">Create pages and edit structured content. Changes are stored as drafts until the site publishing adapter is connected.</p></div><button id="newPageBtn" class="primary">＋ New page</button></div>
+        <div class="panel"><div class="list-tools"><input id="pageSearch" type="search" placeholder="Search pages…" aria-label="Search pages"><select id="pageStatusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option></select></div><div id="pagesTable" class="table-wrap"></div></div>
+        <div id="pageEditor" class="panel hidden">
+          <div class="panel-head"><div><h3 id="editorHeading">Create page</h3><p class="muted">Save a revision before updating existing content.</p></div><button id="closeEditorBtn" class="icon-button" aria-label="Close editor">✕</button></div>
+          <form id="pageForm" class="editor-grid">
+            <input type="hidden" id="pageId">
+            <div class="field"><label for="pageTitle">Page title</label><input id="pageTitle" required maxlength="180" placeholder="Example: Custom Business Software"></div>
+            <div class="field"><label for="pageSlug">URL slug</label><input id="pageSlug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="custom-business-software"><small>Lowercase letters, numbers and hyphens only.</small></div>
+            <div class="field"><label for="pageType">Content type</label><select id="pageType"><option value="page">Page</option><option value="solution">Solution</option><option value="case-study">Case study</option><option value="landing">Landing page</option></select></div>
+            <div class="field"><label for="pageStatus">Status</label><select id="pageStatus"><option value="draft">Draft</option><option value="published">Published in CMS</option><option value="archived">Archived</option></select></div>
+            <div class="field full-span"><label for="seoTitle">SEO title</label><input id="seoTitle" maxlength="70" placeholder="Unique title for search results"><small><span id="seoTitleCount">0</span>/70 characters</small></div>
+            <div class="field full-span"><label for="seoDescription">Meta description</label><textarea id="seoDescription" rows="3" maxlength="180" placeholder="Concise, unique description for search results"></textarea><small><span id="seoDescCount">0</span>/180 characters</small></div>
+            <div class="field full-span"><label for="canonicalUrl">Canonical URL</label><input id="canonicalUrl" type="url" placeholder="https://companyflow.co.uk/example/"></div>
+            <div class="field"><label class="checkbox-label"><input id="robotsIndex" type="checkbox" checked> Allow search indexing</label></div>
+            <div class="field"><label for="ogImagePath">Social/OG image path (optional)</label><input id="ogImagePath" placeholder="cms-media/filename.webp"></div>
+            <div class="field full-span"><label for="pageContent">Structured content (JSON)</label><textarea id="pageContent" class="code-input" rows="12" spellcheck="false">{
+  "sections": []
+}</textarea><small>Use a sections array. This stores content safely; it does not execute arbitrary HTML or scripts.</small></div>
+            <div class="editor-actions full-span"><button id="savePageBtn" class="primary" type="submit">Save page</button><button id="cancelEditorBtn" class="secondary" type="button">Cancel</button></div>
+          </form>
+        </div>
+      </section>
+
+      <section id="view-media" class="view hidden">
+        <div class="section-toolbar"><div><h2>Media library</h2><p class="muted">Upload images and assets to the separate CMS bucket.</p></div><label class="primary upload-button">↑ Upload files<input id="mediaUpload" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml,video/mp4,application/pdf" multiple hidden></label></div>
+        <div class="upload-hint">Maximum 10 MB per file. Supported: JPG, PNG, WebP, GIF, SVG, MP4 and PDF.</div>
+        <div id="mediaGrid" class="media-grid"></div>
+      </section>
+
+      <section id="view-seo" class="view hidden">
+        <div class="section-toolbar"><div><h2>SEO controls</h2><p class="muted">Review metadata stored in the CMS. Live HTML metadata is not changed until publishing is integrated.</p></div><button id="refreshSeoBtn" class="secondary">Refresh report</button></div>
+        <div class="stats-grid"><article class="stat-card"><span class="stat-label">Pages missing SEO title</span><strong id="seoMissingTitle">—</strong></article><article class="stat-card"><span class="stat-label">Pages missing description</span><strong id="seoMissingDesc">—</strong></article><article class="stat-card"><span class="stat-label">Canonical missing</span><strong id="seoMissingCanonical">—</strong></article><article class="stat-card"><span class="stat-label">No-index pages</span><strong id="seoNoIndex">—</strong></article></div>
+        <article class="panel"><div class="panel-head"><div><h3>SEO page audit</h3><p class="muted">Select a page to edit its metadata.</p></div></div><div id="seoTable" class="table-wrap"></div></article>
+      </section>
+
+      <section id="view-settings" class="view hidden">
+        <div class="section-toolbar"><div><h2>Site settings</h2><p class="muted">Store global settings as JSON records. Nothing here changes the live site yet.</p></div></div>
+        <div class="panel">
+          <form id="settingsForm" class="settings-form">
+            <div class="field"><label for="settingKey">Setting key</label><input id="settingKey" required pattern="[a-z0-9][a-z0-9_-]*" placeholder="brand or contact"></div>
+            <div class="field full-span"><label for="settingValue">Setting value (JSON)</label><textarea id="settingValue" class="code-input" rows="8" required>{
+  "siteName": "CompanyFlow"
+}</textarea></div>
+            <div class="editor-actions full-span"><button class="primary" type="submit">Save setting</button></div>
+          </form>
+        </div>
+        <article class="panel"><div class="panel-head"><div><h3>Saved settings</h3><p class="muted">Global brand, contact and integration values.</p></div><button id="refreshSettingsBtn" class="secondary">Refresh</button></div><div id="settingsTable" class="table-wrap"></div></article>
+      </section>
+
+      <section id="view-revisions" class="view hidden">
+        <div class="section-toolbar"><div><h2>Revision history</h2><p class="muted">Saved snapshots of CMS page content. Restore creates a new revision instead of silently overwriting history.</p></div><button id="refreshRevisionsBtn" class="secondary">Refresh history</button></div>
+        <article class="panel"><div id="revisionsTable" class="table-wrap"></div></article>
+      </section>
+      <footer class="app-footer">CompanyFlow Admin · Separate CMS workspace · <span id="footerYear"></span></footer>
+    </main>
+  </div>
+  <script type="module" src="./admin.js"></script>
+</body>
+</html>
