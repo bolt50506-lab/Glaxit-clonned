@@ -23,7 +23,7 @@ async function loadPages(){
 function renderPageList(){
  const q=$('pageSearch').value.trim().toLowerCase();
  const pages=state.pages.filter(p=>(p.title+' '+p.slug).toLowerCase().includes(q));
- $('pageList').innerHTML=pages.length?pages.map(p=>'<button class="pageitem '+(state.page?.id===p.id?'active':'')+'" data-page="'+esc(p.id)+'"><span class="pageicon">▤</span><span><b>'+esc(p.title)+'</b><small>/'+esc(p.slug)+'/ · '+esc(p.status)+'</small></span></button>').join(''):'<div class="empty">No pages found.<br>Create a page in Admin first.</div>';
+ $('pageList').innerHTML=pages.length?pages.map(p=>'<button class="pageitem '+(state.page?.id===p.id?'active':'')+'" data-page="'+esc(p.id)+'"><span class="pageicon">▤</span><span><b>'+esc(p.title)+'</b><small>/'+esc(p.slug)+'/ · '+esc(p.status)+'</small></span></button>').join(''):'<div class="empty">No CMS pages yet.<br>Create a page first, then open it here to edit visually.<p style="margin-top:12px"><a class="createpage-link" href="./index.html">＋ Create a page in Admin</a></p></div>';
 }
 function selectPage(page,mark=true){
  state.page=page;
@@ -103,12 +103,19 @@ async function save(){
  }catch(e){toast('Save failed: '+e.message,true)}
  finally{button.disabled=false;button.textContent='Save draft'}
 }
-$('pageSearch').addEventListener('input',renderPageList);$('refreshBtn').addEventListener('click',loadPages);$('saveBtn').addEventListener('click',save);$('addSectionBtn').addEventListener('click',()=>{
+$('pageSearch').addEventListener('input',renderPageList);$('refreshBtn').addEventListener('click',loadPages);$('saveBtn').addEventListener('click',save);
+const sectionPicker=$('sectionPicker');
+function closeSectionPicker(){sectionPicker?.classList.add('hidden');}
+function addSectionType(key){
  if(!state.page){toast('Choose a page first.',true);return}
- const type=prompt('Add which section? Enter: hero, text, image, features, or cta','hero');
- if(!type)return;const key=type.trim().toLowerCase();if(!defaults[key]){toast('Choose hero, text, image, features, or cta.',true);return}
- state.sections.push(JSON.parse(JSON.stringify(defaults[key])));state.selected=state.sections.length-1;setDirty();renderSections();renderFields();renderCanvas();
-});
+ if(!defaults[key])return;
+ state.sections.push(JSON.parse(JSON.stringify(defaults[key])));
+ state.selected=state.sections.length-1;setDirty();renderSections();renderFields();renderCanvas();closeSectionPicker();
+}
+$('addSectionBtn').addEventListener('click',()=>{if(!state.page){toast('Choose a page first.',true);return}sectionPicker.classList.remove('hidden');});
+$('closeSectionPicker')?.addEventListener('click',closeSectionPicker);
+sectionPicker?.addEventListener('click',e=>{if(e.target===sectionPicker)closeSectionPicker();const item=e.target.closest('[data-add-type]');if(item)addSectionType(item.dataset.addType);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSectionPicker();});
 $('viewLiveBtn').addEventListener('click',()=>window.open('https://companyflow.co.uk'+(state.page?slug(state.page):'/'),'_blank','noopener,noreferrer'));
 document.querySelectorAll('[data-device]').forEach(b=>b.addEventListener('click',()=>{state.device=b.dataset.device;document.querySelectorAll('[data-device]').forEach(x=>x.classList.toggle('active',x===b));renderCanvas()}));
 document.querySelectorAll('[data-preview]').forEach(b=>b.addEventListener('click',()=>setPreview(b.dataset.preview)));
