@@ -68,20 +68,31 @@ function renderFields(){
  $('moveUp')?.addEventListener('click',()=>moveSection(-1));$('moveDown')?.addEventListener('click',()=>moveSection(1));
 }
 function moveSection(delta){const next=state.selected+delta;if(next<0||next>=state.sections.length)return;[state.sections[state.selected],state.sections[next]]=[state.sections[next],state.sections[state.selected]];state.selected=next;setDirty();renderSections();renderFields();renderCanvas()}
+function safeColor(value,fallback){const v=String(value||'').trim();return /^#[0-9a-f]{3}(?:[0-9a-f]{3})?(?:[0-9a-f]{2})?$/i.test(v)?v:fallback}
+function safeHref(value){const v=String(value||'').trim();if(!v)return '#';if(/^https?:\\/\\//i.test(v)||/^\\/(?!\\/)/.test(v)||/^#[a-z0-9_-]+$/i.test(v))return v;return '#'}
 function renderCanvas(){
  const canvas=$('siteCanvas');canvas.className='sitecanvas '+(state.device==='desktop'?'':state.device);
  if(state.preview==='live')return;
  if(!state.page){canvas.innerHTML='<div class="emptycanvas"><span>CF</span><h2>Your page preview</h2><p>Select a page from the left to preview and edit its sections.</p></div>';return}
  if(!state.sections.length){canvas.innerHTML='<div class="emptycanvas"><span>CF</span><h2>This page has no sections yet</h2><p>Click Add section to build the page visually.</p></div>';return}
  canvas.innerHTML=state.sections.map((s,i)=>{
- const align=s.align==='center'?'center':'left';const bg=s.background||((s.type==='hero'||s.type==='cta')?'#111a22':'#ffffff');
- let content='<p class="pv-eyebrow">'+esc(s.eyebrow||'')+'</p>';
- if(s.title)content+=(s.type==='hero'?'<h1>':'<h2>')+esc(s.title)+(s.type==='hero'?'</h1>':'</h2>');
- if(s.text)content+='<p>'+esc(s.text)+'</p>';
- if(s.type==='image')content+='<div class="imagepreview">'+(s.imageUrl?'<img src="'+esc(s.imageUrl)+'" alt="'+esc(s.imageAlt||'')+'">':'<div class="placeholder">Add an image URL in section settings</div>')+'</div>';
- if(s.type==='features')content+='<div class="featuregrid">'+(s.features||[]).map(f=>'<div class="featurecard"><b>'+esc(f.title)+'</b><p>'+esc(f.text)+'</p></div>').join('')+'</div>';
- if(s.buttonText)content+='<a class="pv-button" href="'+esc(s.buttonUrl||'#')+'" target="_blank" rel="noopener">'+esc(s.buttonText)+'</a>';
- return '<section class="pv-section pv-'+esc(s.type)+' '+(i===state.selected?'selected':'')+'" data-canvas-section="'+i+'" style="background:'+esc(bg)+';text-align:'+align+'">'+(s.type==='image'?'<div class="image-layout">'+content+'</div>':content)+'</section>';
+  const align=s.align==='center'?'center':'left';
+  const defaultBg=(s.type==='hero'||s.type==='cta')?'#111a22':(s.type==='features'?'#f5f8f7':'#ffffff');
+  const bg=safeColor(s.background,defaultBg);
+  const eyebrow=s.eyebrow?'<p class="pv-eyebrow">'+esc(s.eyebrow)+'</p>':'';
+  const heading=s.title?(s.type==='hero'?'<h1>':'<h2>')+esc(s.title)+(s.type==='hero'?'</h1>':'</h2>'):'';
+  const paragraph=s.text?'<p>'+esc(s.text)+'</p>':'';
+  const button=s.buttonText?'<a class="pv-button" href="'+esc(safeHref(s.buttonUrl))+'" target="_blank" rel="noopener">'+esc(s.buttonText)+'</a>':'';
+  let content='';
+  if(s.type==='image'){
+   const image=s.imageUrl&&/^https?:\\/\\//i.test(String(s.imageUrl).trim())?'<img loading="lazy" src="'+esc(s.imageUrl.trim())+'" alt="'+esc(s.imageAlt||'')+'">':'<div class="placeholder">Add a public HTTPS image URL in section settings</div>';
+   content='<div class="image-layout"><div class="image-copy">'+eyebrow+heading+paragraph+button+'</div><div class="imagepreview">'+image+'</div></div>';
+  }else{
+   content=eyebrow+heading+paragraph;
+   if(s.type==='features')content+='<div class="featuregrid">'+(s.features||[]).map(f=>'<div class="featurecard"><b>'+esc(f.title)+'</b><p>'+esc(f.text)+'</p></div>').join('')+'</div>';
+   content+=button;
+  }
+  return '<section class="pv-section pv-'+esc(s.type)+' '+(i===state.selected?'selected':'')+'" data-canvas-section="'+i+'" style="background-color:'+bg+';text-align:'+align+'">'+content+'</section>';
  }).join('');
  canvas.querySelectorAll('[data-canvas-section]').forEach(el=>el.addEventListener('click',()=>{state.selected=Number(el.dataset.canvasSection);renderSections();renderFields();renderCanvas()}));
 }
