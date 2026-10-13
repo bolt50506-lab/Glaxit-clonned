@@ -52,7 +52,7 @@ jobs:
               sys.exit(1)
 
           html = html_path.read_text(encoding="utf-8")
-          for attr, pattern in (("src", r'<script[^>]+src=["\\']([^"\\']+)'), ("href", r'<link[^>]+href=["\\']([^"\\']+)')):
+          for attr, pattern in (("src", r"""<script[^>]+src=["']([^"']+)"""), ("href", r"""<link[^>]+href=["']([^"']+)""")):
               for value in re.findall(pattern, html, flags=re.I):
                   if value.startswith(("http://", "https://", "//", "#", "data:")):
                       continue
