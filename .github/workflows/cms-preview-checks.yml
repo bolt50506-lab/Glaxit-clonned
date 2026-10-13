@@ -1,0 +1,75 @@
+name: CompanyFlow CMS preview checks
+
+on:
+  push:
+    branches:
+      - feature/companyflow-admin-panel
+    paths:
+      - 'admin/**'
+      - 'supabase/**'
+      - 'tools/**'
+      - '.github/workflows/cms-preview-checks.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'admin/**'
+      - 'supabase/**'
+      - 'tools/**'
+      - '.github/workflows/cms-preview-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-cms:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out development branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate Python source syntax
+        run: python -m py_compile tools/data.py tools/build_solutions.py
+
+      - name: Validate admin HTML and local asset references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          html_path = Path("admin/index.html")
+          js_path = Path("admin/admin.js")
+          css_path = Path("admin/admin.css")
+          missing = [str(p) for p in (html_path, js_path, css_path) if not p.is_file()]
+          if missing:
+              print("Missing required CMS files:", ", ".join(missing))
+              sys.exit(1)
+
+          html = html_path.read_text(encoding="utf-8")
+          for attr, pattern in (("src", r'<script[^>]+src=["\\']([^"\\']+)'), ("href", r'<link[^>]+href=["\\']([^"\\']+)')):
+              for value in re.findall(pattern, html, flags=re.I):
+                  if value.startswith(("http://", "https://", "//", "#", "data:")):
+                      continue
+                  target = (html_path.parent / value).resolve()
+                  if not target.is_file():
+                      print(f"Missing local {attr} target: {value}")
+                      sys.exit(1)
+          print("CMS HTML and local asset references look valid.")
+          PY
+
+      - name: Check browser code for service-role or secret keys
+        run: |
+          if grep -RniE 'sb_secret_[A-Za-z0-9_-]{12,}|service_role_[A-Za-z0-9_-]{12,}' admin; then
+            echo "Potential privileged Supabase key found in browser-facing admin files."
+            exit 1
+          fi
+          echo "No obvious privileged Supabase key patterns found in admin files."
+
+      - name: Confirm no automatic deployment is configured by this workflow
+        run: echo "Validation only: this workflow does not deploy, publish, or modify production."
