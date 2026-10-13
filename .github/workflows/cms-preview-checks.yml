@@ -38,13 +38,22 @@ jobs:
       - name: Validate solutions generator syntax
         run: python -m py_compile tools/data.py tools/build_solutions.py
 
-      - name: Check required CMS files
+      - name: Check required CMS and visual editor files
         run: |
           test -f admin/index.html
           test -f admin/admin.js
           test -f admin/admin.css
+          test -f admin/builder.html
+          test -f admin/builder.js
+          test -f admin/builder.css
           test -f admin/README.md
-          echo "Required CMS files exist."
+          echo "Required CMS and visual editor files exist."
+
+      - name: Validate browser JavaScript syntax
+        run: |
+          node --check admin/admin.js
+          node --check admin/builder.js
+          echo "Browser JavaScript syntax is valid."
 
       - name: Validate local admin asset references
         run: |
@@ -53,8 +62,8 @@ jobs:
           from pathlib import Path
           import sys
 
-          page = Path("admin/index.html")
-          root = page.parent.resolve()
+          pages = [Path("admin/index.html"), Path("admin/builder.html")]
+          root = Path("admin").resolve()
           missing = []
 
           class AssetParser(HTMLParser):
@@ -68,8 +77,9 @@ jobs:
                   if not target.is_relative_to(root) or not target.is_file():
                       missing.append(value)
 
-          parser = AssetParser()
-          parser.feed(page.read_text(encoding="utf-8"))
+          for page in pages:
+              parser = AssetParser()
+              parser.feed(page.read_text(encoding="utf-8"))
           if missing:
               print("Missing or invalid local asset references:", ", ".join(missing))
               sys.exit(1)
