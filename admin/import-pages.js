@@ -1,7 +1,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.0';
 const supabase=createClient('https://sawqalrbdbayroypbopp.supabase.co','sb_publishable_RQOgdAIQAkm3kMfea9cQQQ_foK6CTdm',{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}});
 const $=id=>document.getElementById(id);
-let user=null,files=[],pages=[],selected=new Set();
+let user=null,files=[],pages=[],selected=new Set(),remoteFiles=null;
 const excluded=/^(admin|wp-content|wp-includes|wp-json|cdnjs\.cloudflare\.com|gmpg\.org|unpkg\.com|node_modules|\.git)(\/|$)/i;
 const utility=/^(privacy-policy|terms-and-conditions|refund-policy|blog)(\/|$)/i;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -46,22 +46,22 @@ function extractSections(doc,canonical,sourcePath){
  }
  return out;
 }
-async function scan(){
- const input=$('folderInput').files;
+async function scan(sourceFiles=null){
+ const input=sourceFiles||$('folderInput').files;
  if(!input?.length){notice('Select the extracted repository folder first.');return}
  const includeUtility=$('includeUtility').checked;
  const htmlFiles=[...input].filter(f=>/\.html?$/i.test(f.name));
  const candidates=htmlFiles.filter(f=>{
-  const path=(f.webkitRelativePath||f.name).replace(/^[^/]+\//,'');
+  const path=f.sourcePath||(f.webkitRelativePath||f.name).replace(/^[^/]+\//,'');
   if(excluded.test(path)||path.split('/').some(part=>excluded.test(part)))return false;
   if(!includeUtility&&utility.test(path))return false;
   return true;
  });
  pages=[];selected.clear();
  for(const file of candidates){
-  const path=(file.webkitRelativePath||file.name).replace(/^[^/]+\//,'');
+  const path=file.sourcePath||(file.webkitRelativePath||file.name).replace(/^[^/]+\//,'');
   try{
-   const source=await file.text(),doc=new DOMParser().parseFromString(source,'text/html');
+   const source=file.sourceText??await file.text(),doc=new DOMParser().parseFromString(source,'text/html');
    const title=doc.title?.trim()||cleanText(doc.querySelector('h1'))||slugFromPath(path);
    const canonical=doc.querySelector('link[rel="canonical"]')?.href||'';
    const description=meta(doc,'description');
@@ -115,8 +115,35 @@ async function runImport(){
  $('progressText').textContent='Finished · '+ok+' imported · '+skip+' skipped · '+failed+' failed. All successful records are drafts.';
  $('importBtn').disabled=false;$('scanBtn').disabled=false;$('openBuilder').classList.remove('hidden');
 }
-$('folderInput').addEventListener('change',()=>{const n=$('folderInput').files.length;notice(n?n+' files selected. Click Scan selected files.':'No folder selected.');$('scanBtn').disabled=!n});
-$('scanBtn').addEventListener('click',scan);
+async function loadRemote(){
+ const btn=$('remoteBtn');btn.disabled=true;btn.textContent='Loading GitHub HTML…';notice('Fetching the development branch HTML list…');
+ try{
+  const treeUrl='https://api.github.com/repos/bolt50506-lab/Glaxit-clonned/git/trees/feature/companyflow-admin-panel?recursive=1';
+  const response=await fetch(treeUrl,{headers:{Accept:'application/vnd.github+json'}});
+  if(!response.ok)throw new Error('GitHub tree request failed ('+response.status+'). The repository must be publicly readable, or use the local folder option.');
+  const tree=await response.json();if(tree.truncated)throw new Error('GitHub returned a truncated file tree. Use the local folder option.');
+  const candidates=(tree.tree||[]).filter(item=>item.type==='blob'&&/\.html?$/i.test(item.path)).filter(item=>!excluded.test(item.path)&&!item.path.split('/').some(part=>excluded.test(part)));
+  if(!candidates.length)throw new Error('No eligible HTML files found in the branch.');
+  remoteFiles=[];
+  for(let i=0;i<candidates.length;i++){
+   const item=candidates[i];
+   remoteFiles.push({name:item.path.split('/').pop(),sourcePath:item.path,sourceText:''});
+  }
+  for(let i=0;i<remoteFiles.length;i++){
+   const file=remoteFiles[i];
+   const url='https://raw.githubusercontent.com/bolt50506-lab/Glaxit-clonned/feature/companyflow-admin-panel/'+file.sourcePath.split('/').map(encodeURIComponent).join('/');
+   const res=await fetch(url);if(!res.ok)throw new Error('Could not fetch '+file.sourcePath+' ('+res.status+').');
+   file.sourceText=await res.text();
+   notice('Loaded '+(i+1)+' of '+remoteFiles.length+' HTML files from GitHub…');
+  }
+  $('folderInput').value='';$('scanBtn').disabled=false;
+  await scan(remoteFiles);
+ }catch(e){notice('GitHub load failed: '+(e.message||'Unknown error'));alert('Could not load pages from GitHub. '+(e.message||''));}
+ finally{btn.disabled=false;btn.textContent='Load HTML from GitHub branch';}
+}
+$('remoteBtn').addEventListener('click',loadRemote);
+$('folderInput').addEventListener('change',()=>{remoteFiles=null;const n=$('folderInput').files.length;notice(n?n+' files selected. Click Scan selected files.':'No folder selected.');$('scanBtn').disabled=!n});
+$('scanBtn').addEventListener('click',()=>scan());
 $('selectAll').addEventListener('change',()=>{selected.clear();if($('selectAll').checked)pages.forEach(p=>selected.add(p.slug));$('reviewRows').querySelectorAll('[data-slug]').forEach(el=>el.checked=$('selectAll').checked);$('importBtn').disabled=selected.size===0});
 $('reviewRows').addEventListener('change',e=>{const box=e.target.closest('[data-slug]');if(!box)return;if(box.checked)selected.add(box.dataset.slug);else selected.delete(box.dataset.slug);$('selectAll').checked=selected.size===pages.length;$('importBtn').disabled=selected.size===0});
 $('importBtn').addEventListener('click',runImport);
