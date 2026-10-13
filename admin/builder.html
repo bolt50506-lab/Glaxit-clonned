@@ -36,6 +36,18 @@
     </div>
   </main>
 </div>
+<div id="sectionPicker" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="sectionPickerTitle">
+ <div class="section-picker">
+  <div class="picker-head"><div><p class="picker-kicker">SECTION LIBRARY</p><h2 id="sectionPickerTitle">Add a section</h2><p>Choose a layout, then edit its content in the side panel.</p></div><button id="closeSectionPicker" class="picker-close" aria-label="Close section picker">×</button></div>
+  <div class="picker-grid">
+   <button class="picker-card" data-add-type="hero"><span class="picker-art art-hero"><b>Heading</b><i>Button</i></span><strong>Hero banner</strong><small>Headline, introduction and primary button</small></button>
+   <button class="picker-card" data-add-type="text"><span class="picker-art art-text"><b>Text content</b><i>Paragraph lines</i></span><strong>Text section</strong><small>Explain your service, story or approach</small></button>
+   <button class="picker-card" data-add-type="image"><span class="picker-art art-image"><b>Text</b><i>Image</i></span><strong>Image + text</strong><small>Pair copy with a supporting image</small></button>
+   <button class="picker-card" data-add-type="features"><span class="picker-art art-features"><i></i><i></i><i></i></span><strong>Feature cards</strong><small>Show benefits, services or key points</small></button>
+   <button class="picker-card" data-add-type="cta"><span class="picker-art art-cta"><b>Call to action</b><i>Button</i></span><strong>Call to action</strong><small>Encourage visitors to take the next step</small></button>
+  </div>
+ </div>
+</div>
 <div id="toast" class="toast hidden" role="status"></div>
 <script type="module" src="./builder.js"></script>
 </body></html>
