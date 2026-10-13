@@ -3,7 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.0';
 const SUPABASE_URL = 'https://sawqalrbdbayroypbopp.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_RQOgdAIQAkm3kMfea9cQQQ_foK6CTdm';
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
 });
 
 const $ = (id) => document.getElementById(id);
@@ -238,11 +238,27 @@ async function deleteSetting(key) {
   await refreshAll();showNotice('Setting deleted.');
 }
 
-$('magicLinkForm').addEventListener('submit',async e=>{
-  e.preventDefault();const email=$('adminEmail').value.trim();
-  setAuthMessage('Sending secure link…');
-  const {error}=await supabase.auth.signInWithOtp({email,options:{emailRedirectTo:window.location.href,shouldCreateUser:false}});
-  if(error)setAuthMessage(error.message,true);else setAuthMessage('If this email belongs to an authorised admin account, a secure sign-in link has been sent.');
+$('passwordLoginForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const email=$('adminEmail').value.trim();
+  const password=$('adminPassword').value;
+  const button=$('passwordLoginBtn');
+  button.disabled=true;button.textContent='Signing in…';
+  setAuthMessage('Checking admin credentials…');
+  try {
+    const {data,error}=await supabase.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    if(!(await isAdminSession(data.session))) {
+      await supabase.auth.signOut();
+      setAuthMessage('This account is not authorised for CompanyFlow administration.',true);
+      return;
+    }
+    await handleSession(data.session);
+  } catch(error) {
+    setAuthMessage(error.message==='Invalid login credentials'?'Email or password is incorrect.':error.message,true);
+  } finally {
+    button.disabled=false;button.textContent='Sign in';
+  }
 });
 supabase.auth.onAuthStateChange((_event,session)=>{window.setTimeout(()=>handleSession(session),0);});
 $('signOutBtn').addEventListener('click',async()=>{await supabase.auth.signOut();location.reload();});
