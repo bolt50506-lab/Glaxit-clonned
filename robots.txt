@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /tools/
+Disallow: /wp-json/
+Disallow: /xmlrpc.php
 
 Sitemap: https://companyflow.co.uk/sitemap.xml
