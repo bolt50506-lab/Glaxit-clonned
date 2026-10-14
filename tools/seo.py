@@ -17,7 +17,7 @@ ORG = {
     "telephone": PHONE,
 }
 def clip(text, limit=155):
-    text = re.sub(r"\\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", str(text)))).strip()
+    text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", str(text)))).strip()
     return text if len(text) <= limit else text[:limit - 1].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
 def url(path=""):
     path = str(path or "").lstrip("/")
@@ -43,7 +43,7 @@ def page_ld(title, path):
                    {"@type":"ListItem","position":1,"name":"Home","item":url()},
                    {"@type":"ListItem","position":2,"name":str(title),"item":u}]}])
 def make_title(title):
-    title = re.sub(r"\\s+", " ", str(title)).strip()
+    title = re.sub(r"\s+", " ", str(title)).strip()
     return title if BRAND.lower() in title.lower() else title + " | " + BRAND
 def make_desc(desc):
     return clip(desc, 155)
