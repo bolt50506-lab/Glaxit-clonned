@@ -36,6 +36,9 @@ def fix(path):
     add = ""
     if not m: add += '<meta name="description" content="%s">' % html.escape(desc)
     if 'rel="canonical"' not in s: add += seo.tags(title, desc, rel + "/" if rel else "", ROOT)
+    og_image = seo.SITE_URL + "/assets/og-default.svg"
+    if 'property="og:image"' not in s: add += '<meta property="og:image" content="%s"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' % og_image
+    if 'name="twitter:image"' not in s: add += '<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="%s">' % og_image
     if rel == "" and "application/ld+json" not in s: add += seo.ld([seo.ORG, {"@type": "WebSite", "url": seo.SITE_URL + "/", "name": seo.BRAND, "publisher": {"@id": seo.SITE_URL + "/#org"}}])
     elif rel and "BreadcrumbList" not in s: add += seo.page_ld(title.split("|")[0].split("\u2014")[0].strip(), rel + "/")
     if add: s = s.replace("</head>", add + "</head>", 1)
