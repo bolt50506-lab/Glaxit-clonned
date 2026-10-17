@@ -51,3 +51,43 @@ input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,42,77,.35);bo
  .elementor-button{max-width:100%}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Homepage-specific finish: preserve original section order, copy and motion hooks. */
+.hero-section{isolation:isolate;overflow:hidden!important;background:radial-gradient(ellipse at 78% 28%,rgba(125,23,53,.22),transparent 38%),linear-gradient(135deg,#0b0b0d 0%,#100d11 58%,#170b10 100%)!important}
+.hero-section:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 75% 40%,rgba(165,42,77,.16),transparent 26%),linear-gradient(110deg,transparent 35%,rgba(255,255,255,.018) 50%,transparent 66%);mask-image:linear-gradient(to bottom,black,transparent 95%)}
+.hero-section .elementor-heading-title{max-width:980px;text-wrap:balance;text-shadow:0 6px 36px rgba(0,0,0,.28)}
+.hero-section .elementor-widget-text-editor{max-width:660px}
+.hero-section .elementor-widget-button .elementor-button{min-height:52px;padding:16px 28px}
+.hero-section .elementor-widget-button .elementor-button:not(:hover){box-shadow:0 8px 30px rgba(125,23,53,.22)}
+.elementor-7 .elementor-element[data-id="49d6db9"]{border-bottom:1px solid rgba(212,107,136,.12)}
+.elementor-7 .elementor-element[data-id="49d6db9"] .elementor-widget-heading .elementor-heading-title{letter-spacing:-.045em}
+.elementor-7 .elementor-widget-icon-box .elementor-icon-box-title,.elementor-7 .elementor-widget-image-box .elementor-image-box-title{letter-spacing:-.02em}
+.elementor-7 .case-study,.elementor-7 .e-loop-item.case-study{overflow:hidden;border:1px solid rgba(212,107,136,.15);border-radius:18px;background:#121114;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.elementor-7 .case-study:hover,.elementor-7 .e-loop-item.case-study:hover{transform:translateY(-5px);border-color:rgba(212,107,136,.55);box-shadow:0 18px 44px rgba(0,0,0,.26)}
+.elementor-7 .case-study img,.elementor-7 .e-loop-item.case-study img{transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .4s ease}
+.elementor-7 .case-study:hover img,.elementor-7 .e-loop-item.case-study:hover img{transform:scale(1.035);filter:saturate(1.08)}
+.elementor-7 .elementor-widget-counter .elementor-counter-number,.elementor-7 .elementor-widget-counter .elementor-counter-number-suffix{color:var(--cf-rose)!important}
+.elementor-7 .elementor-widget-counter .elementor-counter-title{color:var(--cf-muted)!important}
+.elementor-7 .elementor-widget-testimonial,.elementor-7 .elementor-widget-n-carousel{min-width:0}
+.elementor-7 .elementor-widget-icon-list .elementor-icon-list-icon{color:var(--cf-rose)}
+.elementor-7 .elementor-widget-icon-list .elementor-icon-list-text{color:var(--cf-muted)}
+.elementor-7 .elementor-widget-social-icons .elementor-social-icon{background:#21131a!important;border:1px solid var(--cf-line);transition:transform .25s ease,background .25s ease}
+.elementor-7 .elementor-widget-social-icons .elementor-social-icon:hover{transform:translateY(-3px);background:var(--cf-burgundy)!important}
+.elementor-7 .elementor-widget-form .elementor-field-group{margin-bottom:14px}
+.elementor-7 .elementor-widget-form .elementor-field-label{color:var(--cf-white)}
+.elementor-7 .elementor-widget-form .elementor-button{min-height:48px}
+.elementor-7 .elementor-widget-heading .elementor-heading-title a{color:inherit}
+.elementor-7 .elementor-widget-image a{display:block;overflow:hidden;border-radius:14px}
+.elementor-7 .elementor-widget-image a:hover img{transform:scale(1.025)}
+.elementor-location-footer a{color:#d7a2b2}
+.elementor-location-footer a:hover{color:#fff}
+@media(min-width:1025px){
+ .hero-section{min-height:580px}
+ .elementor-7 .case-study,.elementor-7 .e-loop-item.case-study{height:100%}
+}
+@media(max-width:767px){
+ .hero-section{background:radial-gradient(ellipse at 70% 10%,rgba(125,23,53,.22),transparent 42%),#0b0b0d!important}
+ .hero-section:before{opacity:.55}
+ .hero-section .elementor-heading-title{letter-spacing:-.03em}
+ .elementor-7 .case-study,.elementor-7 .e-loop-item.case-study{border-radius:13px}
+}
