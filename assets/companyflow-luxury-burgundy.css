@@ -1,0 +1,53 @@
+/* CompanyFlow Luxury Tech redesign — isolated preview branch */
+:root{--cf-ink:#0b0b0d;--cf-panel:#121114;--cf-panel-2:#191519;--cf-burgundy:#7d1735;--cf-red:#a52a4d;--cf-rose:#d46b88;--cf-white:#f7f3f5;--cf-muted:#b7adb2;--cf-line:rgba(212,107,136,.2);--cf-glow:rgba(125,23,53,.34)}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body,#page,.site-content,.ast-page-builder-template{background:var(--cf-ink)!important;color:var(--cf-white)}
+body,button,input,select,textarea{font-family:"Montserrat","Plus Jakarta Sans",sans-serif}
+h1,h2,h3,.elementor-heading-title{color:var(--cf-white);letter-spacing:-.035em}
+p,li{color:var(--cf-muted)}
+a{color:var(--cf-rose);transition:color .25s ease,opacity .25s ease}
+a:hover{color:#fff}
+::selection{background:var(--cf-burgundy);color:#fff}
+img{transition:transform .65s cubic-bezier(.2,.7,.2,1),filter .4s ease}
+.elementor-widget-image img{border-radius:14px}
+.elementor-section,.e-con,.elementor-element{--e-global-color-primary:var(--cf-red);--e-global-color-secondary:var(--cf-panel);--e-global-color-text:var(--cf-muted);--e-global-color-accent:var(--cf-rose)}
+.elementor-section,.e-con{position:relative}
+.elementor-section:not(.elementor-inner-section),.e-con:not(.e-child){transition:background-color .35s ease}
+.elementor-button,.elementor-button:visited,button,.wp-element-button{background:linear-gradient(120deg,#65132c,#a52a4d)!important;border:1px solid rgba(212,107,136,.52)!important;border-radius:999px!important;color:#fff!important;box-shadow:0 8px 28px rgba(125,23,53,.18);transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.elementor-button:hover,button:hover,.wp-element-button:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(165,42,77,.32);filter:brightness(1.12)}
+.elementor-button-content-wrapper{align-items:center;gap:10px}
+.elementor-widget-icon .elementor-icon,.elementor-icon-box-icon .elementor-icon{transition:transform .3s ease,background .3s ease,color .3s ease}
+.elementor-widget-icon:hover .elementor-icon,.elementor-icon-box-wrapper:hover .elementor-icon{transform:translateY(-3px) scale(1.04)}
+.elementor-widget-icon-box .elementor-icon-box-wrapper,.elementor-widget-image-box .elementor-image-box-wrapper,.elementor-widget-call-to-action .elementor-cta,.elementor-widget-price-list .elementor-price-list-item{border:1px solid var(--cf-line);border-radius:18px;padding:24px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(125,23,53,.055));transition:transform .35s ease,border-color .35s ease,background .35s ease,box-shadow .35s ease}
+.elementor-widget-icon-box .elementor-icon-box-wrapper:hover,.elementor-widget-image-box .elementor-image-box-wrapper:hover,.elementor-widget-call-to-action .elementor-cta:hover{transform:translateY(-5px);border-color:rgba(212,107,136,.55);box-shadow:0 18px 48px rgba(0,0,0,.24);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(125,23,53,.12))}
+.elementor-widget-icon-box .elementor-icon,.elementor-widget-icon .elementor-icon{color:var(--cf-rose);fill:var(--cf-rose)}
+.elementor-widget-divider .elementor-divider-separator{border-color:var(--cf-line)!important}
+.elementor-widget-heading .elementor-heading-title{line-height:1.12}
+.elementor-widget-text-editor,.elementor-widget-text-editor p{color:var(--cf-muted)}
+.elementor-widget-image img:hover{filter:saturate(1.08);transform:scale(1.018)}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{background:#141216!important;border:1px solid var(--cf-line)!important;color:var(--cf-white)!important;border-radius:10px!important}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,42,77,.35);border-color:var(--cf-red)!important}
+::placeholder{color:#8e8188!important}
+.site-header,.ast-primary-header-bar,.main-header-bar,.elementor-location-header{background:rgba(11,11,13,.9)!important;backdrop-filter:blur(16px);border-bottom:1px solid rgba(212,107,136,.12)}
+.main-header-menu a,.ast-builder-menu-1 .menu-item>.menu-link{transition:color .2s ease}
+.main-header-menu a:hover,.ast-builder-menu-1 .menu-item>.menu-link:hover{color:var(--cf-rose)!important}
+.ast-desktop .ast-primary-header-bar .main-header-menu>.menu-item>.menu-link{color:var(--cf-white)}
+.ast-footer-overlay,.site-footer,.elementor-location-footer{background:#080809!important;border-top:1px solid var(--cf-line)}
+.elementor-widget-testimonial .elementor-testimonial-wrapper{background:var(--cf-panel);border:1px solid var(--cf-line);border-radius:18px;padding:26px}
+.elementor-widget-counter .elementor-counter-number-wrapper{color:var(--cf-rose)}
+.elementor-widget-progress .elementor-progress-bar{background:linear-gradient(90deg,var(--cf-burgundy),var(--cf-rose))}
+.elementor-widget-accordion .elementor-accordion-item,.elementor-widget-toggle .elementor-toggle-item{border-color:var(--cf-line)!important}
+.elementor-tab-title,.elementor-accordion-title,.elementor-toggle-title{color:var(--cf-white)!important}
+.elementor-tab-content,.elementor-accordion .elementor-tab-content,.elementor-toggle .elementor-tab-content{background:var(--cf-panel);color:var(--cf-muted)}
+/* Keep movement subtle, performant, and respectful of accessibility preferences. */
+@media (prefers-reduced-motion:no-preference){
+ .elementor-widget-heading .elementor-heading-title{animation:cf-rise .7s both}
+ .elementor-widget-button .elementor-button{will-change:transform}
+}
+@keyframes cf-rise{from{opacity:.0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:767px){
+ .elementor-widget-icon-box .elementor-icon-box-wrapper,.elementor-widget-image-box .elementor-image-box-wrapper{padding:18px}
+ .elementor-widget-image img{border-radius:10px}
+ .elementor-button{max-width:100%}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
