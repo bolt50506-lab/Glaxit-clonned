@@ -164,3 +164,39 @@ input:focus,textarea:focus,select:focus{outline:2px solid rgba(165,42,77,.35);bo
 @media(max-width:767px){.cf-home-hero{min-height:0;padding:64px 22px 24px!important}.cf-hero-inner{grid-template-columns:1fr;gap:15px;min-height:0}.cf-eyebrow{margin-bottom:23px;font-size:9px;letter-spacing:.13em}.cf-home-hero h1#cf-home-title{font-size:clamp(47px,12.4vw,68px)!important;line-height:1.02!important}.cf-hero-lede{margin-top:21px!important;font-size:15px!important;line-height:1.75!important}.cf-hero-actions{gap:19px;margin-top:25px}.cf-button-primary{gap:15px;padding:15px 16px!important}.cf-hero-capabilities{gap:9px;margin-top:26px;font-size:9px}.cf-hero-art{min-height:365px;margin:0 -3px}.cf-art-index{top:4%;left:1%;font-size:8px}.cf-dashboard{width:94%;transform:none;animation:cfDashboardFloat 8s ease-in-out infinite}.cf-dashboard-body{grid-template-columns:38px 1fr;min-height:275px}.cf-dashboard-sidebar{gap:16px}.cf-dashboard-main{padding:21px 15px 15px}.cf-dash-metrics{margin-top:19px;gap:7px}.cf-dash-metrics>div{padding:10px 8px}.cf-dash-metrics strong{font-size:10px}.cf-dash-chart{margin-top:8px;padding:10px}.cf-dash-chart svg{height:55px}.cf-float-card{padding:10px;gap:7px}.cf-float-top{top:14%;right:-1%}.cf-float-bottom{bottom:9%;left:-1%}.cf-float-icon,.cf-float-check{width:25px;height:25px}.cf-float-card strong{font-size:9px}.cf-art-caption{bottom:0;font-size:7px}.cf-hero-bottomline{margin-top:25px;font-size:7px;letter-spacing:.1em}.cf-hero-bottomline span:last-child{display:none}}
 @media(max-width:390px){.cf-home-hero{padding-left:16px!important;padding-right:16px!important}.cf-home-hero h1#cf-home-title{font-size:45px!important}.cf-hero-art{min-height:325px}.cf-dashboard-body{min-height:250px}.cf-float-card{max-width:190px}.cf-hero-capabilities{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.cf-home-hero *,.cf-home-hero *:before,.cf-home-hero *:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+
+/* ── Homepage section system: editorial spacing, glass panels, and portfolio cards ── */
+.elementor-7>.e-con.e-parent{position:relative;padding:clamp(66px,7.2vw,112px) clamp(22px,6vw,94px)!important;border-top:1px solid rgba(212,107,136,.12);background-color:#0b0a0d!important}
+.elementor-7>.e-con.e-parent>.e-con-inner{width:100%!important;max-width:1290px!important;margin-left:auto!important;margin-right:auto!important}
+.elementor-7>.e-con.e-parent[data-id="47b49c3"]{padding-left:0!important;padding-right:0!important;background:linear-gradient(180deg,#0b0a0d,#100b0f 48%,#0b0a0d)!important}
+.elementor-7>.e-con.e-parent[data-id="47b49c3"]>.e-con-inner{max-width:none!important}
+.elementor-7>.e-con.e-parent[data-id="862ad5a"]{background:radial-gradient(ellipse at 10% 40%,rgba(115,20,48,.14),transparent 42%),#0e0c0f!important}
+.elementor-7>.e-con.e-parent[data-id="9518f2b"]{background:radial-gradient(ellipse at 90% 50%,rgba(115,20,48,.12),transparent 42%),#0d0b0e!important}
+.elementor-7 .elementor-widget-heading h4.elementor-heading-title{margin:0 0 15px!important;color:#d46b88!important;font-size:10px!important;font-weight:700!important;letter-spacing:.19em!important;text-transform:uppercase;line-height:1.5!important}
+.elementor-7 .elementor-widget-heading h2.elementor-heading-title{color:#f7f1f4!important;font-size:clamp(30px,4.2vw,55px)!important;line-height:1.08!important;letter-spacing:-.055em!important;font-weight:620!important}
+.elementor-7 .elementor-widget-text-editor p{color:#b9adb4!important;line-height:1.85!important}
+.elementor-7 .elementor-widget-counter{position:relative;min-height:116px;padding:21px 20px!important;border:1px solid rgba(212,107,136,.16)!important;border-radius:8px!important;background:linear-gradient(145deg,rgba(31,22,28,.9),rgba(15,13,16,.92))!important;box-shadow:0 12px 35px rgba(0,0,0,.13);transition:transform .28s ease,border-color .28s ease}
+.elementor-7 .elementor-widget-counter:hover{transform:translateY(-4px);border-color:rgba(212,107,136,.42)!important}
+.elementor-7 .elementor-counter-title{color:#b7a6ae!important;font-size:11px!important;letter-spacing:.04em}
+.elementor-7 .elementor-counter-number{color:#f7eff3!important;font-size:clamp(30px,3.5vw,44px)!important;font-weight:650!important;letter-spacing:-.06em}
+.elementor-7 .elementor-counter-number-suffix{color:#d46b88!important;font-size:25px!important}
+.elementor-7 .elementor-widget-loop-carousel .swiper-slide{overflow:hidden;border:1px solid rgba(212,107,136,.16);border-radius:9px;background:linear-gradient(150deg,#171216,#0f0d10);transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.elementor-7 .elementor-widget-loop-carousel .swiper-slide:hover{transform:translateY(-5px);border-color:rgba(212,107,136,.42);box-shadow:0 22px 55px rgba(0,0,0,.25)}
+.elementor-7 .elementor-widget-loop-carousel .swiper-slide img{filter:saturate(.9);transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .4s ease}
+.elementor-7 .elementor-widget-loop-carousel .swiper-slide:hover img{transform:scale(1.035);filter:saturate(1.08)}
+.elementor-7 .elementor-element[data-id="47b49c3"] .elementor-widget-heading{padding-left:clamp(22px,6vw,94px);padding-right:clamp(22px,6vw,94px)}
+.elementor-7 .elementor-element[data-id="47b49c3"] .elementor-widget-loop-carousel{padding:0 clamp(22px,6vw,94px)}
+.elementor-7 .elementor-widget-button .elementor-button{border:1px solid rgba(212,107,136,.35)!important;border-radius:4px!important;background:linear-gradient(120deg,#8b1d40,#5d102b)!important;box-shadow:0 8px 25px rgba(83,12,34,.16);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.elementor-7 .elementor-widget-button .elementor-button:hover{transform:translateY(-2px);border-color:#d46b88!important;box-shadow:0 12px 32px rgba(125,23,53,.3)}
+.elementor-7 .elementor-widget-image img{border:1px solid rgba(212,107,136,.12)}
+.elementor-7 .elementor-widget-divider .elementor-divider-separator{border-color:rgba(212,107,136,.2)!important}
+@media(max-width:767px){
+ .elementor-7>.e-con.e-parent{padding:57px 20px!important}
+ .elementor-7>.e-con.e-parent[data-id="47b49c3"]{padding-left:0!important;padding-right:0!important}
+ .elementor-7 .elementor-widget-heading h2.elementor-heading-title{font-size:clamp(29px,8vw,39px)!important;line-height:1.12!important}
+ .elementor-7 .elementor-widget-counter{min-height:96px;padding:15px!important}
+ .elementor-7 .elementor-widget-loop-carousel .swiper-slide{border-radius:7px}
+ .elementor-7 .elementor-element[data-id="47b49c3"] .elementor-widget-heading{padding-left:20px;padding-right:20px}
+ .elementor-7 .elementor-element[data-id="47b49c3"] .elementor-widget-loop-carousel{padding:0 20px}
+}
