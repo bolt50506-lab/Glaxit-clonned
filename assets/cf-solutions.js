@@ -29,19 +29,20 @@
     });
   });
   document.querySelectorAll('#cfs-form').forEach(function(form){
-    form.addEventListener('submit',function(event){
+    form.addEventListener('submit',async function(event){
       event.preventDefault();
-      var fields=new FormData(form), email=String(fields.get('email')||'').trim();
+      var fields=new FormData(form),email=String(fields.get('email')||'').trim(),first=String(fields.get('first')||'').trim(),message=String(fields.get('message')||'').trim();
       var note=form.querySelector('#cfs-note');
-      if(!String(fields.get('first')||'').trim()||!email||!String(fields.get('message')||'').trim()){
-        note.hidden=false;note.textContent='Please complete your first name, email and message.';return;
-      }
-      var subject=form.getAttribute('data-subject')||'CompanyFlow enquiry';
-      var lines=[];fields.forEach(function(value,key){lines.push(key+': '+value);});
-      note.hidden=false;note.textContent='Your email app will open with your enquiry details. Please send the prepared message to complete your request.';
-      window.location.href='mailto:alihotspot1@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(lines.join('\n'));
+      if(!first||!email||!message){note.hidden=false;note.textContent='Please complete your first name, email and message.';return;}
+      var button=form.querySelector('button[type="submit"]'),original=button?button.textContent:'';if(button){button.disabled=true;button.textContent='Sending...';}
+      var payload={access_key:'60cc8168-551e-4b8c-9b6b-b89d6f9c1e23',subject:form.getAttribute('data-subject')||'CompanyFlow enquiry',from_name:'CompanyFlow Website',first_name:first,name:first,email:email,message:message,botcheck:''};
+      fields.forEach(function(value,key){if(!(key in payload)&&typeof value==='string')payload[key]=value;});
+      try{var response=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});var result=await response.json();if(!response.ok||result.success!==true)throw new Error('Submission failed');note.hidden=false;note.textContent='Thanks — your enquiry has been sent to CompanyFlow.';form.reset();}
+      catch(error){note.hidden=false;note.textContent='Could not send your enquiry. Please email alihotspot1@gmail.com directly.';}
+      finally{if(button){button.disabled=false;button.textContent=original;}}
     });
   });
+
   if('IntersectionObserver' in window){
     var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.style.animationPlayState='running';observer.unobserve(entry.target);}});},{threshold:.08});
     document.querySelectorAll('.sv-rv').forEach(function(el){el.style.animationPlayState='paused';observer.observe(el);});
